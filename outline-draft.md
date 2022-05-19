@@ -2,7 +2,9 @@
 ## 1. Basics
 - How much is worth including as background?
 - How much should we assume readers know about Clojure?
+    - Write for an audience who know basic Clojure syntax, only reference language guides
 - Already lots of good resources. E.g. [official Clojure guide on language basics](https://clojure.org/guides/learn/clojure%20)
+- How to use this cookbook? Who is it for, what is the best way to use it?
 - Possible topics to include:
     - Setting up a Clojure environment
     - Installing and using Clojure and its libraries
@@ -63,6 +65,7 @@
     - e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
 - Removing columns
 - Transforming values
+    - Working with nested data structures, really nice libraries in Clojure for doing this ([specter](https://github.com/redplanetlabs/specter), [meander](https://github.com/noprompt/meander))
     - All values in a column
     - Conditional transformation (e.g. "truncate only 11 digit phone numbers to 10 digits")
 - Rearranging order of columns
@@ -190,6 +193,13 @@
     - Converting between date and time formats
     - Comparing dates (relatively, i.e. checking for earlier/later than a certain date/time)
 
+### Interop
+- Working with python libraries in Clojure (see [libpython-clj](https://github.com/clj-python/libpython-clj))
+    - How to include python libraries with libpython-clj
+    - Using python classes as Clojure namespaces
+    - Examples of some of the most common ones that don't have equivalents in Clojure? (ML/NLP libraries?)
+        - Mention some common ones that _do_ have equivalents (data manipulation, visualization?)
+
 ### Performance
 - Benchmarking blocks of code
 - Tips for avoiding performance bottlenecks
@@ -215,4 +225,7 @@ A simpler solution to Loftus and Masson’s method](https://pdfs.semanticscholar
 - [Splitting up data for choropleths](https://macwright.com/2013/02/18/literate-jenks.html%20)
 - [Problems with choropleths](https://www.esri.com/arcgis-blog/products/product/mapping/mapping-coronavirus-responsibly/%20)
 
+**Python interop**
+- [Using mathplotlib and numpy](https://nextjournal.com/kommen/parens-for-polyglot)
+- [Interop with NLP libraries](http://gigasquidsoftware.com/blog/2020/01/24/clojure-interop-with-python-nlp-libraries/)
 
