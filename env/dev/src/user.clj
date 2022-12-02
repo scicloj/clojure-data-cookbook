@@ -1,5 +1,4 @@
-(ns user
-  (:require [scicloj.clay.v2.api :as clay]))
+(ns user)
 
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")
@@ -9,9 +8,10 @@
   (println "(start!)                  ;; Start Clay")
   (println "(show <notebook-name>)    ;; Show the given notebook"))
 
-(defn start! []
-  (clay/start!)
-  :ready)
-
-(defn show [notebook]
-  (clay/show-doc! "chapter_2_input_output/2_1_loading_data.clj" {:toc? true}))
+(defn dev
+  "Load and switch to the 'dev' namespace."
+  []
+  (require 'dev)
+  (help)
+  (in-ns 'dev)
+  :loaded)
