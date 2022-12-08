@@ -80,6 +80,9 @@
 
 ;; We can inspect the column metadata with tablecloth:
 
+(def dataset
+  (tc/dataset "data/co2_over_time.csv"))
+
 (-> dataset
     (tc/info :columns))
 
@@ -119,10 +122,69 @@
 ;; Also the magical `:!type` qualifier exists, which will select the complement set -- all columns that
 ;; are _not_ the specified type
 
-;; For others you need to provide a casting function yourself, e.g. parsing strings:
+;; For others you need to provide a casting function yourself, e.g. adding the UTC start of day, accounting for local daylight savings
+
+(defn to-start-of-day-UTC [local-date]
+  (-> local-date
+      .atStartOfDay
+      (java.time.ZonedDateTime/ofLocal (java.time.ZoneId/systemDefault)
+                                       (java.time.ZoneOffset/UTC))))
+
 (-> dataset
-    ;; (tc/convert-types "Date" :local-date-time)
+    (tc/convert-types "Date" [[:timezone-date to-start-of-day-UTC]])
     (tc/info :columns))
 
 ;; For full details on all the possible options for type conversion of columns see the
 ;; [tablecloth API docs](https://scicloj.github.io/tablecloth/index.html#Type_conversion)
+
+;; ### Reading from a URL
+
+;; CSV:
+
+(-> "https://vega.github.io/vega-lite/data/co2-concentration.csv"
+    tc/dataset)
+
+;; JSON: works as long as the data is an array of maps
+
+(-> "https://vega.github.io/vega-lite/data/cars.json"
+    tc/dataset)
+
+;; Tablecloth can handle a string that points to any file that contains either raw or gzipped csv/tsv, json, xls(x), on the local file system or a URL.
+
+;; ### Reading an excel file
+
+;; these should work..
+
+(tc/dataset "data/example_XLS.xls")
+(tc/dataset "data/example_XLSX.xlsx")
+
+(require '[dk.ative.docjure.spreadsheet :as xl])
+
+(def xl-workbook
+  (load-workbook "data/example_XLS.xls"))
+
+;; To discover sheet names:
+
+(->> xl-workbook xl/sheet-seq (map xl/sheet-name))
+
+;; This will show us there is only one sheet in this workbook, named "Sheet1". You can get the data out of it like this:
+
+(def data
+  (->> xl-workbook
+       (xl/select-sheet "Sheet1")
+       xl/row-seq
+       (map (fn [row]
+              (->> row xl/cell-seq (map xl/read-cell))))))
+
+data
+
+;; and into a tablecloth dataset like this:
+
+;; this `header-row?` option should also work
+(tc/dataset data {:header-row? true})
+
+
+;; ### Reading from a database
+;; #### SQL database
+
+;; #### SPARQL database
