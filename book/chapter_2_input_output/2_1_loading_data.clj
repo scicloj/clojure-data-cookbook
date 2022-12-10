@@ -230,3 +230,53 @@
 (let [headers (first iterated-xl-data)
       rows (rest iterated-xl-data)]
   (map #(zipmap headers %) rows))
+
+;; ### Reading from a database
+;; #### SQL database
+
+;; (tc/dataset (,,, results from some SQL query))
+
+;; #### SPARQL database
+
+;; get some tabular RDF.. use matcha?
+
+;; (tc/dataset (,,, results ))
+
+;; ### Generating sequences
+
+(defn seq-of-seqs [rows cols-per-row output-generator]
+  (repeatedly rows (partial repeatedly cols-per-row output-generator)))
+
+;; Of random numbers:
+(defn random-number-between-0-1000 []
+  (rand-int 1000))
+
+(seq-of-seqs 10 4 random-number-between-0-1000)
+
+(defn seq-of-maps [rows cols-per-row output-generator]
+  (let [header-data (map #(str "header-" %) (range cols-per-row))
+        row-data (seq-of-seqs rows cols-per-row output-generator)]
+    (map #(zipmap header-data %) row-data)))
+
+(seq-of-maps 10 4 random-number-between-0-1000)
+
+;; dtype next (library underneath tech.ml.dataset, which is underneath tablecloth) also
+;; has a built-in sequence generator:
+
+(require '[tech.v3.datatype :as dtype])
+
+(dtype/make-reader :string 4 (str "cell-" idx))
+
+(dtype/make-reader :int32 4 (rand-int 10))
+
+;; It is lazy, not cached, so be careful about using a computationally-heavy fn for generator
+
+;; ### Generating repeatable sequences of dummy data
+
+(def consistent-data
+  (map-indexed (fn [index _coll] (str "cell-" index))
+               (range 10)))
+
+(repeat (zipmap (range 10) consistent-data))
+
+:end
