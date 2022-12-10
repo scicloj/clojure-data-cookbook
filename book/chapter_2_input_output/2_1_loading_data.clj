@@ -122,7 +122,8 @@
 ;; Also the magical `:!type` qualifier exists, which will select the complement set -- all columns that
 ;; are _not_ the specified type
 
-;; For others you need to provide a casting function yourself, e.g. adding the UTC start of day, accounting for local daylight savings
+;; For others you need to provide a casting function yourself, e.g. adding the UTC start of day,
+;; accounting for local daylight savings
 
 (defn to-start-of-day-UTC [local-date]
   (-> local-date
@@ -149,11 +150,21 @@
 (-> "https://vega.github.io/vega-lite/data/cars.json"
     tc/dataset)
 
-;; Tablecloth can handle a string that points to any file that contains either raw or gzipped csv/tsv, json, xls(x), on the local file system or a URL.
+;; Tablecloth can handle a string that points to any file that contains either raw or gzipped csv/tsv,
+;; json, xls(x), on the local file system or a URL.
 
 ;; ### Reading an excel file
 
-;; these should work..
+;; Tablecloth supports reading xls and xlsx files iff the underlying Java library for working with
+;; excel is included:
+
+(require '[tech.v3.libs.poi])
+
+;; This is not included in the library by default because `poi` has a hard dependency on log4j2, along
+;; with many other dependencies that the core team at `tech.ml.dataset` (upon which tablecloth is built)
+;; did not want to impose on all users by default (https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/working.20with.20excel.20files/near/314711378).
+
+;; This should work
 
 (tc/dataset "data/example_XLS.xls")
 (tc/dataset "data/example_XLSX.xlsx")
@@ -161,30 +172,61 @@
 (require '[dk.ative.docjure.spreadsheet :as xl])
 
 (def xl-workbook
-  (load-workbook "data/example_XLS.xls"))
+  (xl/load-workbook "data/example_XLS.xls"))
 
 ;; To discover sheet names:
 
 (->> xl-workbook xl/sheet-seq (map xl/sheet-name))
 
-;; This will show us there is only one sheet in this workbook, named "Sheet1". You can get the data out of it like this:
+;; This will show us there is only one sheet in this workbook, named "Sheet1". You can get the data
+;; out of it like this:
 
-(def data
+;; To discover header names:
+
+(def headers
   (->> xl-workbook
        (xl/select-sheet "Sheet1")
        xl/row-seq
-       (map (fn [row]
-              (->> row xl/cell-seq (map xl/read-cell))))))
+       first
+       cell-seq
+       (map xl/read-cell)))
 
-data
+;; To get the data out of the columns:
+
+(def column-index->header
+  (zipmap [:A :B :C :D :E :F :G :H :I] headers))
+
+(->> xl-workbook
+     (xl/select-sheet "Sheet1")
+     (xl/select-columns column-index->header))
 
 ;; and into a tablecloth dataset like this:
 
-;; this `header-row?` option should also work
-(tc/dataset data {:header-row? true})
+(->> xl-workbook
+     (xl/select-sheet "Sheet1")
+     (xl/select-columns column-index->header)
+     (drop 1) ;; don't count the header row as a row
+     tc/dataset)
 
+;; You might be tempted to just iterate over each row and read each cell, but it's more
+;; convenient to think of the data as column-based rather than row-based for tablecloth's purposes.
+;; Setting the dataset headers is more verbose when we're starting from a seq of seqs, since
+;; the `header-row?` option does not work for a seq of seqs (this option is implemented in the
+;; low-level parsing code for each supported input type and is not currently implemented for
+;; a seq of seqs).
 
-;; ### Reading from a database
-;; #### SQL database
+(def iterated-xl-data
+  (->> xl-workbook
+       (xl/select-sheet "Sheet1")
+       xl/row-seq
+       (map #(->> % xl/cell-seq (map xl/read-cell)))))
 
-;; #### SPARQL database
+;; Note the `header-row?` option is not supported:
+
+(tc/dataset iterated-xl-data  {:header-row? true})
+
+;; Can do it manually, but just working with columns from the start is more idiomatic:
+
+(let [headers (first iterated-xl-data)
+      rows (rest iterated-xl-data)]
+  (map #(zipmap headers %) rows))
