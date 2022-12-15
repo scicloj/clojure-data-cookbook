@@ -1,9 +1,12 @@
 (ns dev
-  (:require [scicloj.clay.v2.api :as clay]))
+  (:require [nextjournal.clerk :as clerk]))
 
 (defn start! []
-  (clay/start!)
+  (clerk/serve! {:browse? true})
   :ready)
 
+(defn start-and-watch! []
+  (clerk/serve! {:browse? true :watch-paths ["book" "data"]}))
+
 (defn show [notebook]
-  (clay/show-doc! notebook {:toc? true}))
+  (clerk/show! notebook))

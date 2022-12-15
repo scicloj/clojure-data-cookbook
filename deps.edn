@@ -1,9 +1,7 @@
 {:paths ["book" "data"]
- :deps {org.scicloj/clay {:mvn/version "2-alpha9"}
-        org.clojure/data.csv {:mvn/version "1.0.1"}
+ :deps {org.clojure/data.csv {:mvn/version "1.0.1"}
         scicloj/tablecloth {:mvn/version "6.103"}
         dk.ative/docjure {:mvn/version "1.19.0"}
-        ;; org.scicloj/kindly {:mvn/version "3-alpha6"}
-        }
+        io.github.nextjournal/clerk {:mvn/version "0.12.707"}}
  :aliases
  {:dev {:extra-paths ["env/dev/src"]}}}

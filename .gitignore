@@ -12,3 +12,7 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 .cpcache/
+.clerk/
+.clj-kondo/
+.lsp/.cache
+.dir-locals.el
