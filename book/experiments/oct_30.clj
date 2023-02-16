@@ -1,14 +1,19 @@
 (ns book.experiments.oct-30
-  (:require [scicloj.clay.v2.api :as clay]
-            [scicloj.kindly.v3.kind :as kind]
-            [clojure.string :as str]
-            [tablecloth.api :as tc]))
+  (:require
+   [scicloj.kindly.v3.kind :as kind]
+   [scicloj.kind-clerk.api :as kind-clerk]
+   [clojure.string :as str]
+   [tablecloth.api :as tc]))
 
-
-(clay/start!)
+(kind-clerk/setup!)
 
 (comment
-  (clay/show-doc! "experiments/oct_30.clj" {:toc? true}))
+  (require 'dev)
+  (dev/start!))
+
+;; (comment
+;;   (require '[scicloj.clay.v2.api :as clay])
+;;   (clay/show-doc! "experiments/oct_30.clj" {:toc? true}))
 
 ;; https://r4ds.had.co.nz/transform.html
 
@@ -17,10 +22,8 @@
 ;; tech.ml.dataset
 
 (def flights
-  (-> "experiments/data/nycflights13.csv.gz"
+  (-> "data/nycflights13.flights.csv.gz"
       (tc/dataset {:key-fn keyword})))
-
-flights
 
 ;; Count all the rows
 
@@ -49,7 +52,8 @@ jan-1
 
 (-> jan-1
     (tc/order-by [:dep_time :dep_delay])
-    (kind/pprint))
+    ;; (kind/pprint)
+    )
 
 ;; Note: Tablecloth sorts missing values as the lowest ones (i.e. at the top if sorted by ascending order, at the bottom if sorted by descending order)
 

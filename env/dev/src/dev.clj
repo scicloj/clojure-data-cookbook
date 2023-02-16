@@ -1,9 +1,15 @@
 (ns dev
-  (:require [scicloj.clay.v2.api :as clay]))
+  (:require [scicloj.clay.v2.api :as clay]
+            [nextjournal.clerk :as clerk]
+            [scicloj.kindly-default.v1.api :as kindly-default]))
+
+(kindly-default/setup!)
 
 (defn start! []
-  (clay/start!)
+  #_(clay/start!)
+  (clerk/serve! {:browse? true})
   :ready)
 
 (defn show [notebook]
-  (clay/show-doc! notebook {:toc? true}))
+  #_(clay/show-doc! notebook {:toc? true})
+  (clerk/show! notebook))
