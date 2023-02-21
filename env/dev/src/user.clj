@@ -16,3 +16,9 @@
   (help)
   (in-ns 'dev)
   :loaded)
+
+
+(require '[libpython-clj2.python :as py])
+
+(py/initialize! :python-executable "/opt/homebrew/Caskroom/miniconda/base/envs/cookbook/bin/python3.11"
+                :library-path "/opt/homebrew/Caskroom/miniconda/base/envs/cookbook/lib/libpython3.11.dylib")

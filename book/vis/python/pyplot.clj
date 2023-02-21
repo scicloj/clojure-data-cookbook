@@ -23,11 +23,12 @@
                 '[numpy.random :as np.random]
                 'matplotlib.pyplot
                 '[seaborn :as sns]
-                'bokeh.plotting
-                'bokeh.resources
-                'bokeh.embed
+                ;; 'bokeh.plotting
+                ;; 'bokeh.resources
+                ;; 'bokeh.embed
                 'json
-                '[arviz :as az])
+                ;; '[arviz :as az]
+                )
 
 (def sine-data
   (-> {:x (range 0 (* 3 np/pi) 0.1)}
@@ -63,8 +64,9 @@
             :student_t (np.random/standard_t :df 6
                                              :size size)
             :exponential (np.random/exponential :size size)}]
-  (vis.python/pyplot
-   #(az/plot_forest data)))
+  ;; (vis.python/pyplot
+  ;;  #(az/plot_forest data))
+  )
 
 
 
