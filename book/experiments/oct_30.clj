@@ -27,6 +27,10 @@
 
 ;; Count all the rows
 
+flights
+
+(kind/table flights)
+
 (tc/row-count flights)
 
 ;; Pick observations by their values (filter()).
@@ -40,10 +44,10 @@
       (tc/select-rows (fn [row]
                         (and (-> row :day (= 1))
                              (-> row :month (= 1)))))
-    ;; tc/row-count
+      ;; tc/row-count
       ))
 
-jan-1
+(kind/table jan-1)
 
 ;; (def get-flights-on-day [month day]
 ;;   )
