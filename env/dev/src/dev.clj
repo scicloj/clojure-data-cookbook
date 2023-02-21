@@ -1,9 +1,10 @@
 (ns dev
   (:require [scicloj.kindly-default.v1.api :as kindly-default]
-           [nextjournal.clerk :as clerk]
-           [nextjournal.clerk.viewer :as v]))
+            [nextjournal.clerk :as clerk]
+            [nextjournal.clerk.viewer :as v]))
 
 (defn start! []
+  (kindly-default/setup!)
   (clerk/serve! {:browse? true})
   :ready)
 
