@@ -13,3 +13,6 @@ pom.xml.asc
 .nrepl-port
 .cpcache/
 .clerk/
+.clj-kondo/
+.lsp/.cache
+.dir-locals.el

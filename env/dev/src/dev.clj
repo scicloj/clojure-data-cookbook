@@ -1,15 +1,14 @@
 (ns dev
-  (:require [scicloj.clay.v2.api :as clay]
-            [nextjournal.clerk :as clerk]
-            [scicloj.kindly-default.v1.api :as kindly-default]))
-
-(kindly-default/setup!)
+  (:require [scicloj.kindly-default.v1.api :as kindly-default]
+           [nextjournal.clerk :as clerk]
+           [nextjournal.clerk.viewer :as v]))
 
 (defn start! []
-  #_(clay/start!)
   (clerk/serve! {:browse? true})
   :ready)
 
+(defn start-and-watch! []
+  (clerk/serve! {:browse? true :watch-paths ["book" "data"]}))
+
 (defn show [notebook]
-  #_(clay/show-doc! notebook {:toc? true})
   (clerk/show! notebook))

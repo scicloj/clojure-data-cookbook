@@ -1,6 +1,8 @@
 (ns book.chapter-2-input-output.2-1-loading-data
-  (:require
-    [tablecloth.api :as tc]))
+  {:nextjournal.clerk/toc true})
+
+;; This is a work in progress of the code examples that will make up chapter 2, section 1
+;; of the Clojure data cookbook
 
 ;; # 2.1 How to get data into the notebook
 
@@ -15,12 +17,13 @@
 (require '[clojure.data.csv :as csv]
          '[clojure.java.io :as io])
 
+^{:nextjournal.clerk/viewer :table}
 (with-open [reader (io/reader "data/co2_over_time.csv")]
   (doall
    (csv/read-csv reader)))
 
 ;; Returns: Lazy sequence of vectors of strings (one value per cell)
-;; TODO: Link to useful explainer on lazy seqs
+;; TODO: Link to useful explainer on lazy seqs, explain why we include `doall` here
 
 ;; #### With tablecloth
 
@@ -29,7 +32,17 @@
 ;; details aren't important now, but `tech.ml.dataset` is the library that allows for efficient
 ;; and fast operations on columnar datasets.
 
+;; TODO: Be consistent about you vs we -- pick on and stick with it
+
 (require '[tablecloth.api :as tc])
+
+(require '[nextjournal.clerk :as clerk])
+(require '[nextjournal.clerk.viewer :as v])
+
+;; (clerk/add-viewers! [{:pred #(= tech.v3.dataset.impl.dataset.Dataset (type %))
+;;                       ;; :fetch-fn (fn [_ file] {:nextjournal/content-type "image/png"
+;;                       ;;                         :nextjournal/value (Files/readAllBytes (.toPath file))})
+;;                       :render-fn v/table}])
 
 (-> "data/co2_over_time.csv"
     tc/dataset)
@@ -67,8 +80,7 @@
 ;; be a single character.
 
 (-> "data/co2_over_time.txt"
-    (tc/dataset {:separator "/"})
-    type)
+    (tc/dataset {:separator "/"}))
 
 ;; ##### Specify file encoding
 
@@ -86,7 +98,9 @@
 (-> dataset
     (tc/info :columns))
 
-;; Certain types are built-in (it knows what to do convert them, e.g. numbers:)
+;; Certain types are built-in (it knows what to do to convert them, e.g. numbers:)
+
+;; TODO: Explain why numbers get rounded? Probably not here.. in addendum about numbers in Clojure
 
 (-> dataset
     (tc/convert-types "CO2" :double)
@@ -98,6 +112,8 @@
 @casting/valid-datatype-set
 
 ;; More details on [supported types here](https://github.com/techascent/tech.ml.dataset/blob/master/topics/supported-datatypes.md).
+
+;; TODO: Explain when to use :double vs :type/numerical? What’s the difference?
 
 ;; You can also process multiple columns at once, either by specifying a map of columns to data types:
 
@@ -112,7 +128,7 @@
     (tc/convert-types :type/numerical :double)
     (tc/info :columns))
 
-;; The supported types of columns are:
+;; The supported column types are:
 
 ;; :type/numerical - any numerical type
 ;; :type/float - floating point number (:float32 and :float64)
@@ -164,10 +180,14 @@
 ;; with many other dependencies that the core team at `tech.ml.dataset` (upon which tablecloth is built)
 ;; did not want to impose on all users by default (https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/working.20with.20excel.20files/near/314711378).
 
-;; This should work
+;; You can still require it here, you'll most likely just see an error that says something like
+;; "Log4j2 could not find a logging implementation. Please add log4j-core to the classpath.", unless
+;; you already have a valid log4j config on your class path.
 
-(tc/dataset "data/example_XLS.xls")
-(tc/dataset "data/example_XLSX.xlsx")
+;; This should work according to maintainers, does not atm
+
+(tc/dataset "data/example_XLS.xls" {:filetype "xls"})
+(tc/dataset "data/example_XLSX.xlsx" {:filetype "xlsx"})
 
 (require '[dk.ative.docjure.spreadsheet :as xl])
 
@@ -188,7 +208,7 @@
        (xl/select-sheet "Sheet1")
        xl/row-seq
        first
-       cell-seq
+       xl/cell-seq
        (map xl/read-cell)))
 
 ;; To get the data out of the columns:
@@ -235,6 +255,25 @@
 ;; #### SQL database
 
 ;; (tc/dataset (,,, results from some SQL query))
+
+;; requires `com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}` in `deps.edn`
+
+;; Note you will also require the relevant driver for the type of db you are trying
+;; to access. These are some available ones:
+
+
+(require '[next.jdbc :as jdbc])
+
+;; Connect to the db:
+
+(def db {:dbname "Chinook"
+         :dbtype "sqlite"})
+
+(def ds (jdbc/get-datasource db))
+
+ds
+
+(jdbc/execute! ds ["SELECT * FROM Artists"])
 
 ;; #### SPARQL database
 
