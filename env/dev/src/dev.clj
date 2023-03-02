@@ -5,7 +5,8 @@
 
 (defn start! []
   (kindly-default/setup!)
-  (clerk/serve! {:browse? true})
+  (clerk/serve! {:browse? true
+                 :port 2222})
   :ready)
 
 (defn start-and-watch! []

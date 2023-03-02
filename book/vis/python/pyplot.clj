@@ -23,12 +23,7 @@
                 '[numpy.random :as np.random]
                 'matplotlib.pyplot
                 '[seaborn :as sns]
-                ;; 'bokeh.plotting
-                ;; 'bokeh.resources
-                ;; 'bokeh.embed
-                'json
-                ;; '[arviz :as az]
-                )
+                'json)
 
 (def sine-data
   (-> {:x (range 0 (* 3 np/pi) 0.1)}
@@ -57,16 +52,6 @@
                  :hue "smoker"
                  :style "smoker"
                  :size "size")))
-
-(let [size [10 50]
-      data {:normal (apply np.random/randn size)
-            :gumbel (np.random/gumbel :size size)
-            :student_t (np.random/standard_t :df 6
-                                             :size size)
-            :exponential (np.random/exponential :size size)}]
-  ;; (vis.python/pyplot
-  ;;  #(az/plot_forest data))
-  )
 
 
 

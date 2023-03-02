@@ -16,3 +16,4 @@ pom.xml.asc
 .clj-kondo/
 .lsp/.cache
 .dir-locals.el
+.python-config.edn

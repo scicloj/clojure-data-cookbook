@@ -1,7 +1,6 @@
 {:paths ["book" "data"]
- :deps {org.scicloj/noj {:mvn/version "1-alpha2"}
-       org.clojure/data.csv {:mvn/version "1.0.1"}
-        scicloj/tablecloth {:mvn/version "6.103"}
+ :deps {org.scicloj/noj {:mvn/version "1-alpha5"}
+        org.clojure/data.csv {:mvn/version "1.0.1"}
         dk.ative/docjure {:mvn/version "1.19.0"}
         io.github.nextjournal/clerk {:mvn/version "0.12.707"}
         com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}}
