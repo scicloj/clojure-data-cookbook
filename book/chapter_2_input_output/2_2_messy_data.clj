@@ -1,4 +1,5 @@
 (ns chapter-2-input-output.2-2-messy-data
+  {:nextjournal.clerk/toc true}
   (:require [tablecloth.api :as tc]
             [tech.v3.datatype.functional :as fun]))
 
@@ -87,7 +88,6 @@
 (-> misformatted
     (tc/update-columns {:phone normalize-phone-numbers
                         :postal-code normalize-postal-codes}))
-
 
 ;; - Missing values
 
