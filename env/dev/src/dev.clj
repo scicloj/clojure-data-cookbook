@@ -1,6 +1,8 @@
 (ns dev
-  (:require [nextjournal.clerk :as clerk]
-            [nextjournal.clerk.viewer :as v]))
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :as str]
+   [nextjournal.clerk :as clerk]))
 
 ;; Tell Clerk to render all tablecloth datasets as tables
 
@@ -11,7 +13,7 @@
 ;;                       :render-fn v/table}])
 
 (defn start! []
-  (clerk/serve! {:browse? true})
+  (clerk/serve! {:browse? true :toc? true})
   :ready)
 
 (defn start-and-watch! []

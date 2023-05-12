@@ -1,9 +1,13 @@
 {:paths ["book" "data"]
- :deps {org.clojure/data.csv {:mvn/version "1.0.1"}
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        org.clojure/data.csv {:mvn/version "1.0.1"}
         scicloj/tablecloth {:mvn/version "6.103"}
         dk.ative/docjure {:mvn/version "1.19.0"}
         io.github.nextjournal/clerk {:mvn/version "0.12.707"}
-        com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}}
+        com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}
+        org.xerial/sqlite-jdbc {:mvn/version "3.40.1.0"}
+        io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
+        io.github.swirrl/grafter.core {:mvn/version "3.0.0"}}
  :aliases
  {:dev {:extra-paths ["env/dev/src"]
         :extra-deps {vvvvalvalval/scope-capture {:mvn/version "0.3.3"}}}}}

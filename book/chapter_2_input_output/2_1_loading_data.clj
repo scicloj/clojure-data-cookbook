@@ -266,20 +266,69 @@
 
 ;; Connect to the db:
 
-(def db {:dbname "Chinook"
+(def db {:dbname "data/Chinook_Sqlite.sqlite"
          :dbtype "sqlite"})
 
 (def ds (jdbc/get-datasource db))
 
 ds
 
-(jdbc/execute! ds ["SELECT * FROM Artists"])
+;; Pass the results of a sql query to tablecloth to make a
+
+(-> ds
+    (jdbc/execute! ["SELECT * FROM artist"])
+    (tc/dataset))
+
+;; Passing a parameter to a query
+
+(-> ds
+    (jdbc/execute! ["SELECT * FROM artist WHERE Name = ?" "Aerosmith"])
+    (tc/dataset))
+
+;; note for SQLite specifically the concat operator is `||` not `+`
+
+(-> ds
+    (jdbc/execute! ["SELECT * FROM artist WHERE Name like '%' || ? || '%'" "man"])
+    (tc/dataset))
 
 ;; #### SPARQL database
 
-;; get some tabular RDF.. use matcha?
+(require '[grafter-2.rdf4j.repository :as repo])
+(require '[grafter-2.rdf.protocols :as pr])
 
-;; (tc/dataset (,,, results ))
+(def sparql (repo/sparql-repo "https://query.wikidata.org/sparql"))
+
+;; taken from: https://query.wikidata.org/#%23Public%20sculptures%20in%20Paris%0ASELECT%20DISTINCT%20%3Fitem%20%20%3FTitre%20%3Fcreateur%20%28year%28%3Fdate%29%20as%20%3FAnneeCreation%29%20%3Fimage%20%3Fcoord%0AWHERE%0A%7B%0A%20%20%20%3Fitem%20wdt%3AP31%2Fwdt%3AP279%2a%20wd%3AQ860861.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20sculpture%0A%20%20%20%3Fitem%20wdt%3AP136%20wd%3AQ557141%20.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20genre%C2%A0%3A%20art%20public%0A%20%20%20%7B%3Fitem%20wdt%3AP131%20wd%3AQ90.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20...%20situ%C3%A9e%20dans%20Paris%0A%20%20%20UNION%0A%20%20%20%7B%3Fitem%20wdt%3AP131%20%3Farr.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20...%20ou%20dans%20un%20arrondissement%20de%20Paris%20%0A%20%20%20%3Farr%20wdt%3AP131%20wd%3AQ90.%20%7D%0A%20%20%20%3Fitem%20rdfs%3Alabel%20%3FTitre%20FILTER%20%28lang%28%3FTitre%29%20%3D%20%22fr%22%29.%20%20%23%20Titre%0A%20%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP170%20%3FQcreateur.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20cr%C3%A9ateur%2Fcr%C3%A9atrice%20%28option%29%0A%20%20%20%3FQcreateur%20rdfs%3Alabel%20%3Fcreateur%20FILTER%20%28lang%28%3Fcreateur%29%20%3D%20%22fr%22%29%20.%7D%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP571%20%3Fdate.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20date%20de%20cr%C3%A9ation%20%28option%29%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP18%20%20%3Fimage.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20image%20%28option%29%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP625%20%3Fcoord.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20coordonn%C3%A9es%20g%C3%A9ographiques%20%28option%29%0A%7D
+
+(def sparql-results
+  (let [conn (repo/->connection sparql)]
+    (-> conn
+        (repo/query
+         "# Public sculptures in Paris
+SELECT DISTINCT ?item  ?title ?creator (year(?date) as ?year) ?coord
+WHERE
+{
+   ?item wdt:P31/wdt:P279* wd:Q860861.                    # sculpture
+   ?item wdt:P136 wd:Q557141 .                            # genre : art public
+   {?item wdt:P131 wd:Q90.}                               # ... située dans Paris
+   UNION
+   {?item wdt:P131 ?arr.                                  # ... ou dans un arrondissement de Paris
+   ?arr wdt:P131 wd:Q90. }
+   ?item rdfs:label ?title FILTER (lang(?title) = \"fr\").  # title
+
+   OPTIONAL {?item wdt:P170 ?Qcreateur.                   # créateur/créatrice (option)
+   ?Qcreateur rdfs:label ?creator FILTER (lang(?creator) = \"fr\") .}
+   OPTIONAL {?item wdt:P571 ?date.}                       # date de création (option)
+   OPTIONAL {?item wdt:P18  ?image.}                      # image (option)
+   OPTIONAL {?item wdt:P625 ?coord.}                      # coordonnées géographiques (option)
+}"))))
+
+;; grafter db can help format RDF values
+
+(def sparql-ds
+  (-> sparql-results
+      tc/dataset
+      (tc/update-columns [:coord :title :creator] (partial map pr/raw-value))))
 
 ;; ### Generating sequences
 
