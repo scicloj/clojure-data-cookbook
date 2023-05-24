@@ -3,7 +3,7 @@
 - How much is worth including as background?
 - How much should we assume readers know about Clojure?
     - Write for an audience who know basic Clojure syntax, only reference language guides
-- Already lots of good resources. E.g. [official Clojure guide on language basics](https://clojure.org/guides/learn/clojure%20)
+- Already lots of good resources. E.g. [official Clojure guide on language basics](https://clojure.org/guides/learn/clojure)
 - How to use this cookbook? Who is it for, what is the best way to use it?
 - Possible topics to include:
     - Setting up a Clojure environment
