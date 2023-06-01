@@ -25,4 +25,5 @@
 (defn build! []
   (clerk/build! {:paths ["book/chapter_1_intro/*"
                          "book/chapter_2_input_output/*"
-                         "book/chapter_3_data_manipulation/*"]}))
+                         "book/chapter_3_data_manipulation/*"]
+                 :index "book/index.clj"}))

@@ -1,9 +1,11 @@
 (ns chapter-2-input-output.2-3-exporting-data
   {:nextjournal.clerk/toc true}
-  (:require [tablecloth.api :as tc]
-            [clojure.data.csv :as csv]
-            [clojure.java.io :as io]
-            [clojure.edn :as edn]))
+  (:require
+   [clojure.data.csv :as csv]
+   [clojure.edn :as edn]
+   [clojure.java.io :as io]
+   [nextjournal.clerk :as clerk]
+   [tablecloth.api :as tc]))
 
 ;; # 2.3 How to get data out of a notebook
 
@@ -50,6 +52,14 @@
 
 ;; ## Notebook artifacts
 
+;; Clerk supports publishing your namespaces as HTML (like this website!)
+;; To do that call
+
+(comment
+  (clerk/build! {:paths "path/to/files..."
+                 :index "book/index.clj"}))
+
+;; More information in Clerk's docs: https://book.clerk.vision/#static-building
 
 ;; HTML pages
 ;; Other formats, options for exporting notebooks? PDFs?

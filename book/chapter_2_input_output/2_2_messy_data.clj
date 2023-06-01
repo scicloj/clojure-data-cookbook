@@ -10,7 +10,7 @@
 
 ;; How do you know it's messy? What do I mean by that?
 
-;; - Multiple types mixed in one column
+;; ## Multiple types mixed in one column
 
 ;; Tablecloth will handle it just fine, it will just give the column the type `:object`
 
@@ -33,7 +33,7 @@
 ;; e.g. (this will make your notebook fail to render)
 ;; (tc/convert-types mixed-types :B :int)
 
-;; - Multiple formats for a thing that's supposed to have one (e.g. phone numbers, postal codes)
+;; ## Multiple formats for a thing that's supposed to have one (e.g. phone numbers, postal codes)
 
 ;; You can pass any arbitrary function to update a column
 
@@ -89,7 +89,7 @@
     (tc/update-columns {:phone normalize-phone-numbers
                         :postal-code normalize-postal-codes}))
 
-;; - Missing values
+;; ## Missing values
 
 ;; Tablecloth has [many built-in helpers](https://scicloj.github.io/tablecloth/index.html#Missing)
 ;; for dealing with missing values.
@@ -112,7 +112,7 @@
 
 ;; Table cloth includes many strategies for replacing missing values https://scicloj.github.io/tablecloth/index.html#replace
 
-;; - Arbitrary values meant to indicate missing (e.g. "NONE", "N/A", false, etc.)
+;; ## Arbitrary values meant to indicate missing (e.g. "NONE", "N/A", false, etc.)
 
 ;; It's not uncommon to see missing values indicated in multiple different ways, sometimes
 ;; even within the same dataset. E.g. missing cells might be blank entirely, or they might
