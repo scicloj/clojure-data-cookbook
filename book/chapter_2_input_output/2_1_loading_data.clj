@@ -1,4 +1,4 @@
-(ns book.chapter-2-input-output.2-1-loading-data
+(ns chapter-2-input-output.2-1-loading-data
   {:nextjournal.clerk/toc true})
 
 ;; This is a work in progress of the code examples that will make up chapter 2, section 1
