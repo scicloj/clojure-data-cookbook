@@ -9,5 +9,4 @@
         io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}}
  :aliases
- {:dev {:extra-paths ["env/dev/src"]
-        :extra-deps {vvvvalvalval/scope-capture {:mvn/version "0.3.3"}}}}}
+ {:dev {:extra-paths ["env/dev/src"]}}}

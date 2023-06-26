@@ -1,7 +1,12 @@
+```clojure
+(ns chapter-1-intro.1-1-welcome
+  {:nextjournal.clerk/visibility {:code :hide}
+   :nextjournal.clerk/toc true})
+```
+
 Welcome to the Clojure Data Cookbook! This is a resource for people with data to work with who want to explore what Clojure can do. Clojure is among the [most stable](https://dl.acm.org/doi/10.1145/3386321), [most loved](https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages), and [most lucrative](https://insights.stackoverflow.com/survey/2021#section-salary-salary-and-experience-by-language) languages out there, but is not often thought of as a language for data science.
 
 Clojure is free, open source, and has excellent performance thanks to being [hosted on the JVM](https://clojure.org/about/jvm_hosted). There are thousands of libraries available for Clojure, in addition to the endless Java libraries that are seamlessly available in Clojure, too.
-
 
 Approaching a new Clojure project can be intimidating, though. It's not always obvious where to start. It's not even clear which libraries you'll need, or which ones do what. The Clojure community in general tends to favour bespoke, minimalist configurations that are unique for every project. There are good reasons for this. It tends to lead to more maintainable, more stable code, in the long run. But it does have the major downside of making it harder to get started.
 
