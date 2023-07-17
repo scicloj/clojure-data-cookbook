@@ -91,17 +91,47 @@
 
 
 
-;;     - e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
+;;  e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
+
+(-> dataset
+    (tc/add-column :area [9000000 8000000 1000000]))
+
+(-> dataset
+    (tc/add-column :population [40000000 100000000 80000000])
+    (tc/rename-columns {:size :area})
+    (tc/convert-types :population :double)
+    (tc/add-column :density (fn [d]
+                              (fun// (:population d) (:area d)))))
+
+;; vs, probably preferable
+
+(-> dataset
+    (tc/add-column :population [40000000 100000000 80000000])
+    (tc/rename-columns {:size :area})
+    (tc/add-column :density (fn [ds]
+                              (fun// (fun/* 1.0 (:population ds)) (:area ds)))))
+
 
 ;; - Removing columns
+
+(-> dataset
+    (tc/drop-columns :size))
+
 ;; - Transforming values
 ;;     - Working with nested data structures, really nice libraries in Clojure for doing this ([specter](https://github.com/redplanetlabs/specter), [meander](https://github.com/noprompt/meander))
 ;;     - All values in a column
 ;;     - Conditional transformation (e.g. "truncate only 11 digit phone numbers to 10 digits")
 ;; - Rearranging order of columns
 ;; - Renaming columns
+
 ;; - Filtering rows
 ;;     - Single filter, multiple filters
+
+(-> dataset
+    (tc/select-rows (fn [row]
+                      (< 1000000 (:size row)))))
+
+
 ;; - Aggregating rows (counts, groups)
 ;; - Concatenating datasets
 ;; - Merging datasets
