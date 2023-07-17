@@ -131,8 +131,55 @@
     (tc/select-rows (fn [row]
                       (< 1000000 (:size row)))))
 
-
 ;; - Aggregating rows (counts, groups)
+
+(def co2-over-time (tc/dataset "data/co2_over_time.csv"))
+
+(-> co2-over-time
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (/ (reduce + (get ds "CO2"))
+                                     (count (get ds "CO2"))))}))
+
+;; Group by year
+
+(-> co2-over-time
+    (tc/add-column "Year" (fn [ds]
+                            (map (memfn getYear) (get ds "Date"))))
+    (tc/group-by "Year"))
+
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date")))))
+
+;; Get average temp per year
+;; tablecloth applies the aggregate fn to every groups dataset
+
+(defn round2
+  "Round a double to the given precision (number of significant digits)"
+  [precision d]
+  (let [factor (Math/pow 10 precision)]
+    (/ (Math/round (* d factor)) factor)))
+
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date"))))
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (round2 2
+                                          (/ (reduce + (get ds "CO2"))
+                                             (count (get ds "CO2")))))}))
+
+;; Can rename the column to be more descriptive
+
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date"))))
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (/ (reduce + (get ds "CO2"))
+                                     (count (get ds "CO2"))))})
+    (tc/rename-columns {:$group-name :year}))
+
+
+
 ;; - Concatenating datasets
 ;; - Merging datasets
 ;;     - When column headers are the same or different, on multiple columns
