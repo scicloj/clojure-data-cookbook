@@ -178,11 +178,82 @@
                                      (count (get ds "CO2"))))})
     (tc/rename-columns {:$group-name :year}))
 
+;; Concatenating datasets
 
+(def ds1 (tc/dataset [{:id "id1" :b "val1"}
+                      {:id "id2" :b "val2"}
+                      {:id "id3" :b "val3"}]))
 
-;; - Concatenating datasets
+(def ds2 (tc/dataset [{:id "id1" :b "val4"}
+                      {:id "id5" :b "val5"}
+                      {:id "id6" :b "val6"}]))
+
+;; Naively concats rows
+
+(tc/concat ds1 ds2 (tc/dataset [{:id "id3" :b "other value"}]))
+
+(tc/concat ds1 (tc/dataset [{:b "val4" :c "text"}
+                            {:b "val5" :c "hi"}
+                            {:b "val6" :c "test"}]))
+
+;; De-duping
+
+(tc/union ds1 ds2)
+
 ;; - Merging datasets
 ;;     - When column headers are the same or different, on multiple columns
+
+;; TODO explain set logic and SQL joins
+
+(def ds3 (tc/dataset {:id [1 2 3 4]
+                      :b ["val1" "val2" "val3" "val4"]}))
+
+(def ds4 (tc/dataset {:id [1 2 3 4]
+                      :c ["val1" "val2" "val3" "val4"]}))
+
+;; Keep all columns
+
+(tc/full-join ds3 ds4 :id)
+
+;; "Merge" datasets on a given column where rows have a value
+(tc/inner-join ds3 ds4 :id)
+
+;; Drop rows missing a value
+(tc/inner-join (tc/dataset {:id [1 2 3 4]
+                      :b ["val1" "val2" "val3"]})
+               (tc/dataset {:id [1 2 3 4]
+                      :c ["val1" "val2" "val3" "val4"]})
+               :id)
+
+(tc/right-join (tc/dataset {:id [1 2 3 ]
+                            :b ["val1" "val2" "val3"]})
+               (tc/dataset {:id [1 2 3 4]
+                            :c ["val1" "val2" "val3" "val4"]})
+               :id)
+
+(tc/left-join (tc/dataset {:email ["asdf"]
+                            :name ["asdfads"]
+                            :entry-id [1 2 3]})
+               (tc/dataset {:entry-id [1 2 3]
+                            :upload-count [2 3 4]
+                            :catgory ["art" "science"]})
+               :entry-id)
+
+(tc/dataset {:email ["asdf"]
+             :name ["asdfads"]
+             :entry-id [1 2 3]})
+
+(tc/dataset {:entry-id [1 2 3]
+             :upload-count [2 3 4]
+             :catgory ["art" "science"]})
+
+
+;; see tablecloth join stuff
+
+;; Inner join, only keeps rows with the specified column value in common
+
+(tc/inner-join ds1 ds2 :id)
+
 ;; - Converting between wide and long formats?
 ;; - Summarizing data (mean, standard deviation, confidence intervals etc.)
 ;; - Working with sequential data
@@ -191,3 +262,21 @@
 ;;         - Averaging a sequence in blocks
 ;;     - Run length encoding?
 ;;     - Filling `nil` s with last non-`nil` value?
+
+;; full
+;; |---------|
+
+;;       right
+;;     |-----|
+
+;; left
+;; |-----|
+;;  _________
+;; /   / \   \
+;; \___\_/___/
+
+;;     |--|
+;;     inner
+
+;; |---|  |---|
+;; semi    anti
