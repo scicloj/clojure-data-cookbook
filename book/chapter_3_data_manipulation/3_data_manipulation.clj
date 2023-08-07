@@ -2,7 +2,8 @@
   (:require [tablecloth.api :as tc]
             [tech.v3.datatype.functional :as fun]
             [tech.v3.dataset.column :as tdsc]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [fastmath.stats :as stats]))
 
 ;; This is a work in progress of the code examples that will make up chapter 3
 ;; of the Clojure data cookbook
@@ -88,8 +89,18 @@
 
 ;; "lengthening" or "widening" data, making it "tidy"
 
+(def exp-moving-avg
+  (let [data (get co2-over-time "adjusted CO2")
+        moving-avg
+        (->> data
+             (reduce (fn [acc next]
+                       (conj acc (+ (* 0.9 (last acc)) (* 0.1 next))))
+                     [(first data)])
+             rest
+)]
+    (tc/dataset [["Exponential moving average" moving-avg]])))
 
-
+(tc/append co2-over-time exp-moving-avg)
 
 ;;  e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
 
@@ -255,28 +266,49 @@
 (tc/inner-join ds1 ds2 :id)
 
 ;; - Converting between wide and long formats?
+
+;; - Compute rolling average to be able to plot a trend line
+
+(-> co2-over-time)
+
+;; - Train a model to predict the next 10 years
+
+(-> co2-over-time)
+
+
 ;; - Summarizing data (mean, standard deviation, confidence intervals etc.)
+
+;;   - Standard deviation using fastmath
+
+(def avg-co2-by-year
+  (-> co2-over-time
+      (tc/group-by (fn [row]
+                     (.getYear (get row "Date"))))
+      (tc/aggregate {:average-co2 (fn [ds]
+                                    (/ (reduce + (get ds "CO2"))
+                                       (count (get ds "CO2"))))
+                     :standard-deviation (fn [ds]
+                                           (stats/stddev (get ds "CO2")))})
+      (tc/rename-columns {:$group-name :year})
+      ))
+
+;; - Overall average
+
+(defn mean [data]
+  (/ (reduce + data) (count data)))
+
+(mean (:average-co2 avg-co2-by-year))
+
+;; - Long term average 1991-2020
+
+(-> avg-co2-by-year
+    (tc/select-rows (fn [row] (< 1990 (:year row))))
+    :average-co2
+    mean)
+
 ;; - Working with sequential data
 ;;     - Smoothing out data
 ;;         - Calculating a moving average
 ;;         - Averaging a sequence in blocks
 ;;     - Run length encoding?
 ;;     - Filling `nil` s with last non-`nil` value?
-
-;; full
-;; |---------|
-
-;;       right
-;;     |-----|
-
-;; left
-;; |-----|
-;;  _________
-;; /   / \   \
-;; \___\_/___/
-
-;;     |--|
-;;     inner
-
-;; |---|  |---|
-;; semi    anti
