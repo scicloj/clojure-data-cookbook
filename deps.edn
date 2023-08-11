@@ -8,6 +8,7 @@
         org.xerial/sqlite-jdbc {:mvn/version "3.40.1.0"}
         io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
-        generateme/fastmath {:mvn/version "2.2.1"}}
+        generateme/fastmath {:mvn/version "2.2.1"}
+        scicloj/scicloj.ml.smile {:mvn/version "7.0.650"}}
  :aliases
  {:dev {:extra-paths ["env/dev/src"]}}}

@@ -2,6 +2,7 @@
   (:require [tablecloth.api :as tc]
             [tech.v3.datatype.functional :as fun]
             [tech.v3.dataset.column :as tdsc]
+            [tech.v3.datatype.rolling :as rolling]
             [clojure.string :as str]
             [fastmath.stats :as stats]))
 
@@ -89,19 +90,6 @@
 
 ;; "lengthening" or "widening" data, making it "tidy"
 
-(def exp-moving-avg
-  (let [data (get co2-over-time "adjusted CO2")
-        moving-avg
-        (->> data
-             (reduce (fn [acc next]
-                       (conj acc (+ (* 0.9 (last acc)) (* 0.1 next))))
-                     [(first data)])
-             rest
-)]
-    (tc/dataset [["Exponential moving average" moving-avg]])))
-
-(tc/append co2-over-time exp-moving-avg)
-
 ;;  e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
 
 (-> dataset
@@ -151,12 +139,12 @@
                                   (/ (reduce + (get ds "CO2"))
                                      (count (get ds "CO2"))))}))
 
-;; Group by year
+;; Add a column for year
 
 (-> co2-over-time
-    (tc/add-column "Year" (fn [ds]
-                            (map (memfn getYear) (get ds "Date"))))
-    (tc/group-by "Year"))
+    (tc/map-columns "Year" "Date" (memfn getYear)))
+
+;; Group by year
 
 (-> co2-over-time
     (tc/group-by (fn [row]
@@ -242,6 +230,9 @@
                             :c ["val1" "val2" "val3" "val4"]})
                :id)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; scratch
+
 (tc/left-join (tc/dataset {:email ["asdf"]
                             :name ["asdfads"]
                             :entry-id [1 2 3]})
@@ -267,48 +258,101 @@
 
 ;; - Converting between wide and long formats?
 
+;; Signal processing/time series analysis
+
 ;; - Compute rolling average to be able to plot a trend line
 
-(-> co2-over-time)
+(def exp-moving-avg
+  (let [data (get co2-over-time "adjusted CO2")
+        moving-avg
+        (->> data
+             (reduce (fn [acc next]
+                       (conj acc (+ (* 0.9 (last acc)) (* 0.1 next))))
+                     [(first data)])
+             rest)]
+    (tc/dataset [["Exponential moving average" moving-avg]])))
+
+;; - widen dataset to include new row that's already in order
+
+(tc/append co2-over-time exp-moving-avg)
+
+;; - Rolling average over a 12 point range
+
+(def rolling-average
+  (tc/dataset [["Rolling average"
+                (-> co2-over-time
+                    (get "adjusted CO2")
+                    (rolling/fixed-rolling-window 12
+                                                  fun/mean
+                                                  {:relative-window-position :left}))]]))
+
+(tc/append co2-over-time rolling-average)
 
 ;; - Train a model to predict the next 10 years
 
-(-> co2-over-time)
+(-> co2-over-time
+    )
 
 
 ;; - Summarizing data (mean, standard deviation, confidence intervals etc.)
 
-;;   - Standard deviation using fastmath
+;; - Standard deviation using fastmath
 
 (def avg-co2-by-year
   (-> co2-over-time
       (tc/group-by (fn [row]
                      (.getYear (get row "Date"))))
       (tc/aggregate {:average-co2 (fn [ds]
-                                    (/ (reduce + (get ds "CO2"))
-                                       (count (get ds "CO2"))))
+                                    (stats/mean (get ds "adjusted CO2"))
+                                    ;; (/ (reduce + (get ds "CO2"))
+                                    ;;    (count (get ds "CO2")))
+                                    )
                      :standard-deviation (fn [ds]
-                                           (stats/stddev (get ds "CO2")))})
-      (tc/rename-columns {:$group-name :year})
+                                           (stats/stddev (get ds "adjusted CO2")))})
+      ;; (tc/rename-columns {:$group-name :year})
       ))
 
 ;; - Overall average
 
-(defn mean [data]
-  (/ (reduce + data) (count data)))
-
-(mean (:average-co2 avg-co2-by-year))
+(stats/mean (:average-co2 avg-co2-by-year))
 
 ;; - Long term average 1991-2020
 
 (-> avg-co2-by-year
-    (tc/select-rows (fn [row] (< 1990 (:year row))))
-    :average-co2
-    mean)
+    ;; (tc/select-rows (fn [row] (< 1990 (:year row))))
+    ;; :average-co2
+    ;; mean
+    )
 
 ;; - Working with sequential data
 ;;     - Smoothing out data
 ;;         - Calculating a moving average
 ;;         - Averaging a sequence in blocks
 ;;     - Run length encoding?
-;;     - Filling `nil` s with last non-`nil` value?
+
+;;- Filling `nil` s with last non-`nil` value?
+
+(def sparse-dataset
+  (tc/dataset {:a [nil 2 3 4 nil nil 7 8]
+               :b [10 11 12 nil nil nil 16 nil]}))
+
+(-> sparse-dataset
+    (tc/replace-missing :up))
+
+(-> sparse-dataset
+    (tc/replace-missing :updown))
+
+(-> sparse-dataset
+    (tc/replace-missing :down))
+
+(-> sparse-dataset
+    (tc/replace-missing :downup))
+
+(-> sparse-dataset
+    (tc/replace-missing :lerp))
+
+(-> sparse-dataset
+    (tc/replace-missing :all :value 100))
+
+(-> sparse-dataset
+    (tc/replace-missing :a :value 100))
