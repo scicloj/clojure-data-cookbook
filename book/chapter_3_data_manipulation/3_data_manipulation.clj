@@ -1,4 +1,6 @@
 (ns chapter-3-data-manipulation.3-data-manipulation
+  ;; {:nextjournal.clerk/visibility {:code :hide}
+  ;;  :nextjournal.clerk/toc true}
   (:require [tablecloth.api :as tc]
             [tech.v3.datatype.functional :as fun]
             [tech.v3.dataset.column :as tdsc]

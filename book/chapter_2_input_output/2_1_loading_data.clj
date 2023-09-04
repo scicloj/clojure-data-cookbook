@@ -1,5 +1,6 @@
 (ns book.chapter-2-input-output.2-1-loading-data
-  {:nextjournal.clerk/toc true})
+  {:nextjournal.clerk/visibility {:code :hide}
+   :nextjournal.clerk/toc true})
 
 ;; This is a work in progress of the code examples that will make up chapter 2, section 1
 ;; of the Clojure data cookbook

@@ -9,6 +9,12 @@
         io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
         generateme/fastmath {:mvn/version "2.2.1"}
-        scicloj/scicloj.ml.smile {:mvn/version "7.0.650"}}
+        scicloj/scicloj.ml.smile {:mvn/version "7.0.650"}
+        org.scicloj/noj {:local/root "/Users/kira/code/projects/noj"}
+        ;; org.scicloj/noj {:mvn/version "1-alpha12"}
+        org.scicloj/kind-clerk {:mvn/version "1-alpha3"}
+        org.scicloj/kindly-default {:mvn/version "1-alpha10"}
+        org.scicloj/clay {:mvn/version "2-alpha31"}}
+
  :aliases
  {:dev {:extra-paths ["env/dev/src"]}}}
