@@ -38,7 +38,6 @@
 (require '[tablecloth.api :as tc])
 
 (require '[nextjournal.clerk :as clerk])
-(require '[nextjournal.clerk.viewer :as v])
 
 ;; (clerk/add-viewers! [{:pred #(= tech.v3.dataset.impl.dataset.Dataset (type %))
 ;;                       ;; :fetch-fn (fn [_ file] {:nextjournal/content-type "image/png"
