@@ -25,8 +25,13 @@
                            (str/replace #"^book/" "")))
                  (group-by (fn [el] (-> el (str/split #"\/") first))))]
   (kind/hiccup
-   [:div [:h1 "Contents"]
+   [:div [:h2 "Contents"]
     (for [[chapter_name pages] files]
-      [:section [:h2 chapter_name]
+      [:section [:h3 chapter_name]
        (for [page pages]
          [:li [:a {:href page} (-> page str/capitalize)]])])]))
+
+
+;; ## Recommended sections
+
+;; [randomizing order](chapter_3_data_manipulation/3_data_manipulation.html#randomizing-order)
