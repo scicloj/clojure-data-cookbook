@@ -6,7 +6,7 @@
 ;; This is a work in progress of the code examples that will make up chapter 2, section 2
 ;; of the Clojure data cookbook
 
-;; # 2.2 Dealing with messy data
+;; # Dealing with messy data
 
 ;; How do you know it's messy? What do I mean by that?
 

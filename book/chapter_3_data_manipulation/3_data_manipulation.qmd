@@ -1,0 +1,747 @@
+
+---
+format:
+  html: {toc: true, toc-depth: 4, theme: spacelab}
+highlight-style: solarized
+code-block-background: true
+embed-resources: false
+execute: {freeze: true}
+
+---
+<style>
+table {
+  border-style: thin;
+}
+th, td {
+  padding: 6px;
+}
+td {
+  text-align: left;
+}
+th {
+  text-align: center;
+  background-color: #ddd;
+}
+tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+</style><style>
+.printedClojure .sourceCode {
+  background-color: transparent;
+  border-style: none;
+}
+</style>
+<div class="originalCode">
+```clojure
+(ns chapter-3-data-manipulation.3-data-manipulation
+  ;; {:nextjournal.clerk/visibility {:code :hide}
+  ;;  :nextjournal.clerk/toc true}
+  (:require [tablecloth.api :as tc]
+            [tech.v3.datatype.functional :as fun]
+            [tech.v3.dataset.column :as tdsc]
+            [tech.v3.datatype.rolling :as rolling]
+            [clojure.string :as str]
+            [fastmath.stats :as stats]))
+```
+</div>
+
+
+This is a work in progress of the code examples that will make up chapter 3
+of the Clojure data cookbook
+
+# Data manipulation
+Once data is loaded and ready to work with, here's how to do some of the most common
+data manipulation tasks.
+
+## Sorting
+
+<div class="originalCode">
+```clojure
+(def dataset (tc/dataset [{:country "Canada"
+                           :size 10000000}
+                          {:country "USA"
+                           :size 9000000}
+                          {:country "Germany"
+                           :size 80000}]))
+```
+</div>
+
+
+
+### Sorting columns
+Give the column headers in the order you want
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/reorder-columns [:country :size]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+### Sorting rows
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/order-by [:size] [:desc]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+### Custom sorting functions
+e.g. length of the country name
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/order-by (fn [row] (-> row :country count))
+                 :desc))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+
+## Selecting one column or multiple columns
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/select-columns [:country]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 1]:</p><table><thead><tr><th>:country</th></tr></thead><tbody><tr><td>Canada</td></tr><tr><td>USA</td></tr><tr><td>Germany</td></tr></tbody></table></div></div></div></div>
+
+## Randomizing order
+
+<div class="originalCode">
+```clojure
+(-> dataset tc/shuffle)
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+## Repeatable randomisation
+
+<div class="originalCode">
+```clojure
+(-> dataset (tc/shuffle {:seed 100}))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+Finding unique rows
+
+<div class="originalCode">
+```clojure
+(def dupes (tc/dataset [{:country "Canada"
+                         :size 10000000}
+                        {:country "Canada"
+                         :size 10000303}
+                        {:country "United states"
+                         :size 9000000}
+                        {:country "United States"
+                         :size 9000000}
+                        {:country "Germany"
+                         :size 80000}]))
+```
+</div>
+
+
+(def
+"USA" #{"USA" "United States" "United states of America"})
+https://scicloj.github.io/tablecloth/index.html#Unique
+
+<div class="originalCode">
+```clojure
+(-> dupes tc/unique-by)
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [5 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> dupes (tc/unique-by :size))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [4 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> dupes (tc/unique-by :country))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [4 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> dupes (tc/unique-by #(-> % :country str/lower-case)))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> dupes (tc/unique-by #(-> % :country str/lower-case) {:strategy (fn [vals]
+                                                                     (case (tdsc/column-name vals)
+                                                                       :size (apply max vals)
+                                                                       :country (last vals)))}))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+could use this to rename vals to a canonical one (e.g. convert everything that matches set of USA to "USA")
+Adding computed columns to data
+"lengthening" or "widening" data, making it "tidy"
+e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing multiple columns into a new one
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/add-column :area [9000000 8000000 1000000]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th><th style="text-align:right;">:area</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">9000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">8000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">1000000</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/add-column :population [40000000 100000000 80000000])
+    (tc/rename-columns {:size :area})
+    (tc/convert-types :population :double)
+    (tc/add-column :density (fn [d]
+                              (fun// (:population d) (:area d)))))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 4]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:area</th><th style="text-align:right;">:population</th><th style="text-align:right;">:density</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">4.0E+07</td><td style="text-align:right;">4.00000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">1.0E+08</td><td style="text-align:right;">11.11111111</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">8.0E+07</td><td style="text-align:right;">1000.00000000</td></tr></tbody></table></div></div></div></div>
+vs, probably preferable
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/add-column :population [40000000 100000000 80000000])
+    (tc/rename-columns {:size :area})
+    (tc/add-column :density (fn [ds]
+                              (fun// (fun/* 1.0 (:population ds)) (:area ds)))))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 4]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:area</th><th style="text-align:right;">:population</th><th style="text-align:right;">:density</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">40000000</td><td style="text-align:right;">4.00000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">100000000</td><td style="text-align:right;">11.11111111</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">80000000</td><td style="text-align:right;">1000.00000000</td></tr></tbody></table></div></div></div></div>
+- Removing columns
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/drop-columns :size))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 1]:</p><table><thead><tr><th>:country</th></tr></thead><tbody><tr><td>Canada</td></tr><tr><td>USA</td></tr><tr><td>Germany</td></tr></tbody></table></div></div></div></div>
+- Transforming values
+- Working with nested data structures, really nice libraries in Clojure for doing this ([specter](https://github.com/redplanetlabs/specter), [meander](https://github.com/noprompt/meander))
+- All values in a column
+- Conditional transformation (e.g. "truncate only 11 digit phone numbers to 10 digits")
+- Rearranging order of columns
+- Renaming columns
+- Filtering rows
+- Single filter, multiple filters
+
+<div class="originalCode">
+```clojure
+(-> dataset
+    (tc/select-rows (fn [row]
+                      (< 1000000 (:size row)))))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [2 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+- Aggregating rows (counts, groups)
+
+<div class="originalCode">
+```clojure
+(def co2-over-time (tc/dataset "data/co2_over_time.csv"))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (/ (reduce + (get ds "CO2"))
+                                     (count (get ds "CO2"))))}))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [1 1]:</p><table><thead><tr><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">355.31093117</td></tr></tbody></table></div></div></div></div>
+Add a column for year
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    (tc/map-columns "Year" "Date" (memfn getYear)))
+```
+</div>
+
+
+<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Year</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">1958</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">1958</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">1958</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">1958</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">1958</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">1958</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">1958</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">1958</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">1959</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">1959</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">2019</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">2019</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">2019</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">2019</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">2019</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">2019</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">2019</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">2020</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">2020</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">2020</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">2020</td></tr></tbody></table></div></div></div></div>
+Group by year
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date")))))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [63 3]:</p><table><thead><tr><th style="text-align:right;">:name</th><th style="text-align:right;">:group-id</th><th>:data</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">0</td><td>Group: 1958 [8 3]:</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">1</td><td>Group: 1959 [12 3]:</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">2</td><td>Group: 1960 [12 3]:</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">3</td><td>Group: 1961 [12 3]:</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">4</td><td>Group: 1962 [12 3]:</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">5</td><td>Group: 1963 [12 3]:</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">6</td><td>Group: 1964 [9 3]:</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">7</td><td>Group: 1965 [12 3]:</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">8</td><td>Group: 1966 [12 3]:</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">9</td><td>Group: 1967 [12 3]:</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td>...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">52</td><td>Group: 2010 [12 3]:</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">53</td><td>Group: 2011 [12 3]:</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">54</td><td>Group: 2012 [12 3]:</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">55</td><td>Group: 2013 [12 3]:</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">56</td><td>Group: 2014 [12 3]:</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">57</td><td>Group: 2015 [12 3]:</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">58</td><td>Group: 2016 [12 3]:</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">59</td><td>Group: 2017 [12 3]:</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">60</td><td>Group: 2018 [12 3]:</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">61</td><td>Group: 2019 [12 3]:</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">62</td><td>Group: 2020 [4 3]:</td></tr></tbody></table></div></div></div></div>
+Get average temp per year
+tablecloth applies the aggregate fn to every groups dataset
+
+<div class="originalCode">
+```clojure
+(defn round2
+  "Round a double to the given precision (number of significant digits)"
+  [precision d]
+  (let [factor (Math/pow 10 precision)]
+    (/ (Math/round (* d factor)) factor)))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date"))))
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (round2 2
+                                          (/ (reduce + (get ds "CO2"))
+                                             (count (get ds "CO2")))))}))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [63 2]:</p><table><thead><tr><th style="text-align:right;">:$group-name</th><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.33</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.98</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.91</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.65</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.45</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.99</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.20</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.04</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.37</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.18</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.90</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.65</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.87</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.57</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.61</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.89</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.28</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.58</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.59</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.50</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">414.54</td></tr></tbody></table></div></div></div></div>
+Can rename the column to be more descriptive
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    (tc/group-by (fn [row]
+                   (.getYear (get row "Date"))))
+    (tc/aggregate {:average-co2 (fn [ds]
+                                  (/ (reduce + (get ds "CO2"))
+                                     (count (get ds "CO2"))))})
+    (tc/rename-columns {:$group-name :year}))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [63 2]:</p><table><thead><tr><th style="text-align:right;">:year</th><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.33375000</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.98166667</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.90916667</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.64500000</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.45416667</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.99250000</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.20111111</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.03583333</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.36916667</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.18083333</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.90083333</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.64833333</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.87000000</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.56666667</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.61416667</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.88500000</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.27750000</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.58416667</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.58750000</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.49500000</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">414.53750000</td></tr></tbody></table></div></div></div></div>
+Concatenating datasets
+
+<div class="originalCode">
+```clojure
+(def ds1 (tc/dataset [{:id "id1" :b "val1"}
+                      {:id "id2" :b "val2"}
+                      {:id "id3" :b "val3"}]))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(def ds2 (tc/dataset [{:id "id1" :b "val4"}
+                      {:id "id5" :b "val5"}
+                      {:id "id6" :b "val6"}]))
+```
+</div>
+
+
+Naively concats rows
+
+<div class="originalCode">
+```clojure
+(tc/concat ds1 ds2 (tc/dataset [{:id "id3" :b "other value"}]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [7 2]:</p><table><thead><tr><th>:id</th><th>:b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td></tr><tr><td>id2</td><td>val2</td></tr><tr><td>id3</td><td>val3</td></tr><tr><td>id1</td><td>val4</td></tr><tr><td>id5</td><td>val5</td></tr><tr><td>id6</td><td>val6</td></tr><tr><td>id3</td><td>other value</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(tc/concat ds1 (tc/dataset [{:b "val4" :c "text"}
+                            {:b "val5" :c "hi"}
+                            {:b "val6" :c "test"}]))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [6 3]:</p><table><thead><tr><th>:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td>id1</td><td>val1</td><td></td></tr><tr><td>id2</td><td>val2</td><td></td></tr><tr><td>id3</td><td>val3</td><td></td></tr><tr><td></td><td>val4</td><td>text</td></tr><tr><td></td><td>val5</td><td>hi</td></tr><tr><td></td><td>val6</td><td>test</td></tr></tbody></table></div></div></div></div>
+De-duping
+
+<div class="originalCode">
+```clojure
+(tc/union ds1 ds2)
+```
+</div>
+
+
+<div><div><div><div><p>union [6 2]:</p><table><thead><tr><th>:id</th><th>:b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td></tr><tr><td>id2</td><td>val2</td></tr><tr><td>id3</td><td>val3</td></tr><tr><td>id1</td><td>val4</td></tr><tr><td>id5</td><td>val5</td></tr><tr><td>id6</td><td>val6</td></tr></tbody></table></div></div></div></div>
+- Merging datasets
+- When column headers are the same or different, on multiple columns
+TODO explain set logic and SQL joins
+
+<div class="originalCode">
+```clojure
+(def ds3 (tc/dataset {:id [1 2 3 4]
+                      :b ["val1" "val2" "val3" "val4"]}))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(def ds4 (tc/dataset {:id [1 2 3 4]
+                      :c ["val1" "val2" "val3" "val4"]}))
+```
+</div>
+
+
+Keep all columns
+
+<div class="originalCode">
+```clojure
+(tc/full-join ds3 ds4 :id)
+```
+</div>
+
+
+<div><div><div><div><p>full-join [4 4]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th style="text-align:right;">:right.id</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td style="text-align:right;">1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td style="text-align:right;">2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td style="text-align:right;">3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td>val4</td><td style="text-align:right;">4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+"Merge" datasets on a given column where rows have a value
+
+<div class="originalCode">
+```clojure
+(tc/inner-join ds3 ds4 :id)
+```
+</div>
+
+
+<div><div><div><div><p>inner-join [4 3]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td>val4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+Drop rows missing a value
+
+<div class="originalCode">
+```clojure
+(tc/inner-join (tc/dataset {:id [1 2 3 4]
+                      :b ["val1" "val2" "val3"]})
+               (tc/dataset {:id [1 2 3 4]
+                      :c ["val1" "val2" "val3" "val4"]})
+               :id)
+```
+</div>
+
+
+<div><div><div><div><p>inner-join [4 3]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td></td><td>val4</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(tc/right-join (tc/dataset {:id [1 2 3 ]
+                            :b ["val1" "val2" "val3"]})
+               (tc/dataset {:id [1 2 3 4]
+                            :c ["val1" "val2" "val3" "val4"]})
+               :id)
+```
+</div>
+
+
+<div><div><div><div><p>right-outer-join [4 4]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th style="text-align:right;">:right.id</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td style="text-align:right;">1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td style="text-align:right;">2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td style="text-align:right;">3</td><td>val3</td></tr><tr><td style="text-align:right;"></td><td></td><td style="text-align:right;">4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+
+scratch
+
+<div class="originalCode">
+```clojure
+(tc/left-join (tc/dataset {:email ["asdf"]
+                            :name ["asdfads"]
+                            :entry-id [1 2 3]})
+               (tc/dataset {:entry-id [1 2 3]
+                            :upload-count [2 3 4]
+                            :catgory ["art" "science"]})
+               :entry-id)
+```
+</div>
+
+
+<div><div><div><div><p>left-outer-join [3 6]:</p><table><thead><tr><th style="text-align:right;">:entry-id</th><th>:email</th><th>:name</th><th style="text-align:right;">:right.entry-id</th><th style="text-align:right;">:upload-count</th><th>:catgory</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>asdf</td><td>asdfads</td><td style="text-align:right;">1</td><td style="text-align:right;">2</td><td>art</td></tr><tr><td style="text-align:right;">2</td><td></td><td></td><td style="text-align:right;">2</td><td style="text-align:right;">3</td><td>science</td></tr><tr><td style="text-align:right;">3</td><td></td><td></td><td style="text-align:right;">3</td><td style="text-align:right;">4</td><td></td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(tc/dataset {:email ["asdf"]
+             :name ["asdfads"]
+             :entry-id [1 2 3]})
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th>:email</th><th>:name</th><th style="text-align:right;">:entry-id</th></tr></thead><tbody><tr><td>asdf</td><td>asdfads</td><td style="text-align:right;">1</td></tr><tr><td></td><td></td><td style="text-align:right;">2</td></tr><tr><td></td><td></td><td style="text-align:right;">3</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(tc/dataset {:entry-id [1 2 3]
+             :upload-count [2 3 4]
+             :catgory ["art" "science"]})
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th style="text-align:right;">:entry-id</th><th style="text-align:right;">:upload-count</th><th>:catgory</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td style="text-align:right;">2</td><td>art</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">3</td><td>science</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">4</td><td></td></tr></tbody></table></div></div></div></div>
+see tablecloth join stuff
+Inner join, only keeps rows with the specified column value in common
+
+<div class="originalCode">
+```clojure
+(tc/inner-join ds1 ds2 :id)
+```
+</div>
+
+
+<div><div><div><div><p>inner-join [1 3]:</p><table><thead><tr><th>:id</th><th>:b</th><th>:right.b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td><td>val4</td></tr></tbody></table></div></div></div></div>
+- Converting between wide and long formats?
+Signal processing/time series analysis
+- Compute rolling average to be able to plot a trend line
+
+<div class="originalCode">
+```clojure
+(def exp-moving-avg
+  (let [data (get co2-over-time "adjusted CO2")
+        moving-avg
+        (->> data
+             (reduce (fn [acc next]
+                       (conj acc (+ (* 0.9 (last acc)) (* 0.1 next))))
+                     [(first data)])
+             rest)]
+    (tc/dataset [["Exponential moving average" moving-avg]])))
+```
+</div>
+
+
+- widen dataset to include new row that's already in order
+
+<div class="originalCode">
+```clojure
+(tc/append co2-over-time exp-moving-avg)
+```
+</div>
+
+
+<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Exponential moving average</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">314.44000000</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">314.51200000</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">314.53180000</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">314.59762000</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">314.75685800</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">314.88917220</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">314.92025498</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">314.97122948</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">315.02810653</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.11129588</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">409.42307506</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">409.58376755</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">409.78739079</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.01465172</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.21918654</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">410.45326789</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">410.68594110</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">410.94934699</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">411.18741229</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">411.36267106</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">411.56140396</td></tr></tbody></table></div></div></div></div>
+- Rolling average over a 12 point range
+
+<div class="originalCode">
+```clojure
+(def rolling-average
+  (tc/dataset [["Rolling average"
+                (-> co2-over-time
+                    (get "adjusted CO2")
+                    (rolling/fixed-rolling-window 12
+                                                  fun/mean
+                                                  {:relative-window-position :left}))]]))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(tc/append co2-over-time rolling-average)
+```
+</div>
+
+
+<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Rolling average</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">314.44000000</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">314.50000000</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">314.52250000</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">314.58500000</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">314.73083333</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">314.86750000</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">314.93083333</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">315.01333333</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">315.10500000</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.22333333</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">410.14000000</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">410.38583333</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">410.63500000</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.88333333</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">411.08750000</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">411.26916667</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">411.48833333</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">411.69250000</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">411.89500000</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">412.10166667</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">412.32083333</td></tr></tbody></table></div></div></div></div>
+- Train a model to predict the next 10 years
+
+<div class="originalCode">
+```clojure
+(-> co2-over-time
+    )
+```
+</div>
+
+
+<div><div><div><div><p>data/co2_over_time.csv [741 3]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td></tr></tbody></table></div></div></div></div>
+- Summarizing data (mean, standard deviation, confidence intervals etc.)
+- Standard deviation using fastmath
+
+<div class="originalCode">
+```clojure
+(def avg-co2-by-year
+  (-> co2-over-time
+      (tc/group-by (fn [row]
+                     (.getYear (get row "Date"))))
+      (tc/aggregate {:average-co2 (fn [ds]
+                                    (stats/mean (get ds "adjusted CO2"))
+                                    ;; (/ (reduce + (get ds "CO2"))
+                                    ;;    (count (get ds "CO2")))
+                                    )
+                     :standard-deviation (fn [ds]
+                                           (stats/stddev (get ds "adjusted CO2")))})
+      ;; (tc/rename-columns {:$group-name :year})
+      ))
+```
+</div>
+
+
+- Overall average
+
+<div class="originalCode">
+```clojure
+(stats/mean (:average-co2 avg-co2-by-year))
+```
+</div>
+
+
+
+<div class="printedClojure">
+```clojure
+355.56414902998233
+
+```
+</div>
+
+- Long term average 1991-2020
+
+<div class="originalCode">
+```clojure
+(-> avg-co2-by-year
+    ;; (tc/select-rows (fn [row] (< 1990 (:year row))))
+    ;; :average-co2
+    ;; mean
+    )
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [63 3]:</p><table><thead><tr><th style="text-align:right;">:$group-name</th><th style="text-align:right;">:average-co2</th><th style="text-align:right;">:standard-deviation</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.30000000</td><td style="text-align:right;">0.60318204</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.97750000</td><td style="text-align:right;">0.47259679</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.90750000</td><td style="text-align:right;">0.42004599</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.63833333</td><td style="text-align:right;">0.45170049</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.44833333</td><td style="text-align:right;">0.37201743</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.98750000</td><td style="text-align:right;">0.28813270</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.67888889</td><td style="text-align:right;">0.20127372</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.03083333</td><td style="text-align:right;">0.50883929</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.36250000</td><td style="text-align:right;">0.37363388</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.17500000</td><td style="text-align:right;">0.32326460</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.89333333</td><td style="text-align:right;">0.67686891</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.64500000</td><td style="text-align:right;">0.71908401</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.86500000</td><td style="text-align:right;">0.87383689</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.55833333</td><td style="text-align:right;">0.72002315</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.60500000</td><td style="text-align:right;">0.68076828</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.87833333</td><td style="text-align:right;">1.02130784</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.27416667</td><td style="text-align:right;">0.95601881</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.57750000</td><td style="text-align:right;">0.64441834</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.58166667</td><td style="text-align:right;">0.99862481</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.48833333</td><td style="text-align:right;">0.74410206</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">413.23500000</td><td style="text-align:right;">0.19706175</td></tr></tbody></table></div></div></div></div>
+- Working with sequential data
+- Smoothing out data
+- Calculating a moving average
+- Averaging a sequence in blocks
+- Run length encoding?
+- Filling `nil` s with last non-`nil` value?
+
+<div class="originalCode">
+```clojure
+(def sparse-dataset
+  (tc/dataset {:a [nil 2 3 4 nil nil 7 8]
+               :b [10 11 12 nil nil nil 16 nil]}))
+```
+</div>
+
+
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :up))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;"></td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :updown))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :down))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;"></td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :downup))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :lerp))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2.0</td><td style="text-align:right;">10.0</td></tr><tr><td style="text-align:right;">2.0</td><td style="text-align:right;">11.0</td></tr><tr><td style="text-align:right;">3.0</td><td style="text-align:right;">12.0</td></tr><tr><td style="text-align:right;">4.0</td><td style="text-align:right;">13.0</td></tr><tr><td style="text-align:right;">5.0</td><td style="text-align:right;">14.0</td></tr><tr><td style="text-align:right;">6.0</td><td style="text-align:right;">15.0</td></tr><tr><td style="text-align:right;">7.0</td><td style="text-align:right;">16.0</td></tr><tr><td style="text-align:right;">8.0</td><td style="text-align:right;">16.0</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :all :value 100))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">100</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">100</td></tr></tbody></table></div></div></div></div>
+
+<div class="originalCode">
+```clojure
+(-> sparse-dataset
+    (tc/replace-missing :a :value 100))
+```
+</div>
+
+
+<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">100</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;"></td></tr></tbody></table></div></div></div></div>
+<div style="background-color:grey;height:2px;width:100%;"></div>
+<div><code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_3_data_manipulation/3_data_manipulation.clj">book/chapter_3_data_manipulation/3_data_manipulation.clj</a></small></small></code></div>

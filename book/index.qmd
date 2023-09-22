@@ -1,0 +1,57 @@
+
+---
+format:
+  html: {toc: true, toc-depth: 4, theme: spacelab}
+highlight-style: solarized
+code-block-background: true
+embed-resources: false
+execute: {freeze: true}
+
+---
+<style>
+table {
+  border-style: thin;
+}
+th, td {
+  padding: 6px;
+}
+td {
+  text-align: left;
+}
+th {
+  text-align: center;
+  background-color: #ddd;
+}
+tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+</style><style>
+.printedClojure .sourceCode {
+  background-color: transparent;
+  border-style: none;
+}
+</style>
+<div class="originalCode">
+```clojure
+(ns index
+  {:nextjournal.clerk/visibility {:code :hide}}
+  (:require
+   [clojure.java.io :as io]
+   [clojure.string :as str]
+   [scicloj.kindly.v4.kind :as kind]))
+```
+</div>
+
+
+
+# Preface
+Welcome to the Clojure Data Cookbook! This is the website for the work-in-progress that will become the Clojure Data Cookbook. The goal is to provide a reference for anyone who has data to work with and an interest in doing it in Clojure, documenting the current community recommendations and default stack for data science in Clojure.
+
+## Note! all work here is in progress, subject to change, very messy, and partially done. Please bear with me as I work on through this project :D
+
+```
+```
+
+<div><div><h1>Contents</h1><section><h2>chapter_1_intro</h2><li><a href="chapter_1_intro/1_1_welcome.html">Chapter_1_intro/1_1_welcome.html</a></li><li><a href="chapter_1_intro/1_2_why_clojure.html">Chapter_1_intro/1_2_why_clojure.html</a></li><li><a href="chapter_1_intro/1_3_set_up.html">Chapter_1_intro/1_3_set_up.html</a></li></section><section><h2>chapter_2_input_output</h2><li><a href="chapter_2_input_output/2_1_loading_data.html">Chapter_2_input_output/2_1_loading_data.html</a></li><li><a href="chapter_2_input_output/2_2_messy_data.html">Chapter_2_input_output/2_2_messy_data.html</a></li><li><a href="chapter_2_input_output/2_3_exporting_data.html">Chapter_2_input_output/2_3_exporting_data.html</a></li></section><section><h2>chapter_3_data_manipulation</h2><li><a href="chapter_3_data_manipulation/3_data_manipulation.html">Chapter_3_data_manipulation/3_data_manipulation.html</a></li></section><section><h2>chapter_4_data_visualisation</h2><li><a href="chapter_4_data_visualisation/4_2_graphs.html">Chapter_4_data_visualisation/4_2_graphs.html</a></li><li><a href="chapter_4_data_visualisation/noj_examples.html">Chapter_4_data_visualisation/noj_examples.html</a></li></section></div></div>
+<div style="background-color:grey;height:2px;width:100%;"></div>
+<div><code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/index.clj">book/index.clj</a></small></small></code></div>

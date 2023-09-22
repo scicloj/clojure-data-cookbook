@@ -7,7 +7,7 @@
    [nextjournal.clerk :as clerk]
    [tablecloth.api :as tc]))
 
-;; # 2.3 How to get data out of a notebook
+;; # How to get data out of a notebook
 
 (def consistent-data
   (map-indexed (fn [index _coll] (str "cell-" index))

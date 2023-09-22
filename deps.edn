@@ -10,7 +10,7 @@
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
         generateme/fastmath {:mvn/version "2.2.1"}
         scicloj/scicloj.ml.smile {:mvn/version "7.0.650"}
-        org.scicloj/noj {:mvn/version "1-alpha14"}
+        org.scicloj/noj {:local/root "../noj"}
         org.scicloj/clay {:local/root "../clay"}}
  :aliases
  {:dev {:extra-paths ["env/dev/src"]}}}

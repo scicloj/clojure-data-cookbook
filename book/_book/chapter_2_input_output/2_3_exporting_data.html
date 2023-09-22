@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>book - 6&nbsp; How to get data out of a notebook</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapter_3_data_manipulation/3_data_manipulation.html" rel="next">
+<link href="../chapter_2_input_output/2_2_messy_data.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to get data out of a notebook</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">book</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Clojure Data Cookbook</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_1_intro/1_1_welcome.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_1_intro/1_2_why_clojure.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Why Clojure?</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_1_intro/1_3_set_up.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up a Clojure environment</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_2_input_output/2_2_messy_data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dealing with messy data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_2_input_output/2_3_exporting_data.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to get data out of a notebook</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_3_data_manipulation/3_data_manipulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">3. Data manipulation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_4_data_visualisation/4_2_graphs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Graphs</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapter_4_data_visualisation/noj_examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#writing-to-a-csv-file" id="toc-writing-to-a-csv-file" class="nav-link active" data-scroll-target="#writing-to-a-csv-file"><span class="toc-section-number">6.1</span>  Writing to a CSV file</a></li>
+  <li><a href="#writing-nippy" id="toc-writing-nippy" class="nav-link" data-scroll-target="#writing-nippy"><span class="toc-section-number">6.2</span>  Writing nippy</a></li>
+  <li><a href="#leave-data-in-clojure-files" id="toc-leave-data-in-clojure-files" class="nav-link" data-scroll-target="#leave-data-in-clojure-files"><span class="toc-section-number">6.3</span>  Leave data in Clojure files</a></li>
+  <li><a href="#notebook-artifacts" id="toc-notebook-artifacts" class="nav-link" data-scroll-target="#notebook-artifacts"><span class="toc-section-number">6.4</span>  Notebook artifacts</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">How to get data out of a notebook</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+
+<style>
+table {
+  border-style: thin;
+}
+th, td {
+  padding: 6px;
+}
+td {
+  text-align: left;
+}
+th {
+  text-align: center;
+  background-color: #ddd;
+}
+tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+</style>
+<style>
+.printedClojure .sourceCode {
+  background-color: transparent;
+  border-style: none;
+}
+</style>
+<div class="originalCode">
+<div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">ns</span> chapter<span class="dv">-2</span>-input-output<span class="fl">.2</span><span class="dv">-3</span>-exporting-data</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  {<span class="at">:nextjournal.clerk/toc</span> <span class="va">true</span>}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  (<span class="at">:require</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   [clojure.data.csv <span class="at">:as</span> csv]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   [clojure.edn <span class="at">:as</span> edn]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   [clojure.java.io <span class="at">:as</span> io]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   [nextjournal.clerk <span class="at">:as</span> clerk]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   [tablecloth.api <span class="at">:as</span> tc]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="originalCode">
+<div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> consistent-data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (map-indexed (<span class="kw">fn</span> [<span class="kw">index</span> _coll] (<span class="kw">str</span> <span class="st">"cell-"</span> <span class="kw">index</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               (<span class="kw">range</span> <span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="originalCode">
+<div class="sourceCode" id="cb3"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> data </span>(<span class="kw">take</span> <span class="dv">20</span> (<span class="kw">repeat</span> (<span class="kw">zipmap</span> (<span class="kw">range</span> <span class="dv">10</span>) consistent-data))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="writing-to-a-csv-file" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="writing-to-a-csv-file"><span class="header-section-number">6.1</span> Writing to a CSV file</h2>
+<p>depends what the data looks like for a seq of maps: headers are not necessarily sorted, put them in whatever order you want here Clojure maps make no guarantees about key order, make sure to order values, i.e.&nbsp;use the same header row to get the values from each map</p>
+<div class="originalCode">
+<div class="sourceCode" id="cb4"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">let</span> [headers (<span class="kw">-&gt;</span> data <span class="kw">first</span> <span class="kw">keys</span> <span class="kw">sort</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      rows (<span class="kw">-&gt;&gt;</span> data (<span class="kw">map</span> (<span class="kw">fn</span> [row]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                            (<span class="kw">map</span> (<span class="kw">fn</span> [header]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                   (<span class="kw">get</span> row header)) headers))))]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">with-open</span> [writer (io/writer <span class="st">"data/csv-output.csv"</span>)]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (csv/write-csv writer (<span class="kw">cons</span> headers rows))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb5"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Tablecloth can also export csvs (among other formats)</p>
+<div class="originalCode">
+<div class="sourceCode" id="cb6"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> tc-dataset </span>(tc/dataset data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="originalCode">
+<div class="sourceCode" id="cb7"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(tc/write-csv! tc-dataset <span class="st">"data/tc-output.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb8"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="writing-nippy" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="writing-nippy"><span class="header-section-number">6.2</span> Writing nippy</h2>
+<div class="originalCode">
+<div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(tc/write! tc-dataset <span class="st">"data/tc-nippy.nippy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb10"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read this also with tablecloth:</p>
+<div class="originalCode">
+<div class="sourceCode" id="cb11"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tc-nippy.nippy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div>
+<div>
+<div>
+<div>
+<p>
+data/tc-nippy.nippy [20 10]:
+</p>
+
+<table>
+<thead>
+<tr>
+<th>
+0
+</th>
+<th>
+7
+</th>
+<th>
+1
+</th>
+<th>
+4
+</th>
+<th>
+6
+</th>
+<th>
+3
+</th>
+<th>
+2
+</th>
+<th>
+9
+</th>
+<th>
+5
+</th>
+<th>
+8
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+<tr>
+<td>
+cell-0
+</td>
+<td>
+cell-7
+</td>
+<td>
+cell-1
+</td>
+<td>
+cell-4
+</td>
+<td>
+cell-6
+</td>
+<td>
+cell-3
+</td>
+<td>
+cell-2
+</td>
+<td>
+cell-9
+</td>
+<td>
+cell-5
+</td>
+<td>
+cell-8
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="leave-data-in-clojure-files" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="leave-data-in-clojure-files"><span class="header-section-number">6.3</span> Leave data in Clojure files</h2>
+<div class="originalCode">
+<div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;&gt;</span> data <span class="kw">pr-str</span> (spit <span class="st">"data/clojure-output.edn"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This can be consumed later with:</p>
+<div class="originalCode">
+<div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">with-open</span> [reader (io/reader <span class="st">"data/clojure-output.edn"</span>)]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  (edn/read (java.io.PushbackReader. reader)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>({<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>}</span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a> {<span class="dv">0</span> <span class="st">"cell-0"</span>,</span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>  <span class="dv">7</span> <span class="st">"cell-7"</span>,</span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="st">"cell-1"</span>,</span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span> <span class="st">"cell-4"</span>,</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span> <span class="st">"cell-6"</span>,</span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span> <span class="st">"cell-3"</span>,</span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span> <span class="st">"cell-2"</span>,</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>  <span class="dv">9</span> <span class="st">"cell-9"</span>,</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5</span> <span class="st">"cell-5"</span>,</span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>  <span class="dv">8</span> <span class="st">"cell-8"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="notebook-artifacts" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="notebook-artifacts"><span class="header-section-number">6.4</span> Notebook artifacts</h2>
+<p>Clerk supports publishing your namespaces as HTML (like this website!) To do that call</p>
+<div class="originalCode">
+<div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">comment</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  (clerk/build! {<span class="at">:paths</span> <span class="st">"path/to/files..."</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">:index</span> <span class="st">"book/index.clj"</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+More information in Clerk’s docs: https://book.clerk.vision/#static-building HTML pages Other formats, options for exporting notebooks? PDFs? Partial artifacts, e.g.&nbsp;export just a graph Writing to a database?
+<div style="background-color:grey;height:2px;width:100%;">
+
+</div>
+<div>
+<code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_2_input_output/2_3_exporting_data.clj">book/chapter_2_input_output/2_3_exporting_data.clj</a></small></small></code>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapter_2_input_output/2_2_messy_data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dealing with messy data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapter_3_data_manipulation/3_data_manipulation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">3. Data manipulation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
