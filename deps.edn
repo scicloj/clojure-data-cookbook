@@ -11,6 +11,6 @@
         generateme/fastmath {:mvn/version "2.2.1"}
         scicloj/scicloj.ml.smile {:mvn/version "7.0.650"}
         org.scicloj/noj {:mvn/version "1-alpha15"}
-        org.scicloj/clay {:mvn/version "2-alpha37"}}
+        org.scicloj/clay {:mvn/version "2-alpha38-SNAPSHOT"}}
  :aliases
  {:dev {:extra-paths ["env/dev/src"]}}}
