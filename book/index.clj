@@ -21,7 +21,8 @@
                  (remove #{"book/index.clj"})
                  sort
                  (map #(-> %
-                           (str/replace #".md|.clj" ".html")
+                           (str/replace #"\.md$" ".html")
+                           (str/replace #"\.clj$" "")
                            (str/replace #"^book/" "")))
                  (group-by (fn [el] (-> el (str/split #"\/") first))))]
   (kind/hiccup
@@ -34,4 +35,4 @@
 
 ;; ## Recommended sections
 
-;; [randomizing order](chapter_3_data_manipulation/3_data_manipulation.html#randomizing-order)
+;; [randomizing order](chapter_3_data_manipulation/3_data_manipulation#randomizing-order)

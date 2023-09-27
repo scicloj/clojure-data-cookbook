@@ -128,7 +128,7 @@ e.g. length of the country name
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
 
 ## Repeatable randomisation
 

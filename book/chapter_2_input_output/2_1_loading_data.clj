@@ -1,4 +1,4 @@
-(ns book.chapter-2-input-output.2-1-loading-data
+(ns chapter-2-input-output.2-1-loading-data
   {:nextjournal.clerk/visibility {:code :hide}
    :nextjournal.clerk/toc true})
 
