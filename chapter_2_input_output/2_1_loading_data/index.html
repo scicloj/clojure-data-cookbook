@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Clojure Data Cookbook – index</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapter_2_input_output/2_2_messy_data/index.html" rel="next">
+<link href="../../chapter_1_intro/1_3_set_up.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapter_2_input_output/2_1_loading_data/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">index.html</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Clojure Data Cookbook</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_1_intro/1_1_welcome.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Welcome</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_1_intro/1_2_why_clojure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Why Clojure?</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_1_intro/1_3_set_up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up a Clojure environment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_2_input_output/2_1_loading_data/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_2_input_output/2_2_messy_data/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dealing with messy data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_2_input_output/2_3_exporting_data/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">How to get data out of a notebook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_3_data_manipulation/3_data_manipulation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Data manipulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<style>
+table {
+  border-style: thin;
+}
+th, td {
+  padding: 6px;
+}
+td {
+  text-align: left;
+}
+th {
+  text-align: center;
+  background-color: #ddd;
+}
+tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+</style>
+<style>
+.printedClojure .sourceCode {
+  background-color: transparent;
+  border-style: none;
+}
+</style>
+<div class="originalCode">
+<div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">ns</span> chapter<span class="dv">-2</span>-input-output<span class="fl">.2</span><span class="dv">-1</span>-loading-data</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  {<span class="at">:nextjournal.clerk/visibility</span> {<span class="at">:code</span> <span class="at">:hide</span>}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">:nextjournal.clerk/toc</span> <span class="va">true</span>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  (<span class="at">:require</span> [scicloj.kind-clerk.api <span class="at">:as</span> kind-clerk]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="originalCode">
+<div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(kind-clerk/setup!)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb3"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">:ok</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+;; This is a work in progress of the code examples that will make up chapter 2, section 1 ;; of the Clojure data cookbook ;; # 2.1 How to get data into the notebook ;; ## How to get data into the notebook ;; ### Reading from a delimited text file ;; Easiest with standard file formats, e.g.&nbsp;CSV. ;; #### With Clojure’s standard CSV library (require ‘[clojure.data.csv :as csv]’[clojure.java.io :as io]) ^{:nextjournal.clerk/viewer :table} (with-open [reader (io/reader “data/co2_over_time.csv”)] (doall (csv/read-csv reader))) ;; Returns: Lazy sequence of vectors of strings (one value per cell) ;; TODO: Link to useful explainer on lazy seqs, explain why we include <code>doall</code> here ;; #### With tablecloth ;; For most work involving tabular/columnar data, you’ll use tablecloth, Clojure’s go-to data ;; wrangling library. These all return a <code>tech.ml.dataset Dataset</code> object. The implementation ;; details aren’t important now, but <code>tech.ml.dataset</code> is the library that allows for efficient ;; and fast operations on columnar datasets. ;; TODO: Be consistent about you vs we – pick on and stick with it (require ‘[tablecloth.api :as tc]) (require’[nextjournal.clerk :as clerk]) ;; (clerk/add-viewers! [{:pred #(= tech.v3.dataset.impl.dataset.Dataset (type %)) ;; ;; :fetch-fn (fn [_ file] {:nextjournal/content-type “image/png” ;; ;; :nextjournal/value (Files/readAllBytes (.toPath file))}) ;; :render-fn v/table}]) (-&gt; “data/co2_over_time.csv” tc/dataset) ;; Note the built-in pretty printing. ;; TODO: Write elsewhere about kindly and notebooks, how they know how to render different things ;; Easy things to tidy up at import time: ;; ##### Transforming headers ;; We’ll require Clojure’s standard string library for this example. The transformation function is ;; arbitrary though, accepting a single header value and returning a single, transformed value. (require ‘[clojure.string :as str]) (defn- lower-case-keyword [val] (-&gt; val (str/replace #“+” “-”) str/lower-case keyword)) (-&gt; “data/co2_over_time.csv” (tc/dataset {:key-fn lower-case-keyword})) ;; ##### Specifying separators ;; Tablecloth is pretty smart about standard formats, e.g.&nbsp;CSV above and TSV: (-&gt; “data/co2_over_time.tsv” tc/dataset) ;; But it can also accept an arbitrary separator if for some reason you have some data that uses ;; a non-standard file format (have a look at <code>data/co2_over_time.txt</code>). Note the separator has to ;; be a single character. (-&gt; “data/co2_over_time.txt” (tc/dataset {:separator “/”})) ;; ##### Specify file encoding ;; TODO: does this really matter? test out different file encodings.. ;; ##### Normalize values into consistent formats and types ;; Tablecloth makes it easy to apply arbitrary transformations to all values in a given column ;; We can inspect the column metadata with tablecloth: (def dataset (tc/dataset “data/co2_over_time.csv”)) (-&gt; dataset (tc/info :columns)) ;; Certain types are built-in (it knows what to do to convert them, e.g.&nbsp;numbers:) ;; TODO: Explain why numbers get rounded? Probably not here.. in addendum about numbers in Clojure (-&gt; dataset (tc/convert-types “CO2” :double) (tc/info :columns)) ;; The full list of magic symbols representing types tablecloth supports comes from the underlying ;; <code>tech.ml.dataset</code> library: (require’[tech.v3.datatype.casting :as casting]) <span class="citation" data-cites="casting/valid-datatype-set">@casting/valid-datatype-set</span> ;; More details on <a href="https://github.com/techascent/tech.ml.dataset/blob/master/topics/supported-datatypes.md">supported types here</a>. ;; TODO: Explain when to use :double vs :type/numerical? What’s the difference? ;; You can also process multiple columns at once, either by specifying a map of columns to data types: (-&gt; dataset (tc/convert-types {“CO2” :double “adjusted CO2” :double}) (tc/info :columns)) ;; Or by changing all columns of a certain type to another: (-&gt; dataset (tc/convert-types :type/numerical :double) (tc/info :columns)) ;; The supported column types are: ;; :type/numerical - any numerical type ;; :type/float - floating point number (:float32 and :float64) ;; :type/integer - any integer ;; :type/datetime - any datetime type ;; Also the magical <code>:!type</code> qualifier exists, which will select the complement set – all columns that ;; are <em>not</em> the specified type ;; For others you need to provide a casting function yourself, e.g.&nbsp;adding the UTC start of day, ;; accounting for local daylight savings (defn to-start-of-day-UTC [local-date] (-&gt; local-date .atStartOfDay (java.time.ZonedDateTime/ofLocal (java.time.ZoneId/systemDefault) (java.time.ZoneOffset/UTC)))) (-&gt; dataset (tc/convert-types “Date” [[:timezone-date to-start-of-day-UTC]]) (tc/info :columns)) ;; For full details on all the possible options for type conversion of columns see the ;; <a href="https://scicloj.github.io/tablecloth/index.html#Type_conversion">tablecloth API docs</a> ;; ### Reading from a URL ;; CSV: (-&gt; “https://vega.github.io/vega-lite/data/co2-concentration.csv” tc/dataset) ;; JSON: works as long as the data is an array of maps (-&gt; “https://vega.github.io/vega-lite/data/cars.json” tc/dataset) ;; Tablecloth can handle a string that points to any file that contains either raw or gzipped csv/tsv, ;; json, xls(x), on the local file system or a URL. ;; ### Reading an excel file ;; Tablecloth supports reading xls and xlsx files iff the underlying Java library for working with ;; excel is included: (require ‘[tech.v3.libs.poi]) ;; This is not included in the library by default because <code>poi</code> has a hard dependency on log4j2, along ;; with many other dependencies that the core team at <code>tech.ml.dataset</code> (upon which tablecloth is built) ;; did not want to impose on all users by default (https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/working.20with.20excel.20files/near/314711378). ;; You can still require it here, you’ll most likely just see an error that says something like ;; “Log4j2 could not find a logging implementation. Please add log4j-core to the classpath.”, unless ;; you already have a valid log4j config on your class path. ;; This should work according to maintainers, does not atm (tc/dataset “data/example_XLS.xls” {:filetype “xls”}) (tc/dataset “data/example_XLSX.xlsx” {:filetype “xlsx”}) (require’[dk.ative.docjure.spreadsheet :as xl]) (def xl-workbook (xl/load-workbook “data/example_XLS.xls”)) ;; To discover sheet names: (-&gt;&gt; xl-workbook xl/sheet-seq (map xl/sheet-name)) ;; This will show us there is only one sheet in this workbook, named “Sheet1”. You can get the data ;; out of it like this: ;; To discover header names: (def headers (-&gt;&gt; xl-workbook (xl/select-sheet “Sheet1”) xl/row-seq first xl/cell-seq (map xl/read-cell))) ;; To get the data out of the columns: (def column-index-&gt;header (zipmap [:A :B :C :D :E :F :G :H :I] headers)) (-&gt;&gt; xl-workbook (xl/select-sheet “Sheet1”) (xl/select-columns column-index-&gt;header)) ;; and into a tablecloth dataset like this: (-&gt;&gt; xl-workbook (xl/select-sheet “Sheet1”) (xl/select-columns column-index-&gt;header) (drop 1) ;; don’t count the header row as a row tc/dataset) ;; You might be tempted to just iterate over each row and read each cell, but it’s more ;; convenient to think of the data as column-based rather than row-based for tablecloth’s purposes. ;; Setting the dataset headers is more verbose when we’re starting from a seq of seqs, since ;; the <code>header-row?</code> option does not work for a seq of seqs (this option is implemented in the ;; low-level parsing code for each supported input type and is not currently implemented for ;; a seq of seqs). (def iterated-xl-data (-&gt;&gt; xl-workbook (xl/select-sheet “Sheet1”) xl/row-seq (map #(-&gt;&gt; % xl/cell-seq (map xl/read-cell))))) ;; Note the <code>header-row?</code> option is not supported: (tc/dataset iterated-xl-data {:header-row? true}) ;; Can do it manually, but just working with columns from the start is more idiomatic: (let [headers (first iterated-xl-data) rows (rest iterated-xl-data)] (map #(zipmap headers %) rows)) ;; ### Reading from a database ;; #### SQL database ;; (tc/dataset (,,, results from some SQL query)) ;; requires <code>com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}</code> in <code>deps.edn</code> ;; Note you will also require the relevant driver for the type of db you are trying ;; to access. These are some available ones: (require ‘[next.jdbc :as jdbc]) ;; Connect to the db: (def db {:dbname “data/Chinook_Sqlite.sqlite” :dbtype “sqlite”}) (def ds (jdbc/get-datasource db)) ds ;; Pass the results of a sql query to tablecloth to make a (-&gt; ds (jdbc/execute! [“SELECT * FROM artist”]) (tc/dataset)) ;; Passing a parameter to a query (-&gt; ds (jdbc/execute! [“SELECT * FROM artist WHERE Name = ?” “Aerosmith”]) (tc/dataset)) ;; note for SQLite specifically the concat operator is <code>||</code> not <code>+</code> (-&gt; ds (jdbc/execute! [“SELECT * FROM artist WHERE Name like ‘%’ || ? || ‘%’” “man”]) (tc/dataset)) ;; #### SPARQL database (require’[grafter-2.rdf4j.repository :as repo]) (require ‘[grafter-2.rdf.protocols :as pr]) (def sparql (repo/sparql-repo “https://query.wikidata.org/sparql”)) ;; taken from: https://query.wikidata.org/#%23Public%20sculptures%20in%20Paris%0ASELECT%20DISTINCT%20%3Fitem%20%20%3FTitre%20%3Fcreateur%20%28year%28%3Fdate%29%20as%20%3FAnneeCreation%29%20%3Fimage%20%3Fcoord%0AWHERE%0A%7B%0A%20%20%20%3Fitem%20wdt%3AP31%2Fwdt%3AP279%2a%20wd%3AQ860861.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20sculpture%0A%20%20%20%3Fitem%20wdt%3AP136%20wd%3AQ557141%20.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20genre%C2%A0%3A%20art%20public%0A%20%20%20%7B%3Fitem%20wdt%3AP131%20wd%3AQ90.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20…%20situ%C3%A9e%20dans%20Paris%0A%20%20%20UNION%0A%20%20%20%7B%3Fitem%20wdt%3AP131%20%3Farr.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20…%20ou%20dans%20un%20arrondissement%20de%20Paris%20%0A%20%20%20%3Farr%20wdt%3AP131%20wd%3AQ90.%20%7D%0A%20%20%20%3Fitem%20rdfs%3Alabel%20%3FTitre%20FILTER%20%28lang%28%3FTitre%29%20%3D%20%22fr%22%29.%20%20%23%20Titre%0A%20%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP170%20%3FQcreateur.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20cr%C3%A9ateur%2Fcr%C3%A9atrice%20%28option%29%0A%20%20%20%3FQcreateur%20rdfs%3Alabel%20%3Fcreateur%20FILTER%20%28lang%28%3Fcreateur%29%20%3D%20%22fr%22%29%20.%7D%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP571%20%3Fdate.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20date%20de%20cr%C3%A9ation%20%28option%29%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP18%20%20%3Fimage.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20image%20%28option%29%0A%20%20%20OPTIONAL%20%7B%3Fitem%20wdt%3AP625%20%3Fcoord.%7D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20coordonn%C3%A9es%20g%C3%A9ographiques%20%28option%29%0A%7D (def sparql-results (let [conn (repo/-&gt;connection sparql)] (-&gt; conn (repo/query “# Public sculptures in Paris SELECT DISTINCT ?item ?title ?creator (year(?date) as ?year) ?coord WHERE { ?item wdt:P31/wdt:P279* wd:Q860861. # sculpture ?item wdt:P136 wd:Q557141 . # genre&nbsp;: art public {?item wdt:P131 wd:Q90.} # … située dans Paris UNION {?item wdt:P131 ?arr. # … ou dans un arrondissement de Paris ?arr wdt:P131 wd:Q90. } ?item rdfs:label ?title FILTER (lang(?title) = "fr"). # title OPTIONAL {?item wdt:P170 ?Qcreateur. # créateur/créatrice (option) ?Qcreateur rdfs:label ?creator FILTER (lang(?creator) = "fr") .} OPTIONAL {?item wdt:P571 ?date.} # date de création (option) OPTIONAL {?item wdt:P18 ?image.} # image (option) OPTIONAL {?item wdt:P625 ?coord.} # coordonnées géographiques (option) }”)))) ;; grafter db can help format RDF values (def sparql-ds (-&gt; sparql-results tc/dataset (tc/update-columns [:coord :title :creator] (partial map pr/raw-value)))) ;; ### Generating sequences (defn seq-of-seqs [rows cols-per-row output-generator] (repeatedly rows (partial repeatedly cols-per-row output-generator))) ;; Of random numbers: (defn random-number-between-0-1000 [] (rand-int 1000)) (seq-of-seqs 10 4 random-number-between-0-1000) (defn seq-of-maps [rows cols-per-row output-generator] (let [header-data (map #(str “header-” %) (range cols-per-row)) row-data (seq-of-seqs rows cols-per-row output-generator)] (map #(zipmap header-data %) row-data))) (seq-of-maps 10 4 random-number-between-0-1000) ;; dtype next (library underneath tech.ml.dataset, which is underneath tablecloth) also ;; has a built-in sequence generator: (require’[tech.v3.datatype :as dtype]) (dtype/make-reader :string 4 (str “cell-” idx)) (dtype/make-reader :int32 4 (rand-int 10)) ;; It is lazy, not cached, so be careful about using a computationally-heavy fn for generator ;; ### Generating repeatable sequences of dummy data (def consistent-data (map-indexed (fn [index _coll] (str “cell-” index)) (range 10))) (repeat (zipmap (range 10) consistent-data)) :end
+<div style="background-color:grey;height:2px;width:100%;">
+
+</div>
+<div>
+<code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_2_input_output/2_1_loading_data.clj">book/chapter_2_input_output/2_1_loading_data.clj</a></small></small></code>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapter_1_intro/1_3_set_up.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Setting up a Clojure environment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapter_2_input_output/2_2_messy_data/index.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dealing with messy data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
