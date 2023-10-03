@@ -14,7 +14,11 @@
             [tech.v3.datatype.functional :as fun]
             [scicloj.kindly.v4.kind :as kind]
             [hiccup.core :as hiccup]
-            [clojure2d.color :as color]))
+            [clojure2d.color :as color]
+            [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
+
 
 ;; ## Raw html
 (-> "<p>Hello, <i>Noj</i>.</p>"

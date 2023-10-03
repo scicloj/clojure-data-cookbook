@@ -1,7 +1,10 @@
 (ns chapter-2-input-output.2-2-messy-data
   {:nextjournal.clerk/toc true}
   (:require [tablecloth.api :as tc]
-            [tech.v3.datatype.functional :as fun]))
+            [tech.v3.datatype.functional :as fun]
+            [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
 
 ;; This is a work in progress of the code examples that will make up chapter 2, section 2
 ;; of the Clojure data cookbook
@@ -94,7 +97,7 @@
 ;; Tablecloth has [many built-in helpers](https://scicloj.github.io/tablecloth/index.html#Missing)
 ;; for dealing with missing values.
 
-;; (require '[tech.v3.datatype.datetime :as dt])
+(require '[tech.v3.datatype.datetime :as dt])
 
 (def sparse
   (tc/dataset {:A [1 2 3 nil nil 6]

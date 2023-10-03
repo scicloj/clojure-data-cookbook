@@ -5,7 +5,10 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [nextjournal.clerk :as clerk]
-   [tablecloth.api :as tc]))
+   [tablecloth.api :as tc]
+   [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
 
 ;; # How to get data out of a notebook
 

@@ -1,6 +1,9 @@
 (ns chapter-2-input-output.2-1-loading-data
   {:nextjournal.clerk/visibility {:code :hide}
-   :nextjournal.clerk/toc true})
+   :nextjournal.clerk/toc true}
+  (:require [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
 
 ;; ;; This is a work in progress of the code examples that will make up chapter 2, section 1
 ;; ;; of the Clojure data cookbook
