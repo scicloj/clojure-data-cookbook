@@ -5,9 +5,12 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [nextjournal.clerk :as clerk]
-   [tablecloth.api :as tc]))
+   [tablecloth.api :as tc]
+   [scicloj.kind-clerk.api :as kind-clerk]))
 
-;; # 2.3 How to get data out of a notebook
+(kind-clerk/setup!)
+
+;; # How to get data out of a notebook
 
 (def consistent-data
   (map-indexed (fn [index _coll] (str "cell-" index))

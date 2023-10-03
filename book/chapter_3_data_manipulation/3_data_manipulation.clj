@@ -6,12 +6,15 @@
             [tech.v3.dataset.column :as tdsc]
             [tech.v3.datatype.rolling :as rolling]
             [clojure.string :as str]
-            [fastmath.stats :as stats]))
+            [fastmath.stats :as stats]
+            [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
 
 ;; This is a work in progress of the code examples that will make up chapter 3
 ;; of the Clojure data cookbook
 
-;; # 3. Data manipulation
+;; # Data manipulation
 
 ;; Once data is loaded and ready to work with, here's how to do some of the most common
 ;; data manipulation tasks.

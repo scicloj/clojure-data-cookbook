@@ -3,10 +3,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [nextjournal.clerk :as clerk]
-   [scicloj.kindly-default.v1.api :as kindly-default]
    [scicloj.clay.v2.api :as clay]))
-
-(kindly-default/setup!)
 
 ;; Tell Clerk to render all tablecloth datasets as tables
 
