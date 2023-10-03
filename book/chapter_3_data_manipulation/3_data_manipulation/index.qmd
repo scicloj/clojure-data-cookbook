@@ -41,10 +41,27 @@ tr:nth-child(even) {
             [tech.v3.dataset.column :as tdsc]
             [tech.v3.datatype.rolling :as rolling]
             [clojure.string :as str]
-            [fastmath.stats :as stats]))
+            [fastmath.stats :as stats]
+            [scicloj.kind-clerk.api :as kind-clerk]))
 ```
 </div>
 
+
+
+<div class="originalCode">
+```clojure
+(kind-clerk/setup!)
+```
+</div>
+
+
+
+<div class="printedClojure">
+```clojure
+:ok
+
+```
+</div>
 
 This is a work in progress of the code examples that will make up chapter 3
 of the Clojure data cookbook
@@ -79,7 +96,16 @@ Give the column headers in the order you want
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+| :country |    :size |
+|----------|---------:|
+|   Canada | 10000000 |
+|      USA |  9000000 |
+|  Germany |    80000 |
+
+
+
 
 ### Sorting rows
 
@@ -91,7 +117,16 @@ Give the column headers in the order you want
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+| :country |    :size |
+|----------|---------:|
+|   Canada | 10000000 |
+|      USA |  9000000 |
+|  Germany |    80000 |
+
+
+
 
 ### Custom sorting functions
 e.g. length of the country name
@@ -105,7 +140,16 @@ e.g. length of the country name
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+| :country |    :size |
+|----------|---------:|
+|  Germany |    80000 |
+|   Canada | 10000000 |
+|      USA |  9000000 |
+
+
+
 
 ## Selecting one column or multiple columns
 
@@ -117,7 +161,16 @@ e.g. length of the country name
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 1]:</p><table><thead><tr><th>:country</th></tr></thead><tbody><tr><td>Canada</td></tr><tr><td>USA</td></tr><tr><td>Germany</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 1]:
+
+| :country |
+|----------|
+|   Canada |
+|      USA |
+|  Germany |
+
+
+
 
 ## Randomizing order
 
@@ -128,7 +181,16 @@ e.g. length of the country name
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+| :country |    :size |
+|----------|---------:|
+|      USA |  9000000 |
+|   Canada | 10000000 |
+|  Germany |    80000 |
+
+
+
 
 ## Repeatable randomisation
 
@@ -139,7 +201,16 @@ e.g. length of the country name
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+| :country |    :size |
+|----------|---------:|
+|   Canada | 10000000 |
+|  Germany |    80000 |
+|      USA |  9000000 |
+
+
+
 Finding unique rows
 
 <div class="originalCode">
@@ -169,7 +240,18 @@ https://scicloj.github.io/tablecloth/index.html#Unique
 </div>
 
 
-<div><div><div><div><p>_unnamed [5 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [5 2]:
+
+|      :country |    :size |
+|---------------|---------:|
+|        Canada | 10000000 |
+|        Canada | 10000303 |
+| United states |  9000000 |
+| United States |  9000000 |
+|       Germany |    80000 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -178,7 +260,17 @@ https://scicloj.github.io/tablecloth/index.html#Unique
 </div>
 
 
-<div><div><div><div><p>_unnamed [4 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [4 2]:
+
+|      :country |    :size |
+|---------------|---------:|
+|        Canada | 10000000 |
+|        Canada | 10000303 |
+| United states |  9000000 |
+|       Germany |    80000 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -187,7 +279,17 @@ https://scicloj.github.io/tablecloth/index.html#Unique
 </div>
 
 
-<div><div><div><div><p>_unnamed [4 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [4 2]:
+
+|      :country |    :size |
+|---------------|---------:|
+|        Canada | 10000000 |
+| United states |  9000000 |
+| United States |  9000000 |
+|       Germany |    80000 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -196,7 +298,16 @@ https://scicloj.github.io/tablecloth/index.html#Unique
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>United states</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+|      :country |    :size |
+|---------------|---------:|
+|        Canada | 10000000 |
+| United states |  9000000 |
+|       Germany |    80000 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -208,7 +319,16 @@ https://scicloj.github.io/tablecloth/index.html#Unique
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000303</td></tr><tr><td>United States</td><td style="text-align:right;">9000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 2]:
+
+|      :country |    :size |
+|---------------|---------:|
+|        Canada | 10000303 |
+| United States |  9000000 |
+|       Germany |    80000 |
+
+
+
 could use this to rename vals to a canonical one (e.g. convert everything that matches set of USA to "USA")
 Adding computed columns to data
 "lengthening" or "widening" data, making it "tidy"
@@ -222,7 +342,16 @@ e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th><th style="text-align:right;">:area</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">9000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">8000000</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">1000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 3]:
+
+| :country |    :size |   :area |
+|----------|---------:|--------:|
+|   Canada | 10000000 | 9000000 |
+|      USA |  9000000 | 8000000 |
+|  Germany |    80000 | 1000000 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -236,7 +365,16 @@ e.g. converting a column with numbers to a category (>5 "yes", <5 "no"), summing
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 4]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:area</th><th style="text-align:right;">:population</th><th style="text-align:right;">:density</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">4.0E+07</td><td style="text-align:right;">4.00000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">1.0E+08</td><td style="text-align:right;">11.11111111</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">8.0E+07</td><td style="text-align:right;">1000.00000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 4]:
+
+| :country |    :area | :population |      :density |
+|----------|---------:|------------:|--------------:|
+|   Canada | 10000000 |     4.0E+07 |    4.00000000 |
+|      USA |  9000000 |     1.0E+08 |   11.11111111 |
+|  Germany |    80000 |     8.0E+07 | 1000.00000000 |
+
+
+
 vs, probably preferable
 
 <div class="originalCode">
@@ -250,7 +388,16 @@ vs, probably preferable
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 4]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:area</th><th style="text-align:right;">:population</th><th style="text-align:right;">:density</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td><td style="text-align:right;">40000000</td><td style="text-align:right;">4.00000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td><td style="text-align:right;">100000000</td><td style="text-align:right;">11.11111111</td></tr><tr><td>Germany</td><td style="text-align:right;">80000</td><td style="text-align:right;">80000000</td><td style="text-align:right;">1000.00000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 4]:
+
+| :country |    :area | :population |      :density |
+|----------|---------:|------------:|--------------:|
+|   Canada | 10000000 |    40000000 |    4.00000000 |
+|      USA |  9000000 |   100000000 |   11.11111111 |
+|  Germany |    80000 |    80000000 | 1000.00000000 |
+
+
+
 - Removing columns
 
 <div class="originalCode">
@@ -261,7 +408,16 @@ vs, probably preferable
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 1]:</p><table><thead><tr><th>:country</th></tr></thead><tbody><tr><td>Canada</td></tr><tr><td>USA</td></tr><tr><td>Germany</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 1]:
+
+| :country |
+|----------|
+|   Canada |
+|      USA |
+|  Germany |
+
+
+
 - Transforming values
 - Working with nested data structures, really nice libraries in Clojure for doing this ([specter](https://github.com/redplanetlabs/specter), [meander](https://github.com/noprompt/meander))
 - All values in a column
@@ -280,7 +436,15 @@ vs, probably preferable
 </div>
 
 
-<div><div><div><div><p>_unnamed [2 2]:</p><table><thead><tr><th>:country</th><th style="text-align:right;">:size</th></tr></thead><tbody><tr><td>Canada</td><td style="text-align:right;">10000000</td></tr><tr><td>USA</td><td style="text-align:right;">9000000</td></tr></tbody></table></div></div></div></div>
+_unnamed [2 2]:
+
+| :country |    :size |
+|----------|---------:|
+|   Canada | 10000000 |
+|      USA |  9000000 |
+
+
+
 - Aggregating rows (counts, groups)
 
 <div class="originalCode">
@@ -301,7 +465,14 @@ vs, probably preferable
 </div>
 
 
-<div><div><div><div><p>_unnamed [1 1]:</p><table><thead><tr><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">355.31093117</td></tr></tbody></table></div></div></div></div>
+_unnamed [1 1]:
+
+| :average-co2 |
+|-------------:|
+| 355.31093117 |
+
+
+
 Add a column for year
 
 <div class="originalCode">
@@ -312,7 +483,35 @@ Add a column for year
 </div>
 
 
-<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Year</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">1958</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">1958</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">1958</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">1958</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">1958</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">1958</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">1958</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">1958</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">1959</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">1959</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">2019</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">2019</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">2019</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">2019</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">2019</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">2019</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">2019</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">2020</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">2020</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">2020</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">2020</td></tr></tbody></table></div></div></div></div>
+data/co2_over_time.csv [741 4]:
+
+|       Date |    CO2 | adjusted CO2 | Year |
+|------------|-------:|-------------:|-----:|
+| 1958-03-01 | 315.70 |       314.44 | 1958 |
+| 1958-04-01 | 317.46 |       315.16 | 1958 |
+| 1958-05-01 | 317.51 |       314.71 | 1958 |
+| 1958-07-01 | 315.86 |       315.19 | 1958 |
+| 1958-08-01 | 314.93 |       316.19 | 1958 |
+| 1958-09-01 | 313.21 |       316.08 | 1958 |
+| 1958-11-01 | 313.33 |       315.20 | 1958 |
+| 1958-12-01 | 314.67 |       315.43 | 1958 |
+| 1959-01-01 | 315.58 |       315.54 | 1959 |
+| 1959-02-01 | 316.49 |       315.86 | 1959 |
+|        ... |    ... |          ... |  ... |
+| 2019-06-01 | 413.96 |       411.38 | 2019 |
+| 2019-07-01 | 411.85 |       411.03 | 2019 |
+| 2019-08-01 | 410.08 |       411.62 | 2019 |
+| 2019-09-01 | 408.55 |       412.06 | 2019 |
+| 2019-10-01 | 408.43 |       412.06 | 2019 |
+| 2019-11-01 | 410.29 |       412.56 | 2019 |
+| 2019-12-01 | 411.85 |       412.78 | 2019 |
+| 2020-01-01 | 413.37 |       413.32 | 2020 |
+| 2020-02-01 | 414.09 |       413.33 | 2020 |
+| 2020-03-01 | 414.51 |       412.94 | 2020 |
+| 2020-04-01 | 416.18 |       413.35 | 2020 |
+
+
+
 Group by year
 
 <div class="originalCode">
@@ -324,7 +523,35 @@ Group by year
 </div>
 
 
-<div><div><div><div><p>_unnamed [63 3]:</p><table><thead><tr><th style="text-align:right;">:name</th><th style="text-align:right;">:group-id</th><th>:data</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">0</td><td>Group: 1958 [8 3]:</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">1</td><td>Group: 1959 [12 3]:</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">2</td><td>Group: 1960 [12 3]:</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">3</td><td>Group: 1961 [12 3]:</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">4</td><td>Group: 1962 [12 3]:</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">5</td><td>Group: 1963 [12 3]:</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">6</td><td>Group: 1964 [9 3]:</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">7</td><td>Group: 1965 [12 3]:</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">8</td><td>Group: 1966 [12 3]:</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">9</td><td>Group: 1967 [12 3]:</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td>...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">52</td><td>Group: 2010 [12 3]:</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">53</td><td>Group: 2011 [12 3]:</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">54</td><td>Group: 2012 [12 3]:</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">55</td><td>Group: 2013 [12 3]:</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">56</td><td>Group: 2014 [12 3]:</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">57</td><td>Group: 2015 [12 3]:</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">58</td><td>Group: 2016 [12 3]:</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">59</td><td>Group: 2017 [12 3]:</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">60</td><td>Group: 2018 [12 3]:</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">61</td><td>Group: 2019 [12 3]:</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">62</td><td>Group: 2020 [4 3]:</td></tr></tbody></table></div></div></div></div>
+_unnamed [63 3]:
+
+| :name | :group-id |               :data |
+|------:|----------:|---------------------|
+|  1958 |         0 |  Group: 1958 [8 3]: |
+|  1959 |         1 | Group: 1959 [12 3]: |
+|  1960 |         2 | Group: 1960 [12 3]: |
+|  1961 |         3 | Group: 1961 [12 3]: |
+|  1962 |         4 | Group: 1962 [12 3]: |
+|  1963 |         5 | Group: 1963 [12 3]: |
+|  1964 |         6 |  Group: 1964 [9 3]: |
+|  1965 |         7 | Group: 1965 [12 3]: |
+|  1966 |         8 | Group: 1966 [12 3]: |
+|  1967 |         9 | Group: 1967 [12 3]: |
+|   ... |       ... |                 ... |
+|  2010 |        52 | Group: 2010 [12 3]: |
+|  2011 |        53 | Group: 2011 [12 3]: |
+|  2012 |        54 | Group: 2012 [12 3]: |
+|  2013 |        55 | Group: 2013 [12 3]: |
+|  2014 |        56 | Group: 2014 [12 3]: |
+|  2015 |        57 | Group: 2015 [12 3]: |
+|  2016 |        58 | Group: 2016 [12 3]: |
+|  2017 |        59 | Group: 2017 [12 3]: |
+|  2018 |        60 | Group: 2018 [12 3]: |
+|  2019 |        61 | Group: 2019 [12 3]: |
+|  2020 |        62 |  Group: 2020 [4 3]: |
+
+
+
 Get average temp per year
 tablecloth applies the aggregate fn to every groups dataset
 
@@ -353,7 +580,35 @@ tablecloth applies the aggregate fn to every groups dataset
 </div>
 
 
-<div><div><div><div><p>_unnamed [63 2]:</p><table><thead><tr><th style="text-align:right;">:$group-name</th><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.33</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.98</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.91</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.65</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.45</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.99</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.20</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.04</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.37</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.18</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.90</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.65</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.87</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.57</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.61</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.89</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.28</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.58</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.59</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.50</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">414.54</td></tr></tbody></table></div></div></div></div>
+_unnamed [63 2]:
+
+| :$group-name | :average-co2 |
+|-------------:|-------------:|
+|         1958 |       315.33 |
+|         1959 |       315.98 |
+|         1960 |       316.91 |
+|         1961 |       317.65 |
+|         1962 |       318.45 |
+|         1963 |       318.99 |
+|         1964 |       319.20 |
+|         1965 |       320.04 |
+|         1966 |       321.37 |
+|         1967 |       322.18 |
+|          ... |          ... |
+|         2010 |       389.90 |
+|         2011 |       391.65 |
+|         2012 |       393.87 |
+|         2013 |       396.57 |
+|         2014 |       398.61 |
+|         2015 |       400.89 |
+|         2016 |       404.28 |
+|         2017 |       406.58 |
+|         2018 |       408.59 |
+|         2019 |       411.50 |
+|         2020 |       414.54 |
+
+
+
 Can rename the column to be more descriptive
 
 <div class="originalCode">
@@ -369,7 +624,35 @@ Can rename the column to be more descriptive
 </div>
 
 
-<div><div><div><div><p>_unnamed [63 2]:</p><table><thead><tr><th style="text-align:right;">:year</th><th style="text-align:right;">:average-co2</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.33375000</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.98166667</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.90916667</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.64500000</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.45416667</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.99250000</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.20111111</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.03583333</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.36916667</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.18083333</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.90083333</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.64833333</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.87000000</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.56666667</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.61416667</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.88500000</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.27750000</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.58416667</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.58750000</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.49500000</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">414.53750000</td></tr></tbody></table></div></div></div></div>
+_unnamed [63 2]:
+
+| :year | :average-co2 |
+|------:|-------------:|
+|  1958 | 315.33375000 |
+|  1959 | 315.98166667 |
+|  1960 | 316.90916667 |
+|  1961 | 317.64500000 |
+|  1962 | 318.45416667 |
+|  1963 | 318.99250000 |
+|  1964 | 319.20111111 |
+|  1965 | 320.03583333 |
+|  1966 | 321.36916667 |
+|  1967 | 322.18083333 |
+|   ... |          ... |
+|  2010 | 389.90083333 |
+|  2011 | 391.64833333 |
+|  2012 | 393.87000000 |
+|  2013 | 396.56666667 |
+|  2014 | 398.61416667 |
+|  2015 | 400.88500000 |
+|  2016 | 404.27750000 |
+|  2017 | 406.58416667 |
+|  2018 | 408.58750000 |
+|  2019 | 411.49500000 |
+|  2020 | 414.53750000 |
+
+
+
 Concatenating datasets
 
 <div class="originalCode">
@@ -400,7 +683,20 @@ Naively concats rows
 </div>
 
 
-<div><div><div><div><p>_unnamed [7 2]:</p><table><thead><tr><th>:id</th><th>:b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td></tr><tr><td>id2</td><td>val2</td></tr><tr><td>id3</td><td>val3</td></tr><tr><td>id1</td><td>val4</td></tr><tr><td>id5</td><td>val5</td></tr><tr><td>id6</td><td>val6</td></tr><tr><td>id3</td><td>other value</td></tr></tbody></table></div></div></div></div>
+_unnamed [7 2]:
+
+| :id |          :b |
+|-----|-------------|
+| id1 |        val1 |
+| id2 |        val2 |
+| id3 |        val3 |
+| id1 |        val4 |
+| id5 |        val5 |
+| id6 |        val6 |
+| id3 | other value |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -411,7 +707,19 @@ Naively concats rows
 </div>
 
 
-<div><div><div><div><p>_unnamed [6 3]:</p><table><thead><tr><th>:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td>id1</td><td>val1</td><td></td></tr><tr><td>id2</td><td>val2</td><td></td></tr><tr><td>id3</td><td>val3</td><td></td></tr><tr><td></td><td>val4</td><td>text</td></tr><tr><td></td><td>val5</td><td>hi</td></tr><tr><td></td><td>val6</td><td>test</td></tr></tbody></table></div></div></div></div>
+_unnamed [6 3]:
+
+| :id |   :b |   :c |
+|-----|------|------|
+| id1 | val1 |      |
+| id2 | val2 |      |
+| id3 | val3 |      |
+|     | val4 | text |
+|     | val5 |   hi |
+|     | val6 | test |
+
+
+
 De-duping
 
 <div class="originalCode">
@@ -421,7 +729,19 @@ De-duping
 </div>
 
 
-<div><div><div><div><p>union [6 2]:</p><table><thead><tr><th>:id</th><th>:b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td></tr><tr><td>id2</td><td>val2</td></tr><tr><td>id3</td><td>val3</td></tr><tr><td>id1</td><td>val4</td></tr><tr><td>id5</td><td>val5</td></tr><tr><td>id6</td><td>val6</td></tr></tbody></table></div></div></div></div>
+union [6 2]:
+
+| :id |   :b |
+|-----|------|
+| id1 | val1 |
+| id2 | val2 |
+| id3 | val3 |
+| id1 | val4 |
+| id5 | val5 |
+| id6 | val6 |
+
+
+
 - Merging datasets
 - When column headers are the same or different, on multiple columns
 TODO explain set logic and SQL joins
@@ -452,7 +772,17 @@ Keep all columns
 </div>
 
 
-<div><div><div><div><p>full-join [4 4]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th style="text-align:right;">:right.id</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td style="text-align:right;">1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td style="text-align:right;">2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td style="text-align:right;">3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td>val4</td><td style="text-align:right;">4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+full-join [4 4]:
+
+| :id |   :b | :right.id |   :c |
+|----:|------|----------:|------|
+|   1 | val1 |         1 | val1 |
+|   2 | val2 |         2 | val2 |
+|   3 | val3 |         3 | val3 |
+|   4 | val4 |         4 | val4 |
+
+
+
 "Merge" datasets on a given column where rows have a value
 
 <div class="originalCode">
@@ -462,7 +792,17 @@ Keep all columns
 </div>
 
 
-<div><div><div><div><p>inner-join [4 3]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td>val4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+inner-join [4 3]:
+
+| :id |   :b |   :c |
+|----:|------|------|
+|   1 | val1 | val1 |
+|   2 | val2 | val2 |
+|   3 | val3 | val3 |
+|   4 | val4 | val4 |
+
+
+
 Drop rows missing a value
 
 <div class="originalCode">
@@ -476,7 +816,17 @@ Drop rows missing a value
 </div>
 
 
-<div><div><div><div><p>inner-join [4 3]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td>val3</td></tr><tr><td style="text-align:right;">4</td><td></td><td>val4</td></tr></tbody></table></div></div></div></div>
+inner-join [4 3]:
+
+| :id |   :b |   :c |
+|----:|------|------|
+|   1 | val1 | val1 |
+|   2 | val2 | val2 |
+|   3 | val3 | val3 |
+|   4 |      | val4 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -489,7 +839,17 @@ Drop rows missing a value
 </div>
 
 
-<div><div><div><div><p>right-outer-join [4 4]:</p><table><thead><tr><th style="text-align:right;">:id</th><th>:b</th><th style="text-align:right;">:right.id</th><th>:c</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>val1</td><td style="text-align:right;">1</td><td>val1</td></tr><tr><td style="text-align:right;">2</td><td>val2</td><td style="text-align:right;">2</td><td>val2</td></tr><tr><td style="text-align:right;">3</td><td>val3</td><td style="text-align:right;">3</td><td>val3</td></tr><tr><td style="text-align:right;"></td><td></td><td style="text-align:right;">4</td><td>val4</td></tr></tbody></table></div></div></div></div>
+right-outer-join [4 4]:
+
+| :id |   :b | :right.id |   :c |
+|----:|------|----------:|------|
+|   1 | val1 |         1 | val1 |
+|   2 | val2 |         2 | val2 |
+|   3 | val3 |         3 | val3 |
+|     |      |         4 | val4 |
+
+
+
 
 scratch
 
@@ -506,7 +866,16 @@ scratch
 </div>
 
 
-<div><div><div><div><p>left-outer-join [3 6]:</p><table><thead><tr><th style="text-align:right;">:entry-id</th><th>:email</th><th>:name</th><th style="text-align:right;">:right.entry-id</th><th style="text-align:right;">:upload-count</th><th>:catgory</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td>asdf</td><td>asdfads</td><td style="text-align:right;">1</td><td style="text-align:right;">2</td><td>art</td></tr><tr><td style="text-align:right;">2</td><td></td><td></td><td style="text-align:right;">2</td><td style="text-align:right;">3</td><td>science</td></tr><tr><td style="text-align:right;">3</td><td></td><td></td><td style="text-align:right;">3</td><td style="text-align:right;">4</td><td></td></tr></tbody></table></div></div></div></div>
+left-outer-join [3 6]:
+
+| :entry-id | :email |   :name | :right.entry-id | :upload-count | :catgory |
+|----------:|--------|---------|----------------:|--------------:|----------|
+|         1 |   asdf | asdfads |               1 |             2 |      art |
+|         2 |        |         |               2 |             3 |  science |
+|         3 |        |         |               3 |             4 |          |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -517,7 +886,16 @@ scratch
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th>:email</th><th>:name</th><th style="text-align:right;">:entry-id</th></tr></thead><tbody><tr><td>asdf</td><td>asdfads</td><td style="text-align:right;">1</td></tr><tr><td></td><td></td><td style="text-align:right;">2</td></tr><tr><td></td><td></td><td style="text-align:right;">3</td></tr></tbody></table></div></div></div></div>
+_unnamed [3 3]:
+
+| :email |   :name | :entry-id |
+|--------|---------|----------:|
+|   asdf | asdfads |         1 |
+|        |         |         2 |
+|        |         |         3 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -528,7 +906,16 @@ scratch
 </div>
 
 
-<div><div><div><div><p>_unnamed [3 3]:</p><table><thead><tr><th style="text-align:right;">:entry-id</th><th style="text-align:right;">:upload-count</th><th>:catgory</th></tr></thead><tbody><tr><td style="text-align:right;">1</td><td style="text-align:right;">2</td><td>art</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">3</td><td>science</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">4</td><td></td></tr></tbody></table></div></div></div></div>
+_unnamed [3 3]:
+
+| :entry-id | :upload-count | :catgory |
+|----------:|--------------:|----------|
+|         1 |             2 |      art |
+|         2 |             3 |  science |
+|         3 |             4 |          |
+
+
+
 see tablecloth join stuff
 Inner join, only keeps rows with the specified column value in common
 
@@ -539,7 +926,14 @@ Inner join, only keeps rows with the specified column value in common
 </div>
 
 
-<div><div><div><div><p>inner-join [1 3]:</p><table><thead><tr><th>:id</th><th>:b</th><th>:right.b</th></tr></thead><tbody><tr><td>id1</td><td>val1</td><td>val4</td></tr></tbody></table></div></div></div></div>
+inner-join [1 3]:
+
+| :id |   :b | :right.b |
+|-----|------|----------|
+| id1 | val1 |     val4 |
+
+
+
 - Converting between wide and long formats?
 Signal processing/time series analysis
 - Compute rolling average to be able to plot a trend line
@@ -568,7 +962,35 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Exponential moving average</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">314.44000000</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">314.51200000</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">314.53180000</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">314.59762000</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">314.75685800</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">314.88917220</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">314.92025498</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">314.97122948</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">315.02810653</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.11129588</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">409.42307506</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">409.58376755</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">409.78739079</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.01465172</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.21918654</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">410.45326789</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">410.68594110</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">410.94934699</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">411.18741229</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">411.36267106</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">411.56140396</td></tr></tbody></table></div></div></div></div>
+data/co2_over_time.csv [741 4]:
+
+|       Date |    CO2 | adjusted CO2 | Exponential moving average |
+|------------|-------:|-------------:|---------------------------:|
+| 1958-03-01 | 315.70 |       314.44 |               314.44000000 |
+| 1958-04-01 | 317.46 |       315.16 |               314.51200000 |
+| 1958-05-01 | 317.51 |       314.71 |               314.53180000 |
+| 1958-07-01 | 315.86 |       315.19 |               314.59762000 |
+| 1958-08-01 | 314.93 |       316.19 |               314.75685800 |
+| 1958-09-01 | 313.21 |       316.08 |               314.88917220 |
+| 1958-11-01 | 313.33 |       315.20 |               314.92025498 |
+| 1958-12-01 | 314.67 |       315.43 |               314.97122948 |
+| 1959-01-01 | 315.58 |       315.54 |               315.02810653 |
+| 1959-02-01 | 316.49 |       315.86 |               315.11129588 |
+|        ... |    ... |          ... |                        ... |
+| 2019-06-01 | 413.96 |       411.38 |               409.42307506 |
+| 2019-07-01 | 411.85 |       411.03 |               409.58376755 |
+| 2019-08-01 | 410.08 |       411.62 |               409.78739079 |
+| 2019-09-01 | 408.55 |       412.06 |               410.01465172 |
+| 2019-10-01 | 408.43 |       412.06 |               410.21918654 |
+| 2019-11-01 | 410.29 |       412.56 |               410.45326789 |
+| 2019-12-01 | 411.85 |       412.78 |               410.68594110 |
+| 2020-01-01 | 413.37 |       413.32 |               410.94934699 |
+| 2020-02-01 | 414.09 |       413.33 |               411.18741229 |
+| 2020-03-01 | 414.51 |       412.94 |               411.36267106 |
+| 2020-04-01 | 416.18 |       413.35 |               411.56140396 |
+
+
+
 - Rolling average over a 12 point range
 
 <div class="originalCode">
@@ -592,7 +1014,35 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>data/co2_over_time.csv [741 4]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th><th style="text-align:right;">Rolling average</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td><td style="text-align:right;">314.44000000</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td><td style="text-align:right;">314.50000000</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td><td style="text-align:right;">314.52250000</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td><td style="text-align:right;">314.58500000</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td><td style="text-align:right;">314.73083333</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td><td style="text-align:right;">314.86750000</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td><td style="text-align:right;">314.93083333</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td><td style="text-align:right;">315.01333333</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td><td style="text-align:right;">315.10500000</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.22333333</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td><td style="text-align:right;">410.14000000</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td><td style="text-align:right;">410.38583333</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td><td style="text-align:right;">410.63500000</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td><td style="text-align:right;">410.88333333</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td><td style="text-align:right;">411.08750000</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td><td style="text-align:right;">411.26916667</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td><td style="text-align:right;">411.48833333</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td><td style="text-align:right;">411.69250000</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td><td style="text-align:right;">411.89500000</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td><td style="text-align:right;">412.10166667</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td><td style="text-align:right;">412.32083333</td></tr></tbody></table></div></div></div></div>
+data/co2_over_time.csv [741 4]:
+
+|       Date |    CO2 | adjusted CO2 | Rolling average |
+|------------|-------:|-------------:|----------------:|
+| 1958-03-01 | 315.70 |       314.44 |    314.44000000 |
+| 1958-04-01 | 317.46 |       315.16 |    314.50000000 |
+| 1958-05-01 | 317.51 |       314.71 |    314.52250000 |
+| 1958-07-01 | 315.86 |       315.19 |    314.58500000 |
+| 1958-08-01 | 314.93 |       316.19 |    314.73083333 |
+| 1958-09-01 | 313.21 |       316.08 |    314.86750000 |
+| 1958-11-01 | 313.33 |       315.20 |    314.93083333 |
+| 1958-12-01 | 314.67 |       315.43 |    315.01333333 |
+| 1959-01-01 | 315.58 |       315.54 |    315.10500000 |
+| 1959-02-01 | 316.49 |       315.86 |    315.22333333 |
+|        ... |    ... |          ... |             ... |
+| 2019-06-01 | 413.96 |       411.38 |    410.14000000 |
+| 2019-07-01 | 411.85 |       411.03 |    410.38583333 |
+| 2019-08-01 | 410.08 |       411.62 |    410.63500000 |
+| 2019-09-01 | 408.55 |       412.06 |    410.88333333 |
+| 2019-10-01 | 408.43 |       412.06 |    411.08750000 |
+| 2019-11-01 | 410.29 |       412.56 |    411.26916667 |
+| 2019-12-01 | 411.85 |       412.78 |    411.48833333 |
+| 2020-01-01 | 413.37 |       413.32 |    411.69250000 |
+| 2020-02-01 | 414.09 |       413.33 |    411.89500000 |
+| 2020-03-01 | 414.51 |       412.94 |    412.10166667 |
+| 2020-04-01 | 416.18 |       413.35 |    412.32083333 |
+
+
+
 - Train a model to predict the next 10 years
 
 <div class="originalCode">
@@ -603,7 +1053,35 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>data/co2_over_time.csv [741 3]:</p><table><thead><tr><th>Date</th><th style="text-align:right;">CO2</th><th style="text-align:right;">adjusted CO2</th></tr></thead><tbody><tr><td>1958-03-01</td><td style="text-align:right;">315.70</td><td style="text-align:right;">314.44</td></tr><tr><td>1958-04-01</td><td style="text-align:right;">317.46</td><td style="text-align:right;">315.16</td></tr><tr><td>1958-05-01</td><td style="text-align:right;">317.51</td><td style="text-align:right;">314.71</td></tr><tr><td>1958-07-01</td><td style="text-align:right;">315.86</td><td style="text-align:right;">315.19</td></tr><tr><td>1958-08-01</td><td style="text-align:right;">314.93</td><td style="text-align:right;">316.19</td></tr><tr><td>1958-09-01</td><td style="text-align:right;">313.21</td><td style="text-align:right;">316.08</td></tr><tr><td>1958-11-01</td><td style="text-align:right;">313.33</td><td style="text-align:right;">315.20</td></tr><tr><td>1958-12-01</td><td style="text-align:right;">314.67</td><td style="text-align:right;">315.43</td></tr><tr><td>1959-01-01</td><td style="text-align:right;">315.58</td><td style="text-align:right;">315.54</td></tr><tr><td>1959-02-01</td><td style="text-align:right;">316.49</td><td style="text-align:right;">315.86</td></tr><tr><td>...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td>2019-06-01</td><td style="text-align:right;">413.96</td><td style="text-align:right;">411.38</td></tr><tr><td>2019-07-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">411.03</td></tr><tr><td>2019-08-01</td><td style="text-align:right;">410.08</td><td style="text-align:right;">411.62</td></tr><tr><td>2019-09-01</td><td style="text-align:right;">408.55</td><td style="text-align:right;">412.06</td></tr><tr><td>2019-10-01</td><td style="text-align:right;">408.43</td><td style="text-align:right;">412.06</td></tr><tr><td>2019-11-01</td><td style="text-align:right;">410.29</td><td style="text-align:right;">412.56</td></tr><tr><td>2019-12-01</td><td style="text-align:right;">411.85</td><td style="text-align:right;">412.78</td></tr><tr><td>2020-01-01</td><td style="text-align:right;">413.37</td><td style="text-align:right;">413.32</td></tr><tr><td>2020-02-01</td><td style="text-align:right;">414.09</td><td style="text-align:right;">413.33</td></tr><tr><td>2020-03-01</td><td style="text-align:right;">414.51</td><td style="text-align:right;">412.94</td></tr><tr><td>2020-04-01</td><td style="text-align:right;">416.18</td><td style="text-align:right;">413.35</td></tr></tbody></table></div></div></div></div>
+data/co2_over_time.csv [741 3]:
+
+|       Date |    CO2 | adjusted CO2 |
+|------------|-------:|-------------:|
+| 1958-03-01 | 315.70 |       314.44 |
+| 1958-04-01 | 317.46 |       315.16 |
+| 1958-05-01 | 317.51 |       314.71 |
+| 1958-07-01 | 315.86 |       315.19 |
+| 1958-08-01 | 314.93 |       316.19 |
+| 1958-09-01 | 313.21 |       316.08 |
+| 1958-11-01 | 313.33 |       315.20 |
+| 1958-12-01 | 314.67 |       315.43 |
+| 1959-01-01 | 315.58 |       315.54 |
+| 1959-02-01 | 316.49 |       315.86 |
+|        ... |    ... |          ... |
+| 2019-06-01 | 413.96 |       411.38 |
+| 2019-07-01 | 411.85 |       411.03 |
+| 2019-08-01 | 410.08 |       411.62 |
+| 2019-09-01 | 408.55 |       412.06 |
+| 2019-10-01 | 408.43 |       412.06 |
+| 2019-11-01 | 410.29 |       412.56 |
+| 2019-12-01 | 411.85 |       412.78 |
+| 2020-01-01 | 413.37 |       413.32 |
+| 2020-02-01 | 414.09 |       413.33 |
+| 2020-03-01 | 414.51 |       412.94 |
+| 2020-04-01 | 416.18 |       413.35 |
+
+
+
 - Summarizing data (mean, standard deviation, confidence intervals etc.)
 - Standard deviation using fastmath
 
@@ -656,7 +1134,35 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [63 3]:</p><table><thead><tr><th style="text-align:right;">:$group-name</th><th style="text-align:right;">:average-co2</th><th style="text-align:right;">:standard-deviation</th></tr></thead><tbody><tr><td style="text-align:right;">1958</td><td style="text-align:right;">315.30000000</td><td style="text-align:right;">0.60318204</td></tr><tr><td style="text-align:right;">1959</td><td style="text-align:right;">315.97750000</td><td style="text-align:right;">0.47259679</td></tr><tr><td style="text-align:right;">1960</td><td style="text-align:right;">316.90750000</td><td style="text-align:right;">0.42004599</td></tr><tr><td style="text-align:right;">1961</td><td style="text-align:right;">317.63833333</td><td style="text-align:right;">0.45170049</td></tr><tr><td style="text-align:right;">1962</td><td style="text-align:right;">318.44833333</td><td style="text-align:right;">0.37201743</td></tr><tr><td style="text-align:right;">1963</td><td style="text-align:right;">318.98750000</td><td style="text-align:right;">0.28813270</td></tr><tr><td style="text-align:right;">1964</td><td style="text-align:right;">319.67888889</td><td style="text-align:right;">0.20127372</td></tr><tr><td style="text-align:right;">1965</td><td style="text-align:right;">320.03083333</td><td style="text-align:right;">0.50883929</td></tr><tr><td style="text-align:right;">1966</td><td style="text-align:right;">321.36250000</td><td style="text-align:right;">0.37363388</td></tr><tr><td style="text-align:right;">1967</td><td style="text-align:right;">322.17500000</td><td style="text-align:right;">0.32326460</td></tr><tr><td style="text-align:right;">...</td><td style="text-align:right;">...</td><td style="text-align:right;">...</td></tr><tr><td style="text-align:right;">2010</td><td style="text-align:right;">389.89333333</td><td style="text-align:right;">0.67686891</td></tr><tr><td style="text-align:right;">2011</td><td style="text-align:right;">391.64500000</td><td style="text-align:right;">0.71908401</td></tr><tr><td style="text-align:right;">2012</td><td style="text-align:right;">393.86500000</td><td style="text-align:right;">0.87383689</td></tr><tr><td style="text-align:right;">2013</td><td style="text-align:right;">396.55833333</td><td style="text-align:right;">0.72002315</td></tr><tr><td style="text-align:right;">2014</td><td style="text-align:right;">398.60500000</td><td style="text-align:right;">0.68076828</td></tr><tr><td style="text-align:right;">2015</td><td style="text-align:right;">400.87833333</td><td style="text-align:right;">1.02130784</td></tr><tr><td style="text-align:right;">2016</td><td style="text-align:right;">404.27416667</td><td style="text-align:right;">0.95601881</td></tr><tr><td style="text-align:right;">2017</td><td style="text-align:right;">406.57750000</td><td style="text-align:right;">0.64441834</td></tr><tr><td style="text-align:right;">2018</td><td style="text-align:right;">408.58166667</td><td style="text-align:right;">0.99862481</td></tr><tr><td style="text-align:right;">2019</td><td style="text-align:right;">411.48833333</td><td style="text-align:right;">0.74410206</td></tr><tr><td style="text-align:right;">2020</td><td style="text-align:right;">413.23500000</td><td style="text-align:right;">0.19706175</td></tr></tbody></table></div></div></div></div>
+_unnamed [63 3]:
+
+| :$group-name | :average-co2 | :standard-deviation |
+|-------------:|-------------:|--------------------:|
+|         1958 | 315.30000000 |          0.60318204 |
+|         1959 | 315.97750000 |          0.47259679 |
+|         1960 | 316.90750000 |          0.42004599 |
+|         1961 | 317.63833333 |          0.45170049 |
+|         1962 | 318.44833333 |          0.37201743 |
+|         1963 | 318.98750000 |          0.28813270 |
+|         1964 | 319.67888889 |          0.20127372 |
+|         1965 | 320.03083333 |          0.50883929 |
+|         1966 | 321.36250000 |          0.37363388 |
+|         1967 | 322.17500000 |          0.32326460 |
+|          ... |          ... |                 ... |
+|         2010 | 389.89333333 |          0.67686891 |
+|         2011 | 391.64500000 |          0.71908401 |
+|         2012 | 393.86500000 |          0.87383689 |
+|         2013 | 396.55833333 |          0.72002315 |
+|         2014 | 398.60500000 |          0.68076828 |
+|         2015 | 400.87833333 |          1.02130784 |
+|         2016 | 404.27416667 |          0.95601881 |
+|         2017 | 406.57750000 |          0.64441834 |
+|         2018 | 408.58166667 |          0.99862481 |
+|         2019 | 411.48833333 |          0.74410206 |
+|         2020 | 413.23500000 |          0.19706175 |
+
+
+
 - Working with sequential data
 - Smoothing out data
 - Calculating a moving average
@@ -682,7 +1188,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;"></td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+| :a | :b |
+|---:|---:|
+|  2 | 10 |
+|  2 | 11 |
+|  3 | 12 |
+|  4 | 16 |
+|  7 | 16 |
+|  7 | 16 |
+|  7 | 16 |
+|  8 |    |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -692,7 +1212,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+| :a | :b |
+|---:|---:|
+|  2 | 10 |
+|  2 | 11 |
+|  3 | 12 |
+|  4 | 16 |
+|  7 | 16 |
+|  7 | 16 |
+|  7 | 16 |
+|  8 | 16 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -702,7 +1236,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;"></td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+| :a | :b |
+|---:|---:|
+|    | 10 |
+|  2 | 11 |
+|  3 | 12 |
+|  4 | 12 |
+|  4 | 12 |
+|  4 | 12 |
+|  7 | 16 |
+|  8 | 16 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -712,7 +1260,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">16</td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+| :a | :b |
+|---:|---:|
+|  2 | 10 |
+|  2 | 11 |
+|  3 | 12 |
+|  4 | 12 |
+|  4 | 12 |
+|  4 | 12 |
+|  7 | 16 |
+|  8 | 16 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -722,7 +1284,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">2.0</td><td style="text-align:right;">10.0</td></tr><tr><td style="text-align:right;">2.0</td><td style="text-align:right;">11.0</td></tr><tr><td style="text-align:right;">3.0</td><td style="text-align:right;">12.0</td></tr><tr><td style="text-align:right;">4.0</td><td style="text-align:right;">13.0</td></tr><tr><td style="text-align:right;">5.0</td><td style="text-align:right;">14.0</td></tr><tr><td style="text-align:right;">6.0</td><td style="text-align:right;">15.0</td></tr><tr><td style="text-align:right;">7.0</td><td style="text-align:right;">16.0</td></tr><tr><td style="text-align:right;">8.0</td><td style="text-align:right;">16.0</td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+|  :a |   :b |
+|----:|-----:|
+| 2.0 | 10.0 |
+| 2.0 | 11.0 |
+| 3.0 | 12.0 |
+| 4.0 | 13.0 |
+| 5.0 | 14.0 |
+| 6.0 | 15.0 |
+| 7.0 | 16.0 |
+| 8.0 | 16.0 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -732,7 +1308,21 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">100</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;">100</td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;">100</td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+|  :a |  :b |
+|----:|----:|
+| 100 |  10 |
+|   2 |  11 |
+|   3 |  12 |
+|   4 | 100 |
+| 100 | 100 |
+| 100 | 100 |
+|   7 |  16 |
+|   8 | 100 |
+
+
+
 
 <div class="originalCode">
 ```clojure
@@ -742,6 +1332,20 @@ Signal processing/time series analysis
 </div>
 
 
-<div><div><div><div><p>_unnamed [8 2]:</p><table><thead><tr><th style="text-align:right;">:a</th><th style="text-align:right;">:b</th></tr></thead><tbody><tr><td style="text-align:right;">100</td><td style="text-align:right;">10</td></tr><tr><td style="text-align:right;">2</td><td style="text-align:right;">11</td></tr><tr><td style="text-align:right;">3</td><td style="text-align:right;">12</td></tr><tr><td style="text-align:right;">4</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">100</td><td style="text-align:right;"></td></tr><tr><td style="text-align:right;">7</td><td style="text-align:right;">16</td></tr><tr><td style="text-align:right;">8</td><td style="text-align:right;"></td></tr></tbody></table></div></div></div></div>
+_unnamed [8 2]:
+
+|  :a | :b |
+|----:|---:|
+| 100 | 10 |
+|   2 | 11 |
+|   3 | 12 |
+|   4 |    |
+| 100 |    |
+| 100 |    |
+|   7 | 16 |
+|   8 |    |
+
+
+
 <div style="background-color:grey;height:2px;width:100%;"></div>
 <div><code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_3_data_manipulation/3_data_manipulation.clj">book/chapter_3_data_manipulation/3_data_manipulation.clj</a></small></small></code></div>

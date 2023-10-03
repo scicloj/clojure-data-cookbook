@@ -49,10 +49,27 @@ tr:nth-child(even) {
             [tech.v3.datatype.functional :as fun]
             [scicloj.kindly.v4.kind :as kind]
             [hiccup.core :as hiccup]
-            [clojure2d.color :as color]))
+            [clojure2d.color :as color]
+            [scicloj.kind-clerk.api :as kind-clerk]))
 ```
 </div>
 
+
+
+<div class="originalCode">
+```clojure
+(kind-clerk/setup!)
+```
+</div>
+
+
+
+<div class="printedClojure">
+```clojure
+:ok
+
+```
+</div>
 
 
 ## Raw html
@@ -112,7 +129,7 @@ We can plot a Tablecloth datasete using a Hanami template:
 </div>
 
 
-<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":200,"tooltip":true},"width":400,"background":"floralwhite","height":300,"data":{"values":"x,y\n0,-0.4209983628213514\n1,-0.5833965037248908\n2,-0.9644147094326814\n3,-0.5862004544528605\n4,-0.5101837210023142\n5,-0.5163011425722702\n6,-0.7398281887196692\n7,-0.6303887394567735\n8,-0.546657732572976\n9,-0.12238661543137341\n10,0.24277452001973288\n11,-0.08323009749877841\n12,0.28665226914487796\n13,0.7603694689397982\n14,0.3648234912760243\n15,0.3595165908548027\n16,0.19641209992815012\n17,0.676496803100328\n18,1.043591368200833\n19,0.5729052395778431\n","format":{"type":"csv"}}});</script></div></div>
+<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":200,"tooltip":true},"width":400,"background":"floralwhite","height":300,"data":{"values":"x,y\n0,0.2696595674516514\n1,0.5994221672898448\n2,0.9041662987177651\n3,1.1641703504999699\n4,1.606396428799537\n5,1.3972382302814177\n6,1.7686488303622263\n7,1.8812856284088362\n8,2.1521859934642023\n9,1.761413935660772\n10,1.5350565538499519\n11,1.4760599735629056\n12,1.2326873858637482\n13,1.2742130826088063\n14,0.9937616484523007\n15,1.4130287588308725\n16,1.16480354577581\n17,0.6889384877674767\n18,0.821314858587385\n19,0.7473480777397288\n","format":{"type":"csv"}}});</script></div></div>
 Let us look inside the resulting vega-lite space. We can see the dataset is included as CSV:
 
 <div class="originalCode">
@@ -137,7 +154,7 @@ Let us look inside the resulting vega-lite space. We can see the dataset is incl
  :height 300,
  :data
  {:values
-  "x,y\n0,-0.4209983628213514\n1,-0.5833965037248908\n2,-0.9644147094326814\n3,-0.5862004544528605\n4,-0.5101837210023142\n5,-0.5163011425722702\n6,-0.7398281887196692\n7,-0.6303887394567735\n8,-0.546657732572976\n9,-0.12238661543137341\n10,0.24277452001973288\n11,-0.08323009749877841\n12,0.28665226914487796\n13,0.7603694689397982\n14,0.3648234912760243\n15,0.3595165908548027\n16,0.19641209992815012\n17,0.676496803100328\n18,1.043591368200833\n19,0.5729052395778431\n",
+  "x,y\n0,0.2696595674516514\n1,0.5994221672898448\n2,0.9041662987177651\n3,1.1641703504999699\n4,1.606396428799537\n5,1.3972382302814177\n6,1.7686488303622263\n7,1.8812856284088362\n8,2.1521859934642023\n9,1.761413935660772\n10,1.5350565538499519\n11,1.4760599735629056\n12,1.2326873858637482\n13,1.2742130826088063\n14,0.9937616484523007\n15,1.4130287588308725\n16,1.16480354577581\n17,0.6889384877674767\n18,0.821314858587385\n19,0.7473480777397288\n",
   :format {:type "csv"}}}
 
 ```
@@ -178,7 +195,7 @@ The `scicloj.noj.v1.vis.hanami.templates` namespace add Hanami templates to Hana
 </div>
 
 
-<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"width":400,"background":"floralwhite","title":{"text":"points and a line"},"layer":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":400,"background":"floralwhite","height":300},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":400,"background":"floralwhite","height":300}],"height":300,"data":{"values":"x,y\n0,-0.4209983628213514\n1,-0.5833965037248908\n2,-0.9644147094326814\n3,-0.5862004544528605\n4,-0.5101837210023142\n5,-0.5163011425722702\n6,-0.7398281887196692\n7,-0.6303887394567735\n8,-0.546657732572976\n9,-0.12238661543137341\n10,0.24277452001973288\n11,-0.08323009749877841\n12,0.28665226914487796\n13,0.7603694689397982\n14,0.3648234912760243\n15,0.3595165908548027\n16,0.19641209992815012\n17,0.676496803100328\n18,1.043591368200833\n19,0.5729052395778431\n","format":{"type":"csv"}}});</script></div></div>
+<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"width":400,"background":"floralwhite","title":{"text":"points and a line"},"layer":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":400,"background":"floralwhite","height":300},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":400,"background":"floralwhite","height":300}],"height":300,"data":{"values":"x,y\n0,0.2696595674516514\n1,0.5994221672898448\n2,0.9041662987177651\n3,1.1641703504999699\n4,1.606396428799537\n5,1.3972382302814177\n6,1.7686488303622263\n7,1.8812856284088362\n8,2.1521859934642023\n9,1.761413935660772\n10,1.5350565538499519\n11,1.4760599735629056\n12,1.2326873858637482\n13,1.2742130826088063\n14,0.9937616484523007\n15,1.4130287588308725\n16,1.16480354577581\n17,0.6889384877674767\n18,0.821314858587385\n19,0.7473480777397288\n","format":{"type":"csv"}}});</script></div></div>
 
 ### Concatenation
 
@@ -202,7 +219,7 @@ The `scicloj.noj.v1.vis.hanami.templates` namespace add Hanami templates to Hana
 </div>
 
 
-<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"width":400,"background":"floralwhite","vconcat":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":100,"background":"floralwhite","height":100},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":100,"background":"floralwhite","height":100}],"height":300,"data":{"values":"x,y\n0,-0.4209983628213514\n1,-0.5833965037248908\n2,-0.9644147094326814\n3,-0.5862004544528605\n4,-0.5101837210023142\n5,-0.5163011425722702\n6,-0.7398281887196692\n7,-0.6303887394567735\n8,-0.546657732572976\n9,-0.12238661543137341\n10,0.24277452001973288\n11,-0.08323009749877841\n12,0.28665226914487796\n13,0.7603694689397982\n14,0.3648234912760243\n15,0.3595165908548027\n16,0.19641209992815012\n17,0.676496803100328\n18,1.043591368200833\n19,0.5729052395778431\n","format":{"type":"csv"}}});</script></div></div>
+<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"width":400,"background":"floralwhite","vconcat":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":100,"background":"floralwhite","height":100},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":100,"background":"floralwhite","height":100}],"height":300,"data":{"values":"x,y\n0,0.2696595674516514\n1,0.5994221672898448\n2,0.9041662987177651\n3,1.1641703504999699\n4,1.606396428799537\n5,1.3972382302814177\n6,1.7686488303622263\n7,1.8812856284088362\n8,2.1521859934642023\n9,1.761413935660772\n10,1.5350565538499519\n11,1.4760599735629056\n12,1.2326873858637482\n13,1.2742130826088063\n14,0.9937616484523007\n15,1.4130287588308725\n16,1.16480354577581\n17,0.6889384877674767\n18,0.821314858587385\n19,0.7473480777397288\n","format":{"type":"csv"}}});</script></div></div>
 
 <div class="originalCode">
 ```clojure
@@ -224,7 +241,7 @@ The `scicloj.noj.v1.vis.hanami.templates` namespace add Hanami templates to Hana
 </div>
 
 
-<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"hconcat":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":100,"background":"floralwhite","height":100},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":100,"background":"floralwhite","height":100}],"width":400,"background":"floralwhite","height":300,"data":{"values":"x,y\n0,-0.4209983628213514\n1,-0.5833965037248908\n2,-0.9644147094326814\n3,-0.5862004544528605\n4,-0.5101837210023142\n5,-0.5163011425722702\n6,-0.7398281887196692\n7,-0.6303887394567735\n8,-0.546657732572976\n9,-0.12238661543137341\n10,0.24277452001973288\n11,-0.08323009749877841\n12,0.28665226914487796\n13,0.7603694689397982\n14,0.3648234912760243\n15,0.3595165908548027\n16,0.19641209992815012\n17,0.676496803100328\n18,1.043591368200833\n19,0.5729052395778431\n","format":{"type":"csv"}}});</script></div></div>
+<div><div>vega<script>vegaEmbed(document.currentScript.parentElement, {"hconcat":[{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"circle","size":400,"tooltip":true},"width":100,"background":"floralwhite","height":100},{"encoding":{"y":{"field":"y","type":"quantitative"},"x":{"field":"x","type":"quantitative"}},"mark":{"type":"line","size":4,"color":"brown","tooltip":true},"width":100,"background":"floralwhite","height":100}],"width":400,"background":"floralwhite","height":300,"data":{"values":"x,y\n0,0.2696595674516514\n1,0.5994221672898448\n2,0.9041662987177651\n3,1.1641703504999699\n4,1.606396428799537\n5,1.3972382302814177\n6,1.7686488303622263\n7,1.8812856284088362\n8,2.1521859934642023\n9,1.761413935660772\n10,1.5350565538499519\n11,1.4760599735629056\n12,1.2326873858637482\n13,1.2742130826088063\n14,0.9937616484523007\n15,1.4130287588308725\n16,1.16480354577581\n17,0.6889384877674767\n18,0.821314858587385\n19,0.7473480777397288\n","format":{"type":"csv"}}});</script></div></div>
 
 ### Linear regression
 

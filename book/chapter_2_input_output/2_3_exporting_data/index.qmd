@@ -40,10 +40,27 @@ tr:nth-child(even) {
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [nextjournal.clerk :as clerk]
-   [tablecloth.api :as tc]))
+   [tablecloth.api :as tc]
+   [scicloj.kind-clerk.api :as kind-clerk]))
 ```
 </div>
 
+
+
+<div class="originalCode">
+```clojure
+(kind-clerk/setup!)
+```
+</div>
+
+
+
+<div class="printedClojure">
+```clojure
+:ok
+
+```
+</div>
 
 
 # How to get data out of a notebook
@@ -145,7 +162,33 @@ Read this also with tablecloth:
 </div>
 
 
-<div><div><div><div><p>data/tc-nippy.nippy [20 10]:</p><table><thead><tr><th>0</th><th>7</th><th>1</th><th>4</th><th>6</th><th>3</th><th>2</th><th>9</th><th>5</th><th>8</th></tr></thead><tbody><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr><tr><td>cell-0</td><td>cell-7</td><td>cell-1</td><td>cell-4</td><td>cell-6</td><td>cell-3</td><td>cell-2</td><td>cell-9</td><td>cell-5</td><td>cell-8</td></tr></tbody></table></div></div></div></div>
+data/tc-nippy.nippy [20 10]:
+
+|      0 |      7 |      1 |      4 |      6 |      3 |      2 |      9 |      5 |      8 |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+| cell-0 | cell-7 | cell-1 | cell-4 | cell-6 | cell-3 | cell-2 | cell-9 | cell-5 | cell-8 |
+
+
+
 
 ## Leave data in Clojure files
 
