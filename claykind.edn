@@ -1,0 +1,11 @@
+{:paths        ["book"]
+ :target-dir   nil
+ :front-matter {:format                {:html {:toc       true
+                                               :toc-depth 4
+                                               :theme     :spacelab}}
+                :highlight-style       :solarized
+                :code-block-background true
+                :embed-resources       false
+                :execute               {:freeze true}}
+ :remote-repo  {:git-url "https://github.com/scicloj/clojure-data-cookbook"
+                :branch  "gh-pages"}}

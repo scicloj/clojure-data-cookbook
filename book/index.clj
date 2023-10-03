@@ -13,7 +13,7 @@
 
 ;; ## TEST
 
-(clerk/html
+(clerk-setup/html
  [:a {:href "book/chapter_1_intro/1_1_welcome.html"}
   "THIS IS THE LINK"])
 
@@ -29,7 +29,7 @@
                   (map #(str/replace % #".md|.clj" ".html"))
                   (group-by (fn [el] (take 2 (-> el (str/split #"\/"))))))]
 
-  (clerk/html
+  (clerk-setup/html
    [:div [:h1 "Contents"]
     (for [[[_ chapter_name] pages] files]
       [:section [:h2 chapter_name]

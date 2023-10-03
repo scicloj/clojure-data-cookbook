@@ -3,16 +3,27 @@
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")
   (println)
-  (println "Available commands are:")
+  (println "You can load the following build tools:")
   (println)
-  (println "(start!)                  ;; Start Clerk")
-  (println "(start-and-watch!)        ;; Start Clerk and reload on all changes to the `book` namespaces")
-  (println "(show <notebook-name>)    ;; Show the given notebook"))
+  (println "(clerk)")
+  (println "(clay)")
+  (println "(claykind)")
+  (println "(portal)"))
 
-(defn dev
-  "Load and switch to the 'dev' namespace."
-  []
-  (require 'dev)
-  (help)
-  (in-ns 'dev)
-  :loaded)
+(defn clerk []
+  (require 'clerk-setup)
+  (in-ns 'clerk-setup))
+
+(defn clay []
+  (require 'clerk-setup)
+  (in-ns 'clerk-setup))
+
+(defn claykind []
+  (require 'claykind-setup)
+  (in-ns 'claykind-setup))
+
+(defn portal []
+  (require 'portal-setup)
+  (in-ns 'portal-setup))
+
+(help)

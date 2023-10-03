@@ -1,0 +1,54 @@
+name: clojure-data-cookbook CI
+
+on: [push]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # To install LaTeX to build PDF book
+          tinytex: true
+          # uncomment below and fill to pin a version
+          # version: SPECIFIC-QUARTO-VERSION-HERE
+
+      - name: Prepare Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+
+      - name: Install Clojure tools
+        uses: DeLaGuardo/setup-clojure@11.0
+        with:
+          cli: latest              # Clojure CLI based on tools.deps
+
+      # Optional step:
+      - name: Cache Clojure dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.deps.clj
+          # List all files containing dependencies:
+          key: cljdeps-${{ hashFiles('deps.edn') }}
+          restore-keys: cljdeps-
+
+#      - name: Execute tests
+#        run: clojure -M:dev:test
+
+      - name: Build Markdown
+        run: clojure -M:dev -m scicloj.claykind.main
+
+      - name: Build the book
+        run: quarto render
+
+      - name: Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: quarto publish gh-pages

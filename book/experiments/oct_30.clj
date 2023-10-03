@@ -1,14 +1,14 @@
 (ns book.experiments.oct-30
   (:require [scicloj.clay.v2.api :as clay]
-            [scicloj.kindly.v3.kind :as kind]
+            [scicloj.kindly.v4.kind :as kind]
             [clojure.string :as str]
             [tablecloth.api :as tc]))
 
 
-(clay/start!)
+(clay-setup/start!)
 
 (comment
-  (clay/show-doc! "experiments/oct_30.clj" {:toc? true}))
+  (clay-setup/show-doc! "experiments/oct_30.clj" {:toc? true}))
 
 ;; https://r4ds.had.co.nz/transform.html
 

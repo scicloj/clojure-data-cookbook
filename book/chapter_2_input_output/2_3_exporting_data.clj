@@ -56,8 +56,8 @@
 ;; To do that call
 
 (comment
-  (clerk/build! {:paths "path/to/files..."
-                 :index "book/index.clj"}))
+  (clerk-setup/build! {:paths "path/to/files..."
+                 :index       "book/index.clj"}))
 
 ;; More information in Clerk's docs: https://book.clerk.vision/#static-building
 
