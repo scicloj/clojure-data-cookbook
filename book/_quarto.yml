@@ -3,18 +3,21 @@ project:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark: darkly
 
 book:
   title: "Clojure Data Cookbook"
+  favicon: images/icon.svg
   chapters:
     - index.qmd
     - chapter_1_intro/1_1_welcome.md
     - chapter_1_intro/1_2_why_clojure.md
     - chapter_1_intro/1_3_set_up.md
-    - chapter_2_input_output/2_1_loading_data/index.qmd
-    - chapter_2_input_output/2_2_messy_data/index.qmd
-    - chapter_2_input_output/2_3_exporting_data/index.qmd
-    - chapter_3_data_manipulation/3_data_manipulation/index.qmd
-    - chapter_4_data_visualisation/4_2_graphs/index.qmd
-    - chapter_4_data_visualisation/noj_examples/index.qmd
+    - qmd/2-1-loading-data.md
+    - qmd/2-2-messy-data.md
+    - qmd/2-3-exporting-data.md
+    - qmd/3-data-manipulation.md
+    - qmd/4-2-graphs.md
+    - qmd/noj-examples.md

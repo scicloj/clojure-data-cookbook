@@ -19,7 +19,6 @@
 
 (kind-clerk/setup!)
 
-
 ;; ## Raw html
 (-> "<p>Hello, <i>Noj</i>.</p>"
     vis/raw-html)

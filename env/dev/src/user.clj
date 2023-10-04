@@ -1,32 +1,29 @@
-(ns user
-  (:require [scicloj.clay.v2.api :as clay]))
+(ns user)
 
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")
   (println)
-  (println "Available commands are:")
+  (println "You can load the following build tools:")
   (println)
-  (println "(start!)                  ;; Start Clerk")
-  (println "(start-and-watch!)        ;; Start Clerk and reload on all changes to the `book` namespaces")
-  (println "(show <notebook-name>)    ;; Show the given notebook"))
+  (println "(clerk-setup)")
+  (println "(clay-setup)")
+  (println "(claykind-setup)")
+  (println "(portal-setup)"))
 
-(defn dev
-  "Load and switch to the 'dev' namespace."
-  []
-  (require 'dev)
-  (help)
-  (in-ns 'dev)
-  :loaded)
+(defn clerk-setup []
+  (require 'clerk-setup)
+  (in-ns 'clerk-setup))
 
+(defn clay-setup []
+  (require 'clay-setup)
+  (in-ns 'clay-setup))
 
-(clay/swap-options!
- assoc
- :remote-repo {:git-url "https://github.com/scicloj/kindly-noted"
-               :branch "main"}
- :quarto {:format {:html {:toc true
-                          :toc-depth 4
-                          :theme :spacelab}}
-          :highlight-style :solarized
-          :code-block-background true
-          :embed-resources false
-          :execute {:freeze true}})
+(defn claykind-setup []
+  (require 'claykind-setup)
+  (in-ns 'claykind-setup))
+
+(defn portal-setup []
+  (require 'portal-setup)
+  (in-ns 'portal-setup))
+
+(help)
