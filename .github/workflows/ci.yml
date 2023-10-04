@@ -44,7 +44,7 @@ jobs:
 #        run: clojure -M:dev:test
 
       - name: Prepare dependencies
-        run: clj -P -Sthreads 1
+        run: clojure -P -Sthreads 1
 
       - name: Build Markdown
         run: clojure -M:dev -m scicloj.claykind.main --verbose
