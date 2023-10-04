@@ -1,3 +1,5 @@
+;; # Graphs
+
 (ns chapter-4-data-visualisation.4-2-graphs
   (:require [tablecloth.api :as tc]
             [aerial.hanami.common :as hc]
@@ -10,7 +12,10 @@
             [tech.v3.datatype.functional :as fun]
             [hiccup.core :as hiccup]
             [clojure2d.color :as color]
-            [tablecloth.api :as tc]))
+            [tablecloth.api :as tc]
+            [scicloj.kind-clerk.api :as kind-clerk]))
+
+(kind-clerk/setup!)
 
 
 (def co2-over-time (tc/dataset "data/co2_over_time.csv"))

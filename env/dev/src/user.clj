@@ -1,4 +1,5 @@
-(ns user)
+(ns user
+  (:require [scicloj.clay.v2.api :as clay]))
 
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")
@@ -10,19 +11,19 @@
   (println "(claykind-setup)")
   (println "(portal-setup)"))
 
-(defn clerk []
+(defn clerk-setup []
   (require 'clerk-setup)
   (in-ns 'clerk-setup))
 
-(defn clay []
+(defn clay-setup []
   (require 'clay-setup)
   (in-ns 'clay-setup))
 
-(defn claykind []
+(defn claykind-setup []
   (require 'claykind-setup)
   (in-ns 'claykind-setup))
 
-(defn portal []
+(defn portal-setup []
   (require 'portal-setup)
   (in-ns 'portal-setup))
 

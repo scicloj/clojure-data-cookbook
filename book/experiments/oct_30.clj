@@ -1,4 +1,4 @@
-(ns book.experiments.oct-30
+(ns experiments.oct-30
   (:require [scicloj.clay.v2.api :as clay]
             [scicloj.kindly.v4.kind :as kind]
             [clojure.string :as str]
