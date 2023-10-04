@@ -1,6 +1,6 @@
 {:verbose      true
  :paths        ["book"]
- :target-dir   "qmd"
+ :target-dir   "book/qmd"
  :front-matter {:format                {:html {:toc       true
                                                :toc-depth 4
                                                :theme     :spacelab}}
