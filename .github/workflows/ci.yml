@@ -20,8 +20,8 @@ jobs:
       - name: Prepare Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
-          java-version: '8'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Install Clojure tools
         uses: DeLaGuardo/setup-clojure@11.0

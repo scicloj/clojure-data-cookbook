@@ -8,9 +8,8 @@
          io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
          io.github.swirrl/grafter.core       {:mvn/version "3.0.0"}
          generateme/fastmath                 {:mvn/version "2.2.1"}
-         scicloj/scicloj.ml.smile            {:mvn/version "7.0.650"}
+         scicloj/scicloj.ml.smile            {:mvn/version "7.2"}
          org.scicloj/noj                     {:mvn/version "1-alpha15"}
-         clojure2d/clojure2d                 {:mvn/version "1.4.5"}
          org.scicloj/kindly                  {:mvn/version "4-alpha4"}}
 
  :aliases
