@@ -50,8 +50,8 @@ jobs:
         run: clojure -M:dev -m scicloj.claykind.main --verbose
 
       - name: Build the book
-        run: quarto render
+        run: cd book && quarto render
 
       - name: Deploy
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: quarto publish gh-pages
+        run: cd book && quarto publish gh-pages
