@@ -1,5 +1,4 @@
-(ns user
-  (:require [scicloj.clay.v2.api :as clay]))
+(ns user)
 
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")

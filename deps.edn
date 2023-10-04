@@ -14,7 +14,8 @@
 
  :aliases
  {:dev {:extra-paths ["env/dev/src"]
-        :extra-deps  {io.github.nextjournal/clerk {:mvn/version "0.12.707"}
+        :extra-deps  {org.slf4j/slf4j-simple      {:mvn/version "2.0.9"}
+                      io.github.nextjournal/clerk {:mvn/version "0.12.707"}
                       org.scicloj/kind-clerk      {:mvn/version "RELEASE"}
                       djblue/portal               {:mvn/version "0.48.0"}
                       org.scicloj/kind-portal     {:mvn/version "RELEASE"}
