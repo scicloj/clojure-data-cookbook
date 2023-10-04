@@ -21,4 +21,4 @@
                       org.scicloj/kind-portal     {:mvn/version "RELEASE"}
                       org.scicloj/clay            {:mvn/version "2-alpha37"}
                       org.scicloj/claykind        {:git/url "https://github.com/timothypratley/claykind.git"
-                                                   :sha     "d8f591e1b2bd387fd575d9c63649748f9b25e8ff"}}}}}
+                                                   :sha     "eebd1447fd7c2b065f014a9c3e122a75faff371e"}}}}}
