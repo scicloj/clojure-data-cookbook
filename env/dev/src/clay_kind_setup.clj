@@ -1,0 +1,1 @@
+(ns clay-kind-setup)

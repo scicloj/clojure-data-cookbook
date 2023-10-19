@@ -19,3 +19,5 @@ pom.xml.asc
 
 # ignore built website on main branch, only see on gh-pages
 public/
+/.quarto/
+/_site/
