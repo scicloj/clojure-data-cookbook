@@ -19,10 +19,9 @@
 
 (kind-clerk/setup!)
 
-
 ;; ## Raw html
 (-> "<p>Hello, <i>Noj</i>.</p>"
-    vis/raw-html)
+    kind/html)
 
 (-> [:svg {:height 210
            :width 500}
@@ -32,7 +31,7 @@
              :y2 200
              :style "stroke:rgb(255,0,0);stroke-width:2"}]]
     hiccup/html
-    vis/raw-html)
+    kind/html)
 
 ;; ## Visualizing datases with Hanami
 
