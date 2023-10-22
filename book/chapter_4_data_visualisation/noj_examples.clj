@@ -23,21 +23,15 @@
 (-> "<p>Hello, <i>Noj</i>.</p>"
     kind/html)
 
-(-> [:svg {:height 210
-           :width 500}
-     [:line {:x1 0
-             :y1 0
-             :x2 200
-             :y2 200
-             :style "stroke:rgb(255,0,0);stroke-width:2"}]]
-    hiccup/html
-    kind/html)
+(kind/html
+ "
+<svg height=100 width=100>
+<circle cx=50 cy=50 r=40 stroke='purple' stroke-width=3 fill='floralwhite' />
+</svg> ")
 
 ;; ## Visualizing datases with Hanami
 
 ;; Noj offers a few convenience functions to make [Hanami](https://github.com/jsa-aerial/hanami) plotting work smoothly with [Tablecloth](https://scicloj.github.io/tablecloth/) and [Kindly](https://scicloj.github.io/kindly/).
-
-
 
 (def random-walk
   (let [n 20]
