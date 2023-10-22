@@ -7,4 +7,6 @@
   :base-source-path "book"
   :base-target-path "clean-book"
   :chapter-source-paths ["chapter_1_intro/1_1_welcome.md"
-                         "chapter_4_data_visualisation/noj_examples.clj"]})
+                         "chapter_4_data_visualisation/noj_examples.clj"]
+  :page-options {:quarto {:format {:html {:theme :spacelab}}
+                          :highlight-style :solarized}}})
