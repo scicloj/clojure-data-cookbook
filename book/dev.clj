@@ -1,8 +1,8 @@
 (ns dev
-  (:require [scicloj.clay.v2.quarto :as quarto]))
+  (:require [scicloj.clay.v2.api :as clay]))
 
 
-(quarto/update-book!
+(clay/update-book!
  {:title "Clojure Data Cookbook"
   :base-source-path "book"
   :base-target-path "clean-book"
