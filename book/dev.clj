@@ -16,9 +16,10 @@
                          "chapter_3_data_manipulation/3_data_manipulation.clj"
                          "chapter_4_data_visualisation/noj_examples.clj"
                          "chapter_4_data_visualisation/4_2_graphs.clj"]
-  :page-options {:quarto {:format {:html {;; Quarto themes:
-                                          ;; https://quarto.org/docs/output-formats/html-themes.html
-                                          :theme :spacelab}}
-                          ;; Quarto code highlighting:
-                          ;; https://quarto.org/docs/output-formats/html-code.html#highlighting
-                          :highlight-style :solarized}}})
+  :page-config {:quarto {:format {:html {;; Quarto themes:
+                                         ;; https://quarto.org/docs/output-formats/html-themes.html
+                                         :theme :spacelab
+                                         :monofont "Fira Code Medium"}}
+                         ;; Quarto code highlighting:
+                         ;; https://quarto.org/docs/output-formats/html-code.html#highlighting
+                         :highlight-style :solarized}}})
