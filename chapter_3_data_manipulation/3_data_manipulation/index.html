@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapter_4_data_visualisation/4_2_graphs/index.html" rel="next">
+<link href="../../chapter_4_data_visualisation/noj_examples/index.html" rel="next">
 <link href="../../chapter_2_input_output/2_3_exporting_data/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -183,14 +183,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
+  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
+  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
   </div>
 </li>
     </ul>
@@ -204,7 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#sorting" id="toc-sorting" class="nav-link active" data-scroll-target="#sorting"><span class="header-section-number">8.1</span> Sorting</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#sorting-columns" id="toc-sorting-columns" class="nav-link" data-scroll-target="#sorting-columns"><span class="header-section-number">8.1.1</span> Sorting columns</a></li>
   <li><a href="#sorting-rows" id="toc-sorting-rows" class="nav-link" data-scroll-target="#sorting-rows"><span class="header-section-number">8.1.2</span> Sorting rows</a></li>
   <li><a href="#custom-sorting-functions" id="toc-custom-sorting-functions" class="nav-link" data-scroll-target="#custom-sorting-functions"><span class="header-section-number">8.1.3</span> Custom sorting functions</a></li>
@@ -236,8 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-table {
+<style>table {
   border-style: thin;
 }
 th, td {
@@ -254,13 +253,14 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 </style>
-<style>
-.printedClojure .sourceCode {
+<style>.printedClojure .sourceCode {
   background-color: transparent;
   border-style: none;
 }
 </style>
-<div class="originalCode">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" type="text/javascript"></script>
+<div class="sourceClojure">
 <div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">ns</span> chapter<span class="dv">-3</span>-data-manipulation<span class="fl">.3</span>-data-manipulation</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">;; {:nextjournal.clerk/visibility {:code :hide}</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">;;  :nextjournal.clerk/toc true}</span></span>
@@ -272,7 +272,7 @@ tr:nth-child(even) {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            [fastmath.stats <span class="at">:as</span> stats]</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            [scicloj.kind-clerk.api <span class="at">:as</span> kind-clerk]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(kind-clerk/setup!)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
@@ -282,7 +282,7 @@ tr:nth-child(even) {
 <p>Once data is loaded and ready to work with, here’s how to do some of the most common data manipulation tasks.</p>
 <section id="sorting" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="sorting"><span class="header-section-number">8.1</span> Sorting</h2>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb4"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> dataset </span>(tc/dataset [{<span class="at">:country</span> <span class="st">"Canada"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">:size</span> <span class="dv">10000000</span>}</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                          {<span class="at">:country</span> <span class="st">"USA"</span></span>
@@ -293,7 +293,7 @@ tr:nth-child(even) {
 <section id="sorting-columns" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="sorting-columns"><span class="header-section-number">8.1.1</span> Sorting columns</h3>
 <p>Give the column headers in the order you want</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb5"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    (tc/reorder-columns [<span class="at">:country</span> <span class="at">:size</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -323,7 +323,7 @@ tr:nth-child(even) {
 </section>
 <section id="sorting-rows" class="level3" data-number="8.1.2">
 <h3 data-number="8.1.2" class="anchored" data-anchor-id="sorting-rows"><span class="header-section-number">8.1.2</span> Sorting rows</h3>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb6"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (tc/order-by [<span class="at">:size</span>] [<span class="at">:desc</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -354,7 +354,7 @@ tr:nth-child(even) {
 <section id="custom-sorting-functions" class="level3" data-number="8.1.3">
 <h3 data-number="8.1.3" class="anchored" data-anchor-id="custom-sorting-functions"><span class="header-section-number">8.1.3</span> Custom sorting functions</h3>
 <p>e.g.&nbsp;length of the country name</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb7"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (tc/order-by (<span class="kw">fn</span> [row] (<span class="kw">-&gt;</span> row <span class="at">:country</span> <span class="kw">count</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">:desc</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -386,7 +386,7 @@ tr:nth-child(even) {
 </section>
 <section id="selecting-one-column-or-multiple-columns" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="selecting-one-column-or-multiple-columns"><span class="header-section-number">8.2</span> Selecting one column or multiple columns</h2>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb8"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    (tc/select-columns [<span class="at">:country</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -412,8 +412,9 @@ tr:nth-child(even) {
 </section>
 <section id="randomizing-order" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="randomizing-order"><span class="header-section-number">8.3</span> Randomizing order</h2>
-<div class="originalCode">
-<div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset tc/shuffle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    tc/shuffle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
 <table class="table">
@@ -441,8 +442,9 @@ tr:nth-child(even) {
 </section>
 <section id="repeatable-randomisation" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="repeatable-randomisation"><span class="header-section-number">8.4</span> Repeatable randomisation</h2>
-<div class="originalCode">
-<div class="sourceCode" id="cb10"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset (tc/shuffle {<span class="at">:seed</span> <span class="dv">100</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb10"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    (tc/shuffle {<span class="at">:seed</span> <span class="dv">100</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
 <table class="table">
@@ -468,7 +470,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Finding unique rows</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb11"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> dupes </span>(tc/dataset [{<span class="at">:country</span> <span class="st">"Canada"</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">:size</span> <span class="dv">10000000</span>}</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        {<span class="at">:country</span> <span class="st">"Canada"</span></span>
@@ -481,8 +483,9 @@ tr:nth-child(even) {
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">:size</span> <span class="dv">80000</span>}]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>(def “USA” #{“USA” “United States” “United states of America”}) https://scicloj.github.io/tablecloth/index.html#Unique</p>
-<div class="originalCode">
-<div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes tc/unique-by)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    tc/unique-by)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [5 2]:</p>
 <table class="table">
@@ -515,8 +518,9 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
-<div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes (tc/unique-by <span class="at">:size</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    (tc/unique-by <span class="at">:size</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [4 2]:</p>
 <table class="table">
@@ -545,8 +549,9 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
-<div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes (tc/unique-by <span class="at">:country</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    (tc/unique-by <span class="at">:country</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [4 2]:</p>
 <table class="table">
@@ -575,8 +580,9 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
-<div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes (tc/unique-by #(<span class="kw">-&gt;</span> <span class="va">%</span> <span class="at">:country</span> str/lower-case)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    (tc/unique-by #(<span class="kw">-&gt;</span> <span class="va">%</span> <span class="at">:country</span> str/lower-case)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
 <table class="table">
@@ -601,11 +607,13 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
-<div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes (tc/unique-by #(<span class="kw">-&gt;</span> <span class="va">%</span> <span class="at">:country</span> str/lower-case) {<span class="at">:strategy</span> (<span class="kw">fn</span> [<span class="kw">vals</span>]</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                                                     (<span class="kw">case</span> (tdsc/column-name <span class="kw">vals</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                                                       <span class="at">:size</span> (<span class="kw">apply</span> <span class="kw">max</span> <span class="kw">vals</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                                                                       <span class="at">:country</span> (<span class="kw">last</span> <span class="kw">vals</span>)))}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dupes</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (tc/unique-by #(<span class="kw">-&gt;</span> <span class="va">%</span> <span class="at">:country</span> str/lower-case)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  {<span class="at">:strategy</span> (<span class="kw">fn</span> [<span class="kw">vals</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                               (<span class="kw">case</span> (tdsc/column-name <span class="kw">vals</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">:size</span> (<span class="kw">apply</span> <span class="kw">max</span> <span class="kw">vals</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">:country</span> (<span class="kw">last</span> <span class="kw">vals</span>)))}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
 <table class="table">
@@ -631,7 +639,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>could use this to rename vals to a canonical one (e.g.&nbsp;convert everything that matches set of USA to “USA”) Adding computed columns to data “lengthening” or “widening” data, making it “tidy” e.g.&nbsp;converting a column with numbers to a category (&gt;5 “yes”, &lt;5 “no”), summing multiple columns into a new one</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb17"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (tc/add-column <span class="at">:area</span> [<span class="dv">9000000</span> <span class="dv">8000000</span> <span class="dv">1000000</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -662,7 +670,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb18"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    (tc/add-column <span class="at">:population</span> [<span class="dv">40000000</span> <span class="dv">100000000</span> <span class="dv">80000000</span>])</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    (tc/rename-columns {<span class="at">:size</span> <span class="at">:area</span>})</span>
@@ -684,25 +692,25 @@ tr:nth-child(even) {
 <tr class="odd">
 <td>Canada</td>
 <td style="text-align: right;">10000000</td>
-<td style="text-align: right;">4.0E+07</td>
+<td style="text-align: right;">4.0e07</td>
 <td style="text-align: right;">4.00000000</td>
 </tr>
 <tr class="even">
 <td>USA</td>
 <td style="text-align: right;">9000000</td>
-<td style="text-align: right;">1.0E+08</td>
+<td style="text-align: right;">1.0e08</td>
 <td style="text-align: right;">11.11111111</td>
 </tr>
 <tr class="odd">
 <td>Germany</td>
 <td style="text-align: right;">80000</td>
-<td style="text-align: right;">8.0E+07</td>
+<td style="text-align: right;">8.0e07</td>
 <td style="text-align: right;">1000.00000000</td>
 </tr>
 </tbody>
 </table>
 <p>vs, probably preferable</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb19"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    (tc/add-column <span class="at">:population</span> [<span class="dv">40000000</span> <span class="dv">100000000</span> <span class="dv">80000000</span>])</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    (tc/rename-columns {<span class="at">:size</span> <span class="at">:area</span>})</span>
@@ -743,7 +751,7 @@ tr:nth-child(even) {
 <ul>
 <li>Removing columns</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb20"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    (tc/drop-columns <span class="at">:size</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -776,7 +784,7 @@ tr:nth-child(even) {
 <li>Filtering rows</li>
 <li>Single filter, multiple filters</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb21"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> dataset</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    (tc/select-rows (<span class="kw">fn</span> [row]</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                      (<span class="kw">&lt;</span> <span class="dv">1000000</span> (<span class="at">:size</span> row)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -803,10 +811,10 @@ tr:nth-child(even) {
 <ul>
 <li>Aggregating rows (counts, groups)</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb22"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> co2-over-time </span>(tc/dataset <span class="st">"data/co2_over_time.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb23"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    (tc/aggregate {<span class="at">:average-co2</span> (<span class="kw">fn</span> [ds]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                                  (<span class="kw">/</span> (<span class="kw">reduce</span> <span class="kw">+</span> (<span class="kw">get</span> ds <span class="st">"CO2"</span>))</span>
@@ -826,7 +834,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Add a column for year</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb24"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (tc/map-columns <span class="st">"Year"</span> <span class="st">"Date"</span> (<span class="kw">memfn</span> getYear)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -976,7 +984,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Group by year</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb25"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    (tc/group-by (<span class="kw">fn</span> [row]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                   (.getYear (<span class="kw">get</span> row <span class="st">"Date"</span>)))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1104,14 +1112,14 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Get average temp per year tablecloth applies the aggregate fn to every groups dataset</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb26"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">defn</span><span class="fu"> round2</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Round a double to the given precision (number of significant digits)"</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  [precision d]</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> [factor (Math/pow <span class="dv">10</span> precision)]</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">/</span> (Math/round (<span class="kw">*</span> d factor)) factor)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb27"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    (tc/group-by (<span class="kw">fn</span> [row]</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                   (.getYear (<span class="kw">get</span> row <span class="st">"Date"</span>))))</span>
@@ -1220,7 +1228,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Can rename the column to be more descriptive</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb28"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    (tc/group-by (<span class="kw">fn</span> [row]</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                   (.getYear (<span class="kw">get</span> row <span class="st">"Date"</span>))))</span>
@@ -1329,18 +1337,18 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Concatenating datasets</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb29"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> ds1 </span>(tc/dataset [{<span class="at">:id</span> <span class="st">"id1"</span> <span class="at">:b</span> <span class="st">"val1"</span>}</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                      {<span class="at">:id</span> <span class="st">"id2"</span> <span class="at">:b</span> <span class="st">"val2"</span>}</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                      {<span class="at">:id</span> <span class="st">"id3"</span> <span class="at">:b</span> <span class="st">"val3"</span>}]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb30"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> ds2 </span>(tc/dataset [{<span class="at">:id</span> <span class="st">"id1"</span> <span class="at">:b</span> <span class="st">"val4"</span>}</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                      {<span class="at">:id</span> <span class="st">"id5"</span> <span class="at">:b</span> <span class="st">"val5"</span>}</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                      {<span class="at">:id</span> <span class="st">"id6"</span> <span class="at">:b</span> <span class="st">"val6"</span>}]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Naively concats rows</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb31"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(tc/concat ds1 ds2 (tc/dataset [{<span class="at">:id</span> <span class="st">"id3"</span> <span class="at">:b</span> <span class="st">"other value"</span>}]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [7 2]:</p>
@@ -1382,7 +1390,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb32"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(tc/concat ds1 (tc/dataset [{<span class="at">:b</span> <span class="st">"val4"</span> <span class="at">:c</span> <span class="st">"text"</span>}</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                            {<span class="at">:b</span> <span class="st">"val5"</span> <span class="at">:c</span> <span class="st">"hi"</span>}</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                            {<span class="at">:b</span> <span class="st">"val6"</span> <span class="at">:c</span> <span class="st">"test"</span>}]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1430,7 +1438,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>De-duping</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb33"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(tc/union ds1 ds2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>union [6 2]:</p>
@@ -1472,16 +1480,16 @@ tr:nth-child(even) {
 <li>Merging datasets</li>
 <li>When column headers are the same or different, on multiple columns TODO explain set logic and SQL joins</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb34"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> ds3 </span>(tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">:b</span> [<span class="st">"val1"</span> <span class="st">"val2"</span> <span class="st">"val3"</span> <span class="st">"val4"</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb35"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> ds4 </span>(tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">:c</span> [<span class="st">"val1"</span> <span class="st">"val2"</span> <span class="st">"val3"</span> <span class="st">"val4"</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Keep all columns</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb36"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(tc/full-join ds3 ds4 <span class="at">:id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>full-join [4 4]:</p>
@@ -1522,7 +1530,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>“Merge” datasets on a given column where rows have a value</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb37"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>(tc/inner-join ds3 ds4 <span class="at">:id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>inner-join [4 3]:</p>
@@ -1558,7 +1566,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Drop rows missing a value</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb38"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(tc/inner-join (tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">:b</span> [<span class="st">"val1"</span> <span class="st">"val2"</span> <span class="st">"val3"</span>]})</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>               (tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
@@ -1597,7 +1605,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb39"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(tc/right-join (tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> ]</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">:b</span> [<span class="st">"val1"</span> <span class="st">"val2"</span> <span class="st">"val3"</span>]})</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>               (tc/dataset {<span class="at">:id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
@@ -1642,7 +1650,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>scratch</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb40"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>(tc/left-join (tc/dataset {<span class="at">:email</span> [<span class="st">"asdf"</span>]</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">:name</span> [<span class="st">"asdfads"</span>]</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">:entry-id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>]})</span>
@@ -1698,7 +1706,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb41"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset {<span class="at">:email</span> [<span class="st">"asdf"</span>]</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">:name</span> [<span class="st">"asdfads"</span>]</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">:entry-id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1730,7 +1738,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb42"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset {<span class="at">:entry-id</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>]</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">:upload-count</span> [<span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span>]</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">:catgory</span> [<span class="st">"art"</span> <span class="st">"science"</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1763,7 +1771,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>see tablecloth join stuff Inner join, only keeps rows with the specified column value in common</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb43"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>(tc/inner-join ds1 ds2 <span class="at">:id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>inner-join [1 3]:</p>
@@ -1787,7 +1795,7 @@ tr:nth-child(even) {
 <li>Converting between wide and long formats? Signal processing/time series analysis</li>
 <li>Compute rolling average to be able to plot a trend line</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb44"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> exp-moving-avg</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">let</span> [data (<span class="kw">get</span> co2-over-time <span class="st">"adjusted CO2"</span>)</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        moving-avg</span>
@@ -1801,7 +1809,7 @@ tr:nth-child(even) {
 <ul>
 <li>widen dataset to include new row that’s already in order</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb45"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>(tc/append co2-over-time exp-moving-avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>data/co2_over_time.csv [741 4]:</p>
@@ -1952,7 +1960,7 @@ tr:nth-child(even) {
 <ul>
 <li>Rolling average over a 12 point range</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb46"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> rolling-average</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  (tc/dataset [[<span class="st">"Rolling average"</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                (<span class="kw">-&gt;</span> co2-over-time</span>
@@ -1961,7 +1969,7 @@ tr:nth-child(even) {
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>                                                  fun/mean</span>
 <span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>                                                  {<span class="at">:relative-window-position</span> <span class="at">:left</span>}))]]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb47"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>(tc/append co2-over-time rolling-average)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>data/co2_over_time.csv [741 4]:</p>
@@ -2112,7 +2120,7 @@ tr:nth-child(even) {
 <ul>
 <li>Train a model to predict the next 10 years</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb48"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2242,7 +2250,7 @@ tr:nth-child(even) {
 <li>Summarizing data (mean, standard deviation, confidence intervals etc.)</li>
 <li>Standard deviation using fastmath</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb49"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> avg-co2-by-year</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">-&gt;</span> co2-over-time</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>      (tc/group-by (<span class="kw">fn</span> [row]</span>
@@ -2260,7 +2268,7 @@ tr:nth-child(even) {
 <ul>
 <li>Overall average</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb50"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(stats/mean (<span class="at">:average-co2</span> avg-co2-by-year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
@@ -2269,7 +2277,7 @@ tr:nth-child(even) {
 <ul>
 <li>Long term average 1991-2020</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb52"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> avg-co2-by-year</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; (tc/select-rows (fn [row] (&lt; 1990 (:year row))))</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">;; :average-co2</span></span>
@@ -2406,12 +2414,12 @@ tr:nth-child(even) {
 <li>Run length encoding?</li>
 <li>Filling <code>nil</code> s with last non-<code>nil</code> value?</li>
 </ul>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb53"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> sparse-dataset</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  (tc/dataset {<span class="at">:a</span> [<span class="va">nil</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="va">nil</span> <span class="va">nil</span> <span class="dv">7</span> <span class="dv">8</span>]</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">:b</span> [<span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="va">nil</span> <span class="va">nil</span> <span class="va">nil</span> <span class="dv">16</span> <span class="va">nil</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb54"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:up</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2458,7 +2466,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb55"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:updown</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2505,7 +2513,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb56"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:down</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2552,7 +2560,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb57"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:downup</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2599,7 +2607,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb58"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:lerp</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2646,7 +2654,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb59"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:all</span> <span class="at">:value</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2693,7 +2701,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb60"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> sparse-dataset</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    (tc/replace-missing <span class="at">:a</span> <span class="at">:value</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -2744,7 +2752,7 @@ tr:nth-child(even) {
 
 </div>
 <div>
-<code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_3_data_manipulation/3_data_manipulation.clj">book/chapter_3_data_manipulation/3_data_manipulation.clj</a></small></small></code>
+<pre><small><small>source: <a href="https://github.com/scicloj/clojure-data-cookbook/blob/main/book/chapter_3_data_manipulation/3_data_manipulation.clj">book/chapter_3_data_manipulation/3_data_manipulation.clj</a></small></small></pre>
 </div>
 
 
@@ -2991,8 +2999,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

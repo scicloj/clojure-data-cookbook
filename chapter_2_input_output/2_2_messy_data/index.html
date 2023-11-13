@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -183,14 +183,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
+  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
+  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
   </div>
 </li>
     </ul>
@@ -231,8 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-table {
+<style>table {
   border-style: thin;
 }
 th, td {
@@ -249,20 +248,21 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 </style>
-<style>
-.printedClojure .sourceCode {
+<style>.printedClojure .sourceCode {
   background-color: transparent;
   border-style: none;
 }
 </style>
-<div class="originalCode">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" type="text/javascript"></script>
+<div class="sourceClojure">
 <div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">ns</span> chapter<span class="dv">-2</span>-input-output<span class="fl">.2</span><span class="dv">-2</span>-messy-data</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  {<span class="at">:nextjournal.clerk/toc</span> <span class="va">true</span>}</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  (<span class="at">:require</span> [tablecloth.api <span class="at">:as</span> tc]</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            [tech.v3.datatype.functional <span class="at">:as</span> fun]</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            [scicloj.kind-clerk.api <span class="at">:as</span> kind-clerk]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(kind-clerk/setup!)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
@@ -273,12 +273,12 @@ tr:nth-child(even) {
 <section id="multiple-types-mixed-in-one-column" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="multiple-types-mixed-in-one-column"><span class="header-section-number">6.1</span> Multiple types mixed in one column</h2>
 <p>Tablecloth will handle it just fine, it will just give the column the type <code>:object</code></p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb4"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> mixed-types</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  (tc/dataset {<span class="at">:A</span> [<span class="st">"string"</span> <span class="st">"more strings"</span> <span class="dv">3</span>]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">:B</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="st">"whoops"</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb5"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(tc/info mixed-types <span class="at">:columns</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed :column info [2 4]:</p>
@@ -307,7 +307,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>To convert all values in a row to a given type:</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb6"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(tc/convert-types mixed-types <span class="at">:A</span> <span class="at">:string</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
@@ -333,7 +333,7 @@ tr:nth-child(even) {
 </tr>
 </tbody>
 </table>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb7"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> mixed-types</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (tc/convert-types <span class="at">:A</span> <span class="at">:string</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (tc/info <span class="at">:columns</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -368,18 +368,18 @@ tr:nth-child(even) {
 <section id="multiple-formats-for-a-thing-thats-supposed-to-have-one-e.g.-phone-numbers-postal-codes" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="multiple-formats-for-a-thing-thats-supposed-to-have-one-e.g.-phone-numbers-postal-codes"><span class="header-section-number">6.2</span> Multiple formats for a thing that’s supposed to have one (e.g.&nbsp;phone numbers, postal codes)</h2>
 <p>You can pass any arbitrary function to update a column</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb8"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> misformatted</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  (tc/dataset {<span class="at">:phone</span> [<span class="st">"123-456-5654"</span> <span class="st">"(304) 342 1235"</span> <span class="st">"(423)-234-2342"</span> <span class="st">"1234325984"</span> <span class="st">"nope"</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">:postal-code</span> [<span class="st">"t1n 0k2"</span> <span class="st">"H9Q1L2"</span> <span class="st">"H3H 8V0"</span> <span class="st">"eu5h04"</span> <span class="st">"just wrong"</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">require</span> '[clojure.string <span class="at">:as</span> <span class="kw">str</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
 <div class="sourceCode" id="cb10"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb11"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> phone-regex</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">re-pattern</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>   (<span class="kw">str</span></span>
@@ -391,7 +391,7 @@ tr:nth-child(even) {
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(</span><span class="sc">\\</span><span class="st">d{4})"</span>  <span class="co">; any 4 numbers</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    )))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">defn-</span><span class="fu"> normalize-phone-numbers </span>[col]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">map</span> (<span class="kw">fn</span> [v]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>         (<span class="kw">let</span> [[match a b c] (<span class="kw">re-matches</span> phone-regex v)]</span>
@@ -403,7 +403,7 @@ tr:nth-child(even) {
 <div class="printedClojure">
 <div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">#'chapter-2-input-output.2-2-messy-data/normalize-phone-numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> postal-code-regex</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">re-pattern</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>   (<span class="kw">str</span></span>
@@ -419,7 +419,7 @@ tr:nth-child(even) {
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">".*"</span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"(</span><span class="sc">\\</span><span class="st">d{1})"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">defn-</span><span class="fu"> normalize-postal-codes </span>[col]</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">map</span> (<span class="kw">fn</span> [v]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         (<span class="kw">let</span> [[match a b c d <span class="kw">e</span> f] (<span class="kw">-&gt;&gt;</span> v str/upper-case (<span class="kw">re-matches</span> postal-code-regex))]</span>
@@ -431,7 +431,7 @@ tr:nth-child(even) {
 <div class="printedClojure">
 <div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">#'chapter-2-input-output.2-2-messy-data/normalize-postal-codes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb17"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> misformatted</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    (tc/update-columns {<span class="at">:phone</span> normalize-phone-numbers</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">:postal-code</span> normalize-postal-codes}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -471,19 +471,19 @@ tr:nth-child(even) {
 <section id="missing-values" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="missing-values"><span class="header-section-number">6.3</span> Missing values</h2>
 <p>Tablecloth has <a href="https://scicloj.github.io/tablecloth/index.html#Missing">many built-in helpers</a> for dealing with missing values.</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb18"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">require</span> '[tech.v3.datatype.datetime <span class="at">:as</span> dt])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
 <div class="sourceCode" id="cb19"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb20"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> sparse</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  (tc/dataset {<span class="at">:A</span> [<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="va">nil</span> <span class="va">nil</span> <span class="dv">6</span>]</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">:B</span> [<span class="st">"test"</span> <span class="va">nil</span> <span class="st">"this"</span> <span class="st">"is"</span> <span class="st">"a"</span> <span class="st">"test"</span>]}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Drop whole rows with any missing values:</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb21"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(tc/drop-missing sparse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [3 2]:</p>
@@ -510,7 +510,7 @@ tr:nth-child(even) {
 </tbody>
 </table>
 <p>Drop whole row with any missing values in a given column:</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb22"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(tc/drop-missing sparse <span class="at">:A</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>_unnamed [4 2]:</p>
@@ -544,12 +544,12 @@ tr:nth-child(even) {
 </section>
 <section id="arbitrary-values-meant-to-indicate-missing-e.g.-none-na-false-etc." class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="arbitrary-values-meant-to-indicate-missing-e.g.-none-na-false-etc."><span class="header-section-number">6.4</span> Arbitrary values meant to indicate missing (e.g.&nbsp;“NONE”, “N/A”, false, etc.)</h2>
-It’s not uncommon to see missing values indicated in multiple different ways, sometimes even within the same dataset. E.g. missing cells might be blank entirely, or they might be populated with some arbitrary value meant to indicate “nothing”, like “NONE”, “N/A”, <code>false</code>, etc.
+<p>It’s not uncommon to see missing values indicated in multiple different ways, sometimes even within the same dataset. E.g. missing cells might be blank entirely, or they might be populated with some arbitrary value meant to indicate “nothing”, like “NONE”, “N/A”, <code>false</code>, etc.</p>
 <div style="background-color:grey;height:2px;width:100%;">
 
 </div>
 <div>
-<code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_2_input_output/2_2_messy_data.clj">book/chapter_2_input_output/2_2_messy_data.clj</a></small></small></code>
+<pre><small><small>source: <a href="https://github.com/scicloj/clojure-data-cookbook/blob/main/book/chapter_2_input_output/2_2_messy_data.clj">book/chapter_2_input_output/2_2_messy_data.clj</a></small></small></pre>
 </div>
 
 

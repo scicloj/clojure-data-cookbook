@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -183,14 +183,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
+  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapter_4_data_visualisation/noj_examples/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs with Noj</span></span></a>
+  <a href="../../chapter_4_data_visualisation/4_2_graphs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Graphs</span></span></a>
   </div>
 </li>
     </ul>
@@ -231,8 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<style>
-table {
+<style>table {
   border-style: thin;
 }
 th, td {
@@ -249,13 +248,14 @@ tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 </style>
-<style>
-.printedClojure .sourceCode {
+<style>.printedClojure .sourceCode {
   background-color: transparent;
   border-style: none;
 }
 </style>
-<div class="originalCode">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" type="text/javascript"></script>
+<div class="sourceClojure">
 <div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">ns</span> chapter<span class="dv">-2</span>-input-output<span class="fl">.2</span><span class="dv">-3</span>-exporting-data</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  {<span class="at">:nextjournal.clerk/toc</span> <span class="va">true</span>}</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  (<span class="at">:require</span></span>
@@ -266,24 +266,24 @@ tr:nth-child(even) {
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   [tablecloth.api <span class="at">:as</span> tc]</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>   [scicloj.kind-clerk.api <span class="at">:as</span> kind-clerk]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(kind-clerk/setup!)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
 <div class="sourceCode" id="cb3"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">:ok</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb4"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> consistent-data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  (map-indexed (<span class="kw">fn</span> [<span class="kw">index</span> _coll] (<span class="kw">str</span> <span class="st">"cell-"</span> <span class="kw">index</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               (<span class="kw">range</span> <span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb5"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> data </span>(<span class="kw">take</span> <span class="dv">20</span> (<span class="kw">repeat</span> (<span class="kw">zipmap</span> (<span class="kw">range</span> <span class="dv">10</span>) consistent-data))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="writing-to-a-csv-file" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="writing-to-a-csv-file"><span class="header-section-number">7.1</span> Writing to a CSV file</h2>
 <p>depends what the data looks like for a seq of maps: headers are not necessarily sorted, put them in whatever order you want here Clojure maps make no guarantees about key order, make sure to order values, i.e.&nbsp;use the same header row to get the values from each map</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb6"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">let</span> [headers (<span class="kw">-&gt;</span> data <span class="kw">first</span> <span class="kw">keys</span> <span class="kw">sort</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      rows (<span class="kw">-&gt;&gt;</span> data (<span class="kw">map</span> (<span class="kw">fn</span> [row]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            (<span class="kw">map</span> (<span class="kw">fn</span> [header]</span>
@@ -295,10 +295,10 @@ tr:nth-child(even) {
 <div class="sourceCode" id="cb7"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tablecloth can also export csvs (among other formats)</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb8"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> tc-dataset </span>(tc/dataset data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(tc/write-csv! tc-dataset <span class="st">"data/tc-output.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
@@ -307,14 +307,14 @@ tr:nth-child(even) {
 </section>
 <section id="writing-nippy" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="writing-nippy"><span class="header-section-number">7.2</span> Writing nippy</h2>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb11"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(tc/write! tc-dataset <span class="st">"data/tc-nippy.nippy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
 <div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Read this also with tablecloth:</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tc-nippy.nippy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>data/tc-nippy.nippy [20 10]:</p>
@@ -591,14 +591,14 @@ tr:nth-child(even) {
 </section>
 <section id="leave-data-in-clojure-files" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="leave-data-in-clojure-files"><span class="header-section-number">7.3</span> Leave data in Clojure files</h2>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;&gt;</span> data <span class="kw">pr-str</span> (spit <span class="st">"data/clojure-output.edn"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="printedClojure">
 <div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">nil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This can be consumed later with:</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">with-open</span> [reader (io/reader <span class="st">"data/clojure-output.edn"</span>)]</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  (edn/read (java.io.PushbackReader. reader)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -808,17 +808,17 @@ tr:nth-child(even) {
 <section id="notebook-artifacts" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="notebook-artifacts"><span class="header-section-number">7.4</span> Notebook artifacts</h2>
 <p>Clerk supports publishing your namespaces as HTML (like this website!) To do that call</p>
-<div class="originalCode">
+<div class="sourceClojure">
 <div class="sourceCode" id="cb18"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">comment</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  (clerk/build! {<span class="at">:paths</span> <span class="st">"path/to/files..."</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">:index</span> <span class="st">"book/index.clj"</span>}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-More information in Clerk’s docs: https://book.clerk.vision/#static-building HTML pages Other formats, options for exporting notebooks? PDFs? Partial artifacts, e.g.&nbsp;export just a graph Writing to a database?
+<p>More information in Clerk’s docs: https://book.clerk.vision/#static-building HTML pages Other formats, options for exporting notebooks? PDFs? Partial artifacts, e.g.&nbsp;export just a graph Writing to a database?</p>
 <div style="background-color:grey;height:2px;width:100%;">
 
 </div>
 <div>
-<code><small><small>source: <a href="https://github.com/scicloj/kindly-noted/blob/main/book/chapter_2_input_output/2_3_exporting_data.clj">book/chapter_2_input_output/2_3_exporting_data.clj</a></small></small></code>
+<pre><small><small>source: <a href="https://github.com/scicloj/clojure-data-cookbook/blob/main/book/chapter_2_input_output/2_3_exporting_data.clj">book/chapter_2_input_output/2_3_exporting_data.clj</a></small></small></pre>
 </div>
 
 
