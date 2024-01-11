@@ -1,11 +1,5 @@
 # Welcome
 
-```clojure
-(ns chapter-1-intro.1-1-welcome
-  {:nextjournal.clerk/visibility {:code :hide}
-   :nextjournal.clerk/toc true})
-```
-
 Welcome to the Clojure Data Cookbook! This is a resource for people with data to work with who want to explore what Clojure can do. Clojure is among the [most stable](https://dl.acm.org/doi/10.1145/3386321), [most loved](https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages), and [most lucrative](https://insights.stackoverflow.com/survey/2021#section-salary-salary-and-experience-by-language) languages out there, but is not often thought of as a language for data science.
 
 Clojure is free, open source, and has excellent performance thanks to being [hosted on the JVM](https://clojure.org/about/jvm_hosted). There are thousands of libraries available for Clojure, in addition to the endless Java libraries that are seamlessly available in Clojure, too.
@@ -16,8 +10,8 @@ Clojure and its ecosystem are very much optimized for long-term, professional us
 
 Clojure's story for data science is no different. In recent years a lot of amazing work has been done by the community that makes Clojure a great choice for many data-focused tasks, but it's not always obvious where to start.
 
-**This book is a guide through Clojure's ecosystem for data science.** It includes some introductory tutorials on getting a Clojure environment set up, a brief overview of the most relevant parts of the Clojure language itself, and most importantly, a comprehensive collection of example-based explanations of which libraries to use and how to use them to accomplish common tasks in data science using Clojure. We'll cover data input and output, manipulation, visualisation, and finally analysis, including many common statistical analyses. The examples include a brief introduction to the type of problem we're solving, the solution itself, and in most cases an explanation of what the solution is doing. The goal is to provide insight into how to think like a Clojurian and solve problems "the Clojure way".
+**This book is a guide through Clojure's ecosystem for data science.** It includes some introductory tutorials on getting a Clojure environment set up, a brief overview of the most relevant parts of the Clojure language itself, and most importantly, a comprehensive collection of example-based explanations of which libraries to use and how to use them to accomplish common tasks in data science using Clojure. We'll cover data input and output, manipulation, visualisation, and finally analysis, including many common statistical analyses. The examples include a brief introduction to the type of problem we're solving, the solution itself, and in most cases an explanation of what the solution is doing. The goal is to provide insight into how to think like a Clojurian and solve data problems "the Clojure way".
 
-The examples in this book can be copy/pasted into a notebook on your own computer and should run there so you can see how they work. Continue reading this chapter for more details on how to set up a working Clojure environment on your own computer.
+This book is written as a series of Clojure notebooks. I'll explain what those are as we get started, but the short version is that this book itself _is_ code. You can clone this repo and run the examples on your own computer. You can edit and play around with them yourself. This is one of the coolest things about Clojure. In Clojure, code is data and data is code. There is no distinction. This way of thinking about code makes it easy to transform Clojure code into all kinds of different formats. Clojure is most often used to write executable computer programs, but it can just as well be used to generate a presentation, or a website, or a book!
 
-This book assumes some basic prior knowledge of data science but not necessarily Clojure. This is meant to be a guide to demonstrate what tools are available in Clojure's ecosystem for working with data, starting with the assumption that most people do not think of Clojure as an obvious choice for data science. It is not an introduction to statistics. The examples assume you are familiar with the underlying statistical method and offer an example implementation in Clojure.
+Anyway it's no secret that I'm a fan of Clojure. Hopefully you will be too by the end of this book. Happy reading :)

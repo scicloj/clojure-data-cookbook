@@ -1,3 +1,0 @@
-{:target-dir "/qmd"
- :paths ["notebooks/chapter_1/*"
-         "notebooks/chapter_2/*"]}

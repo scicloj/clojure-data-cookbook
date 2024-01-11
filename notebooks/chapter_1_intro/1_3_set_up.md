@@ -1,10 +1,4 @@
-```clojure
-(ns chapter-1-intro.1-3-set-up
-  {:nextjournal.clerk/visibility {:code :hide}
-   :nextjournal.clerk/toc true})
-```
-
-# Setting up a Clojure environment
+# Getting Started with Data in Clojure
 
 This is a guide for setting up a Clojure environment if you're new to the language. If you already have a Clojure environment running on your machine, you can skip this part!
 
