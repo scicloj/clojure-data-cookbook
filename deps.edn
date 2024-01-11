@@ -1,4 +1,4 @@
-{:paths ["book" "data"]
+{:paths ["notebooks" "data"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/data.csv {:mvn/version "1.0.1"}
         scicloj/tablecloth {:mvn/version "7.007"}
