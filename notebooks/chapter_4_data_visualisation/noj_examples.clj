@@ -7,7 +7,7 @@
             [aerial.hanami.common :as hc]
             [aerial.hanami.templates :as ht]
             [scicloj.noj.v1.vis.hanami.templates :as vht]
-            [scicloj.noj.v1.vis :as vis]
+            [scicloj.noj.v1.vis.hanami :as hanami]
             [scicloj.noj.v1.stats :as stats]
             [scicloj.noj.v1.datasets :as datasets]
             [tech.v3.datatype :as dtype]
@@ -45,14 +45,14 @@
 ;; We can plot a Tablecloth datasete using a Hanami template:
 
 (-> random-walk
-    (vis/hanami-plot ht/point-chart
+    (hanami/plot ht/point-chart
                      {:MSIZE 200}))
 
 ;; Let us look inside the resulting vega-lite space. We can see the dataset is included as CSV:
 
 (-> random-walk
-    (vis/hanami-plot ht/point-chart
-                     {:MSIZE 200})
+    (hanami/plot ht/point-chart
+                 {:MSIZE 200})
     kind/pprint)
 
 ;; ### Additional Hanami templates
@@ -60,70 +60,70 @@
 ;; The `scicloj.noj.v1.vis.hanami.templates` namespace add Hanami templates to Hanami's own collection.
 
 (-> datasets/mtcars
-    (vis/hanami-plot vht/boxplot-chart
-                     {:X :gear
-                      :XTYPE :nominal
-                      :Y :mpg}))
+    (hanami/plot vht/boxplot-chart
+                 {:X :gear
+                  :XTYPE :nominal
+                  :Y :mpg}))
 
 ;; ### Layers
 
 (-> random-walk
-    (vis/hanami-layers
+    (hanami/layers
      {:TITLE "points and a line"}
-     [(vis/hanami-plot nil
-                       ht/point-chart
-                       {:MSIZE 400})
-      (vis/hanami-plot nil
-                       ht/line-chart
-                       {:MSIZE 4
-                        :MCOLOR "brown"})]))
+     [(hanami/plot nil
+                   ht/point-chart
+                   {:MSIZE 400})
+      (hanami/plot nil
+                   ht/line-chart
+                   {:MSIZE 4
+                    :MCOLOR "brown"})]))
 
 ;; ### Concatenation
 
 (-> random-walk
-    (vis/hanami-vconcat
+    (hanami/vconcat
      {}
-     [(vis/hanami-plot nil
-                       ht/point-chart
-                       {:MSIZE 400
-                        :HEIGHT 100
-                        :WIDTH 100})
-      (vis/hanami-plot nil
-                       ht/line-chart
-                       {:MSIZE 4
-                        :MCOLOR "brown"
-                        :HEIGHT 100
-                        :WIDTH 100})]))
+     [(hanami/plot nil
+                   ht/point-chart
+                   {:MSIZE 400
+                    :HEIGHT 100
+                    :WIDTH 100})
+      (hanami/plot nil
+                   ht/line-chart
+                   {:MSIZE 4
+                    :MCOLOR "brown"
+                    :HEIGHT 100
+                    :WIDTH 100})]))
 
 (-> random-walk
-    (vis/hanami-hconcat
+    (hanami/hconcat
      {}
-     [(vis/hanami-plot nil
-                       ht/point-chart
-                       {:MSIZE 400
-                        :HEIGHT 100
-                        :WIDTH 100})
-      (vis/hanami-plot nil
-                       ht/line-chart
-                       {:MSIZE 4
-                        :MCOLOR "brown"
-                        :HEIGHT 100
-                        :WIDTH 100})]))
+     [(hanami/plot nil
+                   ht/point-chart
+                   {:MSIZE 400
+                    :HEIGHT 100
+                    :WIDTH 100})
+      (hanami/plot nil
+                   ht/line-chart
+                   {:MSIZE 4
+                    :MCOLOR "brown"
+                    :HEIGHT 100
+                    :WIDTH 100})]))
 
 ;; ### Linear regression
 
 (-> datasets/mtcars
     (stats/add-predictions :mpg [:wt]
                            {:model-type :smile.regression/ordinary-least-square})
-    (vis/hanami-layers {}
-                       [(vis/hanami-plot nil
+    (hanami/layers {}
+                       [(hanami/plot nil
                                          ht/point-chart
                                          {:X :wt
                                           :Y :mpg
                                           :MSIZE 200
                                           :HEIGHT 200
                                           :WIDTH 200})
-                        (vis/hanami-plot nil
+                        (hanami/plot nil
                                          ht/line-chart
                                          {:X :wt
                                           :Y :mpg-prediction
@@ -134,7 +134,7 @@
 ;; ### Histogram
 
 (-> datasets/iris
-    (vis/hanami-histogram :sepal-width
+    (hanami/histogram :sepal-width
                           {:nbins 10}))
 
 ;; ### Combining a few things together
@@ -155,8 +155,8 @@
                   (stats/add-predictions :mpg [:wt]
                                          {:model-type :smile.regression/ordinary-least-square})
                   (tc/select-columns [:gear :wt :mpg :mpg-prediction])
-                  (vis/hanami-layers {:TITLE (str "grear=" group-name)}
-                                     [(vis/hanami-plot nil
+                  (hanami/layers {:TITLE (str "grear=" group-name)}
+                                     [(hanami/plot nil
                                                        ht/point-chart
                                                        {:X :wt
                                                         :Y :mpg
@@ -164,7 +164,7 @@
                                                         :MCOLOR (pallete i)
                                                         :HEIGHT 200
                                                         :WIDTH 200})
-                                      (vis/hanami-plot nil
+                                      (hanami/plot nil
                                                        ht/line-chart
                                                        {:X :wt
                                                         :Y :mpg-prediction
@@ -172,7 +172,7 @@
                                                         :MCOLOR (pallete i)
                                                         :YTITLE :mpg})]
                                      ))))
-           (vis/hanami-vconcat nil {}))))
+           (hanami/vconcat nil {}))))
 
 ;; A similar example with histograms:
 
@@ -185,9 +185,9 @@
            (map-indexed
             (fn [i [group-name ds]]
               (-> ds
-                  (vis/hanami-histogram :sepal-width
+                  (hanami/histogram :sepal-width
                                         {:nbins 10}))))
-           (vis/hanami-vconcat nil {}))))
+           (hanami/vconcat nil {}))))
 
 ;; Scatterplots and regression lines again, this time using Vega-Lite for layout and coloring (using its "facet" option).
 
@@ -197,8 +197,8 @@
                            {:model-type :smile.regression/ordinary-least-square})
     (tc/ungroup)
     (tc/select-columns [:gear :wt :mpg :mpg-prediction])
-    (vis/hanami-layers {}
-                       [(vis/hanami-plot nil
+    (hanami/layers {}
+                       [(hanami/plot nil
                                          ht/point-chart
                                          {:X :wt
                                           :Y :mpg
@@ -206,7 +206,7 @@
                                           :COLOR "gear"
                                           :HEIGHT 100
                                           :WIDTH 200})
-                        (vis/hanami-plot nil
+                        (hanami/plot nil
                                          ht/line-chart
                                          {:X :wt
                                           :Y :mpg-prediction
