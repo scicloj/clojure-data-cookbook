@@ -4,7 +4,7 @@
 (clay/make!
  {:format [:quarto :html]
   :book {:title "Clojure Data Cookbook"}
-  :base-source-path "book"
+  :base-source-path "notebooks"
   :source-path ["index.clj"
                 "chapter_1_intro/1_1_welcome.md"
                 "chapter_1_intro/1_2_why_clojure.md"
