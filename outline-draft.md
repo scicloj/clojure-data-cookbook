@@ -1,4 +1,53 @@
 # Draft Clojure cookbook outline
+
+-----------------
+
+1  Introduction
+Whole game
+
+2  Data visualization
+    - artifacts
+    - communication using data
+    - scenarios
+      - geographical data
+        - fish populations in different water bodies
+        - water quality at different bathing water sites
+        - pollution levels across areas
+      - time series data
+        - climate data over time
+      - networks
+        - water network data -- discovering upstream and downstream
+        - transportation
+          - links between areas
+      - relationships between variables
+        - iris dataset
+        - type of graph is determined by the variables you're trying to visualize
+    - applications
+      - advertising
+      - health care
+      - business analytics
+    - common visualisations
+      - tables (summary, statistical, comparisons)
+      - charts (lines, bars, box, plots, regressions)
+  - exercises
+3  Workflow: basics
+    - JVM (different arch.es )
+    - IDEs (cider, calva, cursive)
+    - tooling (kindly, toolkit/notebooks -- clay, clerk, portal)
+    - interop (python, R -- config and installation of external environments)
+    - publishing
+      - reports, blog posts, presentations
+      - maintaining history and making data available
+      - technical details but also what should be included in the contents
+4  Data transformation
+5  Workflow: code style
+6  Data tidying
+7  Workflow: scripts and projects
+8  Data import
+9  Workflow: getting help
+
+-----------------
+
 ## 1. Basics
 - How much is worth including as background?
 - How much should we assume readers know about Clojure?
@@ -228,4 +277,3 @@ A simpler solution to Loftus and Masson’s method](https://pdfs.semanticscholar
 **Python interop**
 - [Using mathplotlib and numpy](https://nextjournal.com/kommen/parens-for-polyglot)
 - [Interop with NLP libraries](http://gigasquidsoftware.com/blog/2020/01/24/clojure-interop-with-python-nlp-libraries/)
-
