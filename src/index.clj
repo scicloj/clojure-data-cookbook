@@ -1,7 +1,7 @@
 ^{:kindly/hide-code true}
 (ns index)
 
-;; # Welcome
+;; # Welcome {.unnumbered}
 
 ;; ::: {.callout-note}
 ;; **Status:** This is a work in progress and still has many missing and moving parts. Updates are published here as they come and this banner will be removed once this book is "stable" (or at least as stable as it will get until more progress is made in the broader Clojure data science ecosystem)
@@ -28,7 +28,7 @@
 ;;
 ;; This book is written as a series of Clojure notebooks. I'll explain what those are as we get started, but the short version is that this book itself _is_ code. You can clone this repo and run the examples on your own computer. You can edit and play around with them yourself. This is one of the coolest things about Clojure. In Clojure, code is data and data is code. There is no distinction. This way of thinking about code makes it easy to transform Clojure code into all kinds of different formats. Clojure is most often used to write executable computer programs, but it can just as well be used to generate a presentation, or a website, or a book!
 ;;
-;; It's no secret that I'm a fan of Clojure. Hopefully you will be too by the end of this book. Happy reading :
+;; It's no secret that I'm a fan of Clojure. Hopefully you will be too by the end of this book. Happy reading :)
 
 ;; ## Support
 ;;
