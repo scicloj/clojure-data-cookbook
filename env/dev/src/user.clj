@@ -1,32 +1,30 @@
-(ns user
-  (:require [scicloj.clay.v2.api :as clay]))
+(ns user)
 
 (defn help []
   (println "Welcome to the Clojure Data Cookbook")
   (println)
-  (println "You can load the following build tools:")
+  (println "Available commands are:")
   (println)
-  (println "(clerk-setup)")
-  (println "(clay-setup)")
-  (println "(claykind-setup)")
-  (println "(portal-setup)"))
+  (println "(build)      ;; build all of the namespaces in the project into a website using quarto"))
 
-(defn clerk-setup []
-  (require 'clerk-setup)
-  (in-ns 'clerk-setup)
-  :loaded-clerk)
+(defn dev
+  "Load and switch to the 'dev' namespace."
+  []
+  (require 'dev)
+  (help)
+  (in-ns 'dev)
+  :loaded)
 
-(defn clay-setup []
-  (require 'clay-setup)
-  (in-ns 'clay-setup))
+(comment
+  (defn clerk-setup []
+    (require 'clerk-setup)
+    (in-ns 'clerk-setup)
+    :loaded-clerk)
 
-(defn claykind-setup []
-  (require 'claykind-setup)
-  (in-ns 'claykind-setup))
+  (defn clay-setup []
+    (require 'clay-setup)
+    (in-ns 'clay-setup))
 
-(defn portal-setup []
-  (require 'portal-setup)
-  (in-ns 'portal-setup)
-  :loaded-portal)
-
-(help)
+  (defn claykind-setup []
+    (require 'claykind-setup)
+    (in-ns 'claykind-setup)))

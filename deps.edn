@@ -1,4 +1,4 @@
-{:paths ["notebooks" "data"]
+{:paths ["src" "data"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         org.clojure/data.csv {:mvn/version "1.0.1"}
         scicloj/tablecloth {:mvn/version "7.007"}
@@ -19,5 +19,5 @@
  :aliases
  {:dev {:extra-paths ["env/dev/src"]
         :extra-deps  {djblue/portal {:mvn/version "0.48.0"}
-                     org.scicloj/kind-portal {:mvn/version "1-alpha7"}
-                     org.scicloj/kind-clerk {:mvn/version "1-alpha5"}}}}}
+                      org.scicloj/kind-portal {:mvn/version "1-alpha7"}
+                      org.scicloj/kind-clerk {:mvn/version "1-alpha5"}}}}}

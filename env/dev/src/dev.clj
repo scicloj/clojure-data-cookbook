@@ -1,34 +1,21 @@
 (ns dev
   (:require
-   [clojure.java.io :as io]
-   [clojure.string :as str]
-   [nextjournal.clerk :as clerk]
+   [aerial.hanami.common :as hc]
    [scicloj.clay.v2.api :as clay]))
 
-;; Tell Clerk to render all tablecloth datasets as tables
+(defn build []
+  (swap! hc/_defaults
+         assoc
+         :BACKGROUND "white")
 
-
-;; (clerk/add-viewers! [{:pred #(= tech.v3.dataset.impl.dataset.Dataset (type %))
-;;                       ;; :fetch-fn (fn [_ file] {:nextjournal/content-type "image/png"
-;;                       ;;                         :nextjournal/value (Files/readAllBytes (.toPath file))})
-;;                       :render-fn v/table}])
-
-(defn start! []
-  (clerk/serve! {:browse? true :toc? true})
-  ;; (clay/start!)
-  :ready)
-
-(defn start-and-watch! []
-  (clerk/serve! {:browse? true :watch-paths ["book" "data"]}))
-
-(defn show [notebook]
-  (clerk/show! notebook)
-  ;; (clay/show-namespace! notebook)
-  )
-
-(defn build! []
-  (clerk/build! {:paths ["book/chapter_1_intro/*"
-                         ;; "book/chapter_2_input_output/*"
-                         ;; "book/chapter_3_data_manipulation/*"
-                         ]
-                 :index "book/index.clj"}))
+  (clay/make!
+   {:show false
+    :run-quarto false
+    :format [:quarto :html]
+    :book {:title "Clojure Data Cookbook"}
+    :base-source-path "src"
+    :base-target-path "docs"
+    :subdirs-to-sync ["src" "data"]
+    :source-path ["index.clj"
+                  "book/why-clojure.md"
+                  "book/introduction.md"]}))
