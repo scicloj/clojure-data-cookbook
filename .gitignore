@@ -17,7 +17,5 @@ pom.xml.asc
 .lsp/.cache
 .dir-locals.el
 
-# ignore built website on main branch, only see on gh-pages
-public/
-/.quarto/
-/_site/
+# ignore built quarto website
+docs/
