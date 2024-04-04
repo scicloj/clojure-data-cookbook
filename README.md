@@ -29,4 +29,4 @@ To run this project locally, start a REPL with the `:dev` alias, then run `(dev)
 
 # License
 
-This work is available under the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) License](https://creativecommons.org/licenses/by-sa/4.0/). See the link or [LICENSE file](./LICENSE) for details.
+This work is available under the [CC BY-NC-ND 4.0 license](https://creativecommons.org/licenses/by-nc-nd/4.0/). See the link or [LICENSE file](./LICENSE) for details.
