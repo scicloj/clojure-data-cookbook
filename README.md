@@ -19,6 +19,8 @@ The [outline](https://github.com/scicloj/clojure-data-cookbook/blob/main/outline
 
 ## Contributing
 
+The most valuable contributions to this effort at the moment would be working on the libraries used for data science in Clojure. There are still many rough edges, and polishing them is what will make Clojure's data science ecoystem feel ready for professional use.
+
 Pull requests welcome!
 
 [See the SciCloj contributing page](https://scicloj.github.io/blog-test/pages/contributing/)
