@@ -1,19 +1,28 @@
 {:paths ["src" "data"]
- :deps {org.clojure/clojure {:mvn/version "1.11.1"}
-        org.clojure/data.csv {:mvn/version "1.0.1"}
-        scicloj/tablecloth {:mvn/version "7.029.2"}
-        io.github.nextjournal/clerk {:mvn/version "0.15.957"}
+ :deps {;; core Clojure for data science
         org.scicloj/clay {:mvn/version "2-beta9"}
-        com.github.seancorfield/next.jdbc {:mvn/version "1.3.939"}
-        org.xerial/sqlite-jdbc {:mvn/version "3.45.3.0"}
-        io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
-        io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
-        generateme/fastmath {:mvn/version "2.4.0"}
+        org.clojure/clojure {:mvn/version "1.11.3"}
         org.scicloj/noj {:mvn/version "1-alpha34"}
-        com.cnuernber/charred {:mvn/version "1.034"}
-        clj-http/clj-http {:mvn/version "3.13.0"}
-        org.dhatim/fastexcel-reader  {:mvn/version "0.16.4"
-                                      :exclusions [org.apache.poi/poi-ooxml]}}
+        scicloj/tablecloth {:mvn/version "7.029.2"}
+
+        ;; logging
+        org.apache.logging.log4j/log4j-core {:mvn/version "2.23.1"}
+        org.slf4j/slf4j-simple {:mvn/version "2.0.13"}
+
+        ;; databases
+        com.github.seancorfield/next.jdbc {:mvn/version "1.3.939"}
+        io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
+        io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
+        org.xerial/sqlite-jdbc {:mvn/version "3.45.3.0"}
+
+        ;; stats
+        generateme/fastmath {:mvn/version "2.4.0"}
+
+        ;; excel
+        org.apache.poi/poi {:mvn/version "5.2.5"}
+        org.apache.poi/poi-ooxml {:mvn/version "5.2.5"}
+        org.dhatim/fastexcel-reader {:mvn/version "0.16.4"
+                                     :exclusions [org.apache.poi/poi-ooxml]}}
 
  :aliases
  {:dev {:extra-paths ["env/dev/src"]
