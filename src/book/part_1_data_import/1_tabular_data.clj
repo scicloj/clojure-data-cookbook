@@ -1,4 +1,4 @@
-^{:kindly/hide-code true}
+^:kindly/hide-code
 (ns book.part-1-data-import.1-tabular-data
   (:require [tablecloth.api :as tc]))
 
@@ -24,6 +24,7 @@
 
 ;; Standard tabular file formats like `.csv `and `.tsv` Just Work:
 
+^{:print-index-range 5}
 (tc/dataset "data/co2_over_time.csv")
 
 (tc/dataset "data/co2_over_time.tsv")
@@ -73,7 +74,11 @@
 (require '[tech.v3.libs.poi :as xls])
 
 ;; And now our excel spreadsheet should load. If there's a single sheet in the workbook, tablecloth will just work.
-(tc/dataset "data/example_XLS.xls")
+;; ^{:print-index-range 5}
+;; (tc/dataset "data/example_XLS.xls")
+(-> (tc/dataset "data/example_XLS.xls")
+    (vary-meta assoc :print-index-range 5)
+)
 
 ;; With multiple sheets we get an error:
 (tc/dataset "data/example_multiple_sheets_XLS.xls")
@@ -134,7 +139,7 @@
 ;; If you don't want to pre-emptively create datasets for all of your sheets (for example if they're very large), you can load them lazily with `xl.input->workbook`:
 (def xlsx-workbook
   (xlsx/input->workbook "data/example_multiple_sheets_XLSX.xlsx"))
-
+;;
 ;; And now work with this workbook as a lazy sequence of un-reified sheets:
 (-> xlsx-workbook
     .iterator

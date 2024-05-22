@@ -1,17 +1,24 @@
 {:remote-repo {:git-url "https://github.com/scicloj/clojure-data-cookbook"
                :branch "main"}
- :quarto {:format {:html {:toc true
-                          :toc-depth 4
-                          :mainfont "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif"
-                          :monofont "Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace"}}
-          :base-target-path "temp"
-          :code-block-background true
-          :include-in-header {:text "<link rel = \"icon\" href = \"data:,\" />"}
-          ;; :chapters ;; ["index.md"
-                    ;;  "why-clojure.md"
-                    ;;  "introduction.md"
-                    ;;  {:part "end-to-end.qmd"
-                    ;;   :chapters ["workflow.qmd"
-                    ;;              "tidy-data.qmd"
-                    ;;              "data-transformation.qmd"]}]
-          }}
+ :kindly/options {:datatables {:paging false
+                               :scrollY 400
+                               :scrollX 700
+                               :sPaginationType "full_numbers"
+                               :order []}
+                  :element/max-height nil}
+ :quarto {:include-in-header {:text "<link rel = \"icon\" href = \"data:,\" />\n<script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"7612edfb-6430-4b4e-8cec-e648f6cb41cc\"></script>"}}}
+
+
+
+;; dream config someday to specify chapter config here:
+          ;; :chapters ["index.md"
+          ;;            "book/why-clojure.md"
+          ;;            "book/introduction.md"
+          ;;            {:part "book/part_1_data_import/0_data_import.md"
+          ;;             :chapters ["book/part_1_data_import/1_tabular_data.clj"]}
+          ;;            ;; {:part "end-to-end.qmd"
+          ;;            ;;  :chapters ["workflow.qmd"
+          ;;            ;;             "tidy-data.qmd"
+          ;;            ;;             "data-transformation.qmd"]
+          ;;            ;;  }
+          ;;            ]

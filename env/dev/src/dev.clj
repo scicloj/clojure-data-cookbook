@@ -18,4 +18,10 @@
     :subdirs-to-sync ["src" "data"]
     :source-path ["index.clj"
                   "book/why-clojure.md"
-                  "book/introduction.md"]}))
+                  "book/introduction.md"
+                  "book/part_1_data_import/0_data_import.md"
+                  "book/part_1_data_import/1_tabular_data.clj"]}))
+
+(defn build-cli [_]
+  (build)
+  (System/exit 0))
