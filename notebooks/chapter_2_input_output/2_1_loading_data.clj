@@ -5,51 +5,6 @@
 
 (kind-clerk/setup!)
 
-;; ;; This is a work in progress of the code examples that will make up chapter 2, section 1
-;; ;; of the Clojure data cookbook
-
-;; ;; # 2.1 How to get data into the notebook
-
-;; ;; ## How to get data into the notebook
-
-;; ;; ### Reading from a delimited text file
-
-;; ;; Easiest with standard file formats, e.g. CSV.
-
-;; ;; #### With Clojure's standard CSV library
-
-;; (require '[clojure.data.csv :as csv]
-;;          '[clojure.java.io :as io])
-
-;; ^{:nextjournal.clerk/viewer :table}
-;; (with-open [reader (io/reader "data/co2_over_time.csv")]
-;;   (doall
-;;    (csv/read-csv reader)))
-
-;; ;; Returns: Lazy sequence of vectors of strings (one value per cell)
-;; ;; TODO: Link to useful explainer on lazy seqs, explain why we include `doall` here
-
-;; ;; #### With tablecloth
-
-;; ;; For most work involving tabular/columnar data, you'll use tablecloth, Clojure's go-to data
-;; ;; wrangling library. These all return a `tech.ml.dataset Dataset` object. The implementation
-;; ;; details aren't important now, but `tech.ml.dataset` is the library that allows for efficient
-;; ;; and fast operations on columnar datasets.
-
-;; ;; TODO: Be consistent about you vs we -- pick on and stick with it
-
-;; (require '[tablecloth.api :as tc])
-
-;; (require '[nextjournal.clerk :as clerk])
-
-;; ;; (clerk/add-viewers! [{:pred #(= tech.v3.dataset.impl.dataset.Dataset (type %))
-;; ;;                       ;; :fetch-fn (fn [_ file] {:nextjournal/content-type "image/png"
-;; ;;                       ;;                         :nextjournal/value (Files/readAllBytes (.toPath file))})
-;; ;;                       :render-fn v/table}])
-
-;; (-> "data/co2_over_time.csv"
-;;     tc/dataset)
-
 ;; ;; Note the built-in pretty printing.
 ;; ;; TODO: Write elsewhere about kindly and notebooks, how they know how to render different things
 
@@ -78,12 +33,7 @@
 ;; (-> "data/co2_over_time.tsv"
 ;;     tc/dataset)
 
-;; ;; But it can also accept an arbitrary separator if for some reason you have some data that uses
-;; ;; a non-standard file format (have a look at `data/co2_over_time.txt`). Note the separator has to
-;; ;; be a single character.
 
-;; (-> "data/co2_over_time.txt"
-;;     (tc/dataset {:separator "/"}))
 
 ;; ;; ##### Specify file encoding
 
