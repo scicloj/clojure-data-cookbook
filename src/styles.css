@@ -1,7 +1,11 @@
 .table {
-  width: auto
+  width: auto;
 }
 
 .clay-image img {
-  max-width: 100%
+  max-width: 100%;
+}
+
+div:has(> .clay-dataset) {
+  max-width: 100%;
 }

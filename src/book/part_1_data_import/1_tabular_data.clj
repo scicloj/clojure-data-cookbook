@@ -24,7 +24,6 @@
 
 ;; Standard tabular file formats like `.csv `and `.tsv` Just Work:
 
-^{:print-index-range 5}
 (tc/dataset "data/co2_over_time.csv")
 
 (tc/dataset "data/co2_over_time.tsv")
@@ -74,11 +73,7 @@
 (require '[tech.v3.libs.poi :as xls])
 
 ;; And now our excel spreadsheet should load. If there's a single sheet in the workbook, tablecloth will just work.
-;; ^{:print-index-range 5}
-;; (tc/dataset "data/example_XLS.xls")
-(-> (tc/dataset "data/example_XLS.xls")
-    (vary-meta assoc :print-index-range 5)
-)
+(tc/dataset "data/example_XLS.xls")
 
 ;; With multiple sheets we get an error:
 (tc/dataset "data/example_multiple_sheets_XLS.xls")
