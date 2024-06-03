@@ -73,14 +73,14 @@
 (require '[tech.v3.libs.poi :as xls])
 
 ;; And now our excel spreadsheet should load. If there's a single sheet in the workbook, tablecloth will just work.
-(tc/dataset "data/example_XLS.xls")
+(tc/dataset "data/tabular_data/example_XLS.xls")
 
 ;; With multiple sheets we get an error:
-(tc/dataset "data/example_multiple_sheets_XLS.xls")
+(tc/dataset "data/tabular_data/example_multiple_sheets_XLS.xls")
 
 ;; So we can load the file as a sequence of datasets and work with them from there. We can load them all using `xl/workbook->datasets`.
 (def xls-sheets
-  (xls/workbook->datasets "data/example_multiple_sheets_XLS.xls"))
+  (xls/workbook->datasets "data/tabular_data/example_multiple_sheets_XLS.xls"))
 
 ;; There are also options for configuring how column names are rendered and how values are parsed. They are a subset of the arguments for creating a new dataset, [documented here](https://techascent.github.io/tech.ml.dataset/tech.v3.libs.poi.html#var-workbook-.3Edatasets).
 ;;
@@ -93,7 +93,7 @@
 ;; If, for some reason, you know you don't want to load all the sheets as datasets pre-emptively, for example if they're very large and you only want to work with one of them, you can load the workbook itself, which allows you to iterate through the sheets without parsing them. `input->workbook` returns an implementation of `tech.v3.dataset/Spreadsheet$Workbook`:
 
 (def xls-workbook
-  (xls/input->workbook "data/example_multiple_sheets_XLS.xls"))
+  (xls/input->workbook "data/tabular_data/example_multiple_sheets_XLS.xls"))
 
 ;; The easiest way to work with this sequence of workbooks is to convert it to a Clojure seq:
 
@@ -123,17 +123,17 @@
 ;; And now our excel spreadsheet should load. These behave the same way as `.xls` files. For completeness, specific examples are given below.
 
 ;; If there's a single sheet, tablecloth will just work:
-(tc/dataset "data/example_XLSX.xlsx")
+(tc/dataset "data/tabular_data/example_XLSX.xlsx")
 
 ;; With multiple sheets it throws an error:
-(tc/dataset "data/example_multiple_sheets_XLSX.xlsx")
+(tc/dataset "data/tabular_data/example_multiple_sheets_XLSX.xlsx")
 
 ;; So we can load the file as a sequence of datasets. The same options are supported for configuring how the data gets loaded [documented here](https://techascent.github.io/tech.ml.dataset/tech.v3.libs.fastexcel.html#var-workbook-.3Edatasets):
-(xlsx/workbook->datasets "data/example_multiple_sheets_XLSX.xlsx")
+(xlsx/workbook->datasets "data/tabular_data/example_multiple_sheets_XLSX.xlsx")
 
 ;; If you don't want to pre-emptively create datasets for all of your sheets (for example if they're very large), you can load them lazily with `xl.input->workbook`:
 (def xlsx-workbook
-  (xlsx/input->workbook "data/example_multiple_sheets_XLSX.xlsx"))
+  (xlsx/input->workbook "data/tabular_data/example_multiple_sheets_XLSX.xlsx"))
 ;;
 ;; And now work with this workbook as a lazy sequence of un-reified sheets:
 (-> xlsx-workbook

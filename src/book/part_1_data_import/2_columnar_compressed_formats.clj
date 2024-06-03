@@ -106,10 +106,30 @@
 
 (require '[tech.v3.libs.parquet :as pq])
 
+;; Parquet support includes the following datatypes:
+;; - all numeric types
+;; - strings
+;; - java.time LocalDate, Instant
+;; - UUIDs (read/written as strings, the same as R's write_parquet function)
+
 ;; Given a path to a single parquet file, we get a single dataset:
-(pq/parquet->ds "data/mtcars.parquet")
+(pq/parquet->ds "data/columnar_data/mtcars.parquet")
+
+;; We can pass the `key-fn` option (like with any other file type) to format column headers on read:
+(pq/parquet->ds "data/columnar_data/mtcars.parquet" {:key-fn keyword})
+
+;; We can also use the `:column-allowlist` or `:column-blocklist` options to load only certain columns. This can be useful if the dataset is very large and you know in advance that you only need a subset of the columns. Note that the column header transformations are applied __before__ the column selection, so the column selection should use the transformed column names:
+(pq/parquet->ds "data/columnar_data/mtcars.parquet"
+                {:key-fn keyword
+                 :column-allowlist [:mpg, :cyl]})
+
+;; As opposed to this, which returns nothing because there are no columns with the string names "mpg" or "cyl", because of the key-fn option we passed.
+(pq/parquet->ds "data/columnar_data/mtcars.parquet"
+                {:key-fn keyword
+                 :column-allowlist ["mpg", "cyl"]})
 
 ;; A path to a directory with many parquet files, we get a sequence of datasets:
+
 
 
 ;;

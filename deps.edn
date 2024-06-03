@@ -1,6 +1,6 @@
 {:paths ["src" "data"]
  :deps {;; core Clojure for data science
-        org.scicloj/clay {:mvn/version "2-beta9"}
+        org.scicloj/clay {:mvn/version "2-beta10"}
         org.clojure/clojure {:mvn/version "1.11.3"}
         org.scicloj/noj {:mvn/version "1-alpha34"}
         scicloj/tablecloth {:mvn/version "7.029.2"}
