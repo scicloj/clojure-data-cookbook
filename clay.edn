@@ -7,7 +7,8 @@
                                :order []}
                   :dataset/print-range 3
                   :element/max-height nil}
- :quarto {:include-in-header {:text "<link rel = \"icon\" href = \"data:,\" />\n<script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"7612edfb-6430-4b4e-8cec-e648f6cb41cc\"></script>"}}}
+ :quarto {:format {:html {:css "src/styles.css"}}
+          :include-in-header {:text "<link rel = \"icon\" href = \"data:,\" />\n<script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"7612edfb-6430-4b4e-8cec-e648f6cb41cc\"></script>"}}}
 
 
 

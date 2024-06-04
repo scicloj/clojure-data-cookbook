@@ -20,7 +20,9 @@
                   "book/why-clojure.md"
                   "book/introduction.md"
                   "book/part_1_data_import/0_data_import.md"
-                  "book/part_1_data_import/1_tabular_data.clj"]}))
+                  "book/part_1_data_import/1_tabular_data.clj"
+                  "book/part_1_data_import/2_columnar_compressed_data.clj"
+                  ]}))
 
 (defn build-cli [_]
   (build)

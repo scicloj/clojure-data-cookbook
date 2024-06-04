@@ -2,7 +2,7 @@ format:
   html:
     toc: true
     toc-depth: 4
-    theme: cosmo
+    # theme: cosmo
     css: src/styles.css
     mainfont: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif
     monofont: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace
@@ -17,3 +17,5 @@ book:
     - part: src/book/part_1_data_import/0_data_import.md
       chapters:
         - book.part_1_data_import.1_tabular_data.qmd
+        - book.part_1_data_import.2_columnar_compressed_data.qmd
+resources: "*/*.csv"

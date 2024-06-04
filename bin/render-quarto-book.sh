@@ -20,7 +20,6 @@ clojure -A:dev -X dev/build-cli
 cd docs
 echoOrange ">>>>>> Updating _quarto.yml...\n"
 cp ../env/dev/quarto.yml ../docs/_quarto.yml
-echo 'resources: "*/*.csv"' >> _quarto.yml
 
 # echoOrange ">>>>>> Publishing to gh-pages with quarto publish\n"
 quarto preview

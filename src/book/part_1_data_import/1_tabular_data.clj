@@ -24,19 +24,19 @@
 
 ;; Standard tabular file formats like `.csv `and `.tsv` Just Work:
 
-(tc/dataset "data/co2_over_time.csv")
+(tc/dataset "data/tabular_data/co2_over_time.csv")
 
-(tc/dataset "data/co2_over_time.tsv")
+(tc/dataset "data/tabular_data/co2_over_time.tsv")
 
 ;; ### Non-standard delimeters
 
-;; You can also specify the column separator if it is something non-standard, but note that [it must be a single character](https://github.com/techascent/tech.ml.dataset/blob/7dbda7ab2923521d298c1be3d257b3563b4f1efc/src/tech/v3/dataset/io/univocity.clj#L45). The `data/co2_over_time.txt` file looks like this:
+;; You can also specify the column separator if it is something non-standard, but note that [it must be a single character](https://github.com/techascent/tech.ml.dataset/blob/7dbda7ab2923521d298c1be3d257b3563b4f1efc/src/tech/v3/dataset/io/univocity.clj#L45). The `data/tabular_data/co2_over_time.txt` file looks like this:
 
-(slurp "data/co2_over_time.txt")
+(slurp "data/tabular_data/co2_over_time.txt")
 
 ;; So we can specify the `separator` option when loading the data to create our properly-formed dataset:
 
-(tc/dataset "data/co2_over_time.txt" {:separator "/"})
+(tc/dataset "data/tabular_data/co2_over_time.txt" {:separator "/"})
 
 ;; ## Spreadsheets
 

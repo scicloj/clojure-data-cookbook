@@ -5,7 +5,3 @@
 .clay-image img {
   max-width: 100%;
 }
-
-.clay-sequential, .clay-map {
-  width: unset !important;
-}
