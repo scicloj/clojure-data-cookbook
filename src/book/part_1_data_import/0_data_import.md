@@ -1,4 +1,4 @@
-# Data Import
+# Data Import {#sec-data-import}
 
 To work with your data in Clojure, first you have to load the data into a Clojure namespace. This section covers how to load data from many different sources, from files to databases to web pages, and more.
 
@@ -17,3 +17,19 @@ This section of the book covers how to access data from the following sources:
 - Other misc file formats
   - SASS/SPSS
   - XML
+
+
+<!-- ;; ## From a URL -->
+
+<!-- ;; ## From a hand-written data entry -->
+
+<!-- ;; ## From a database -->
+
+<!-- ;; ## From a web page -->
+
+
+<!-- ;; ## Other considerations -->
+
+<!-- ;; ### File encoding -->
+<!-- ;; ### Column header formatting -->
+<!-- ;; ### Column data types -->

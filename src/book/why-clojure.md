@@ -4,9 +4,9 @@ This is the first question most people ask me when they learn that I work primar
 
 Anyway -- as much as I personally love the language, Clojure is not a common first choice for data science (yet!). It has everything you need to be productive working with data, and (I'd argue) it offers elegant solutions to most of the most common complaints with the current data science ecosystem.
 
-Clojure is among the [most stable](https://dl.acm.org/doi/10.1145/3386321), [most loved](https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages), and [most lucrative](https://insights.stackoverflow.com/survey/2021#section-salary-salary-and-experience-by-language) languages out there. It's free, open source, and has excellent performance thanks to being [hosted on the JVM](https://clojure.org/about/jvm_hosted). There are thousands of libraries available for Clojure, in addition to the endless Java libraries that are seamlessly available too.
+Clojure is among the [most stable](https://dl.acm.org/doi/10.1145/3386321), [most loved](https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages), and [most lucrative](https://insights.stackoverflow.com/survey/2021#section-salary-salary-and-experience-by-language) languages out there. It's free, open source, and has excellent performance thanks to being [hosted on the JVM](https://clojure.org/about/jvm_hosted). There are thousands of libraries available for Clojure, in addition to the endless Java libraries that are seamlessly available too. It's a modern Lisp dialect and as such offers a unique and compelling approach to data science. It strongly emphasizes functional programming, immutable data structures, and powerful concurrency primitives, offering a robust foundation for building scalable, efficient, and maintainable data science workflows.
 
-If you prefer to listen rather than read, the rest of this section is mostly a summary of the points I made in [my talk at the conj in 2023](https://www.youtube.com/watch?v=MguatDl5u2Q), which you could watch instead.
+If you prefer to listen rather than read, the rest of this section makes very similar points  to the ones I made in [my talk at the conj in 2023](https://www.youtube.com/watch?v=MguatDl5u2Q), which you could watch instead.
 
 ## Complete toolkit
 
@@ -81,6 +81,8 @@ In Clojure, immutability is a core principle that profoundly impacts data proces
 ## Stability
 
 The stability of Clojure's ecosystem, rooted in its culture and language design, offers significant benefits for long-term projects. Clojure's approach to evolution, emphasizing backward compatibility and cautious introduction of changes, ensures that code written today will remain functional and relevant in the future. This stability is reflected in the slow, deliberate growth of Clojure's core language and its libraries, where changes are carefully considered to avoid disrupting existing codebases. For instance, the Clojure community values libraries that have stood the test of time and maintain compatibility across Clojure versions, making them reliable choices for critical applications.
+
+Working with Clojure is an unusually peaceful experience for people coming from most other languages. It is easy to manage different JVM versions on one machine, but it also usually unnecessary. Clojure itself is "just" a just a Java library, required in each individual project that uses it, along with all the other dependencies. Version management is embedded in the tooling, so the familiar frustrations dealing with conflicting or incompatible library versions is non-existent in Clojure. Most people find that most of the problems they used to ~~waste~~ spend most of their days dealing with are simply not problems in Clojure.
 
 ## Functional
 

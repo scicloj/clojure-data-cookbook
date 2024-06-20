@@ -14,6 +14,9 @@ book:
     - index.qmd
     - src/book/why-clojure.md
     - src/book/introduction.md
+    - part: src/book/part_0_end_to_end/0_intro.md
+      chapters:
+        - book.part_0_end_to_end.1_importing_data.qmd
     - part: src/book/part_1_data_import/0_data_import.md
       chapters:
         - book.part_1_data_import.1_tabular_data.qmd
