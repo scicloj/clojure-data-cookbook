@@ -20,3 +20,5 @@ Chapter 1 (@sec-data-import-example) starts with getting data into your notebook
 Chapter 2 (@sec-data-transformation-example) will cover how to transform data. We'll be working with 3 separate datasets in order to cobble together the information we want, and not all of it is well organized or relevant. Real world data is invariably a total mess. In this chapter we'll explore some basic techniques for cleaning it up. We'll cover things like joining datasets together, filling in missing values, de-duplicating rows, (TODO: elaborate..)
 
 Chapter 3 covers modelling our data. Our goal for this exercise is to estimate the value of a house given sales data from similar properties. To do this, we'll explore different approaches to modelling the data and build an algorithm that can predict the price of house and say something about that prediction.
+
+## Basic toolkit
