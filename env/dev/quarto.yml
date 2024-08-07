@@ -14,9 +14,13 @@ book:
     - index.qmd
     - src/book/why-clojure.md
     - src/book/introduction.md
+    - part: src/book/getting_started/0_getting_started_with_clojure.md
+      chapters:
+        - book.getting_started.0_getting_started_with_clojure.md
     - part: src/book/part_0_end_to_end/0_intro.md
       chapters:
-        - book.part_0_end_to_end.1_importing_data.qmd
+        - book.part_0_end_to_end.1_data_import_and_cleanup_example.qmd
+        - book.part_0_end_to_end.2_data_transformation_example.qmd
     - part: src/book/part_1_data_import/0_data_import.md
       chapters:
         - book.part_1_data_import.1_tabular_data.qmd

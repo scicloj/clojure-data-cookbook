@@ -1,9 +1,11 @@
 {:paths ["src" "data"]
  :deps {;; core Clojure for data science
-        org.scicloj/clay {:mvn/version "2-beta10"}
+        org.scicloj/clay {:mvn/version "2-beta15"}
         org.clojure/clojure {:mvn/version "1.11.3"}
         org.scicloj/noj {:mvn/version "1-alpha34"}
         scicloj/tablecloth {:mvn/version "7.029.2"}
+        org.scicloj/tcutils {:mvn/version "0.1.0-alpha"}
+        org.scicloj/hanamicloth {:mvn/version "1-alpha2-SNAPSHOT"}
 
         ;; logging
         org.apache.logging.log4j/log4j-core {:mvn/version "2.23.1"}
@@ -16,7 +18,7 @@
         org.xerial/sqlite-jdbc {:mvn/version "3.45.3.0"}
 
         ;; stats
-        generateme/fastmath {:mvn/version "2.4.0"}
+        ;; generateme/fastmath {:mvn/version "2.4.0"}
 
         ;; excel
         org.apache.poi/poi {:mvn/version "5.2.5"}
@@ -88,8 +90,7 @@
                                                                       io.netty/netty
                                                                       com.google.inject.extensions/guice-servlet]}
         ;; Apple silicon support for snappy
-        org.xerial.snappy/snappy-java {:mvn/version "1.1.8.4"}
-        }
+        org.xerial.snappy/snappy-java {:mvn/version "1.1.8.4"}}
 
  :aliases
  {:dev {:extra-paths ["env/dev/src"]

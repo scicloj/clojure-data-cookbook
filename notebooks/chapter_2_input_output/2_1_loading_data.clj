@@ -33,6 +33,10 @@
 ;; (-> "data/co2_over_time.tsv"
 ;;     tc/dataset)
 
+;; ;; But it can also accept an arbitrary separator if for some reason you have some data that uses
+;; ;; a non-standard file format (have a look at `data/co2_over_time.txt`). Note the separator has to
+;; ;; be a single character.
+
 
 
 ;; ;; ##### Specify file encoding

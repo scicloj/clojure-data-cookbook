@@ -18,4 +18,4 @@ pom.xml.asc
 .dir-locals.el
 
 # ignore built quarto website
-docs/
+book/
