@@ -33,3 +33,10 @@ This section of the book covers how to access data from the following sources:
 <!-- ;; ### File encoding -->
 <!-- ;; ### Column header formatting -->
 <!-- ;; ### Column data types -->
+
+
+<!-- Text: CSV & JSON -->
+<!-- Binary: Parquet, Delta Lake, AVRO & Excel -->
+<!-- IPC: Feather, Arrow -->
+<!-- Databases: MySQL, Postgres, SQL Server, Sqlite, Redshift & Oracle -->
+<!-- Cloud storage: S3, Azure Blob & Azure File -->

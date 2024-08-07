@@ -5,3 +5,8 @@
 .clay-image img {
   max-width: 100%;
 }
+
+.clay-dataset {
+  overflow-y: scroll;
+  border-right: 2px solid gold;
+}

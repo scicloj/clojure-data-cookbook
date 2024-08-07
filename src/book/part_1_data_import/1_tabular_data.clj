@@ -1,4 +1,4 @@
-^:kindly/hide-code
+^{:kindly/hide-code true :clay {:kindly/options {:dataset/print-range 3}}}
 (ns book.part-1-data-import.1-tabular-data
   (:require [tablecloth.api :as tc]))
 
