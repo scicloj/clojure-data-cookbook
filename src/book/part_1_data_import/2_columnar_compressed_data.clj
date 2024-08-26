@@ -37,73 +37,14 @@
 
 ;; ## Parquet
 
-;; Working with parquet files requires a pile of dependencies. There is a very long and carefully chosen list of exclusions curated to avoid a [myriad of CVE issues in hadoop](https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/Arrow.3A.20dataset-.3Estream!.20.26.20metadata/near/300962808):
+;; Working with parquet files requires a pile of dependencies. There is a very long and carefully chosen list of exclusions curated to avoid a [myriad of CVE issues in hadoop](https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/Arrow.3A.20dataset-.3Estream!.20.26.20metadata/near/300962808) that are conveniently packaged up in the [`tech.parquet` package](https://github.com/techascent/tech.parquet). We'll add this to our `deps.edn`:
 
-;; ```clojure
-;; org.apache.parquet/parquet-hadoop {:mvn/version "1.12.0"
-;;                                    :exclusions [org.slf4j/slf4j-log4j12]}
-;; org.apache.hadoop/hadoop-common {:mvn/version "3.3.0"
-;;                                  :exclusions  [com.sun.jersey/jersey-core
-;;                                                com.sun.jersey/jersey-json
-;;                                                com.sun.jersey/jersey-server
-;;                                                com.sun.jersey/jersey-servlet
+```clojure
+com.techascent/tmd-parquet {:mvn/version "1.000-beta-39"}
 
-;;                                                dnsjava/dnsjava
+ ```
 
-;;                                                org.eclipse.jetty/jetty-server
-;;                                                org.eclipse.jetty/jetty-servlet
-;;                                                org.eclipse.jetty/jetty-util
-;;                                                org.eclipse.jetty/jetty-webapp
-
-;;                                                javax.activation/javax.activation-api
-;;                                                javax.servlet.jsp/jsp-api
-;;                                                javax.servlet/javax.servlet-api
-
-;;                                                io.netty/netty-codec
-;;                                                io.netty/netty-handler
-;;                                                io.netty/netty-transport
-;;                                                io.netty/netty-transport-native-epoll
-
-;;                                                org.codehaus.jettison/jettison
-
-;;                                                org.apache.zookeeper/zookeeper
-
-;;                                                org.apache.curator/curator-recipes
-;;                                                org.apache.curator/curator-client
-;;                                                org.apache.htrace/htrace-core4
-
-;;                                                org.apache.hadoop.thirdparty/hadoop-shaded-protobuf_3_7
-;;                                                org.apache.hadoop/hadoop-auth
-
-;;                                                org.apache.kerby/kerb-core
-
-;;                                                commons-cli/commons-cli
-;;                                                commons-net/commons-net
-;;                                                org.apache.commons/commons-lang3
-;;                                                org.apache.commons/commons-text
-;;                                                org.apache.commons/commons-configuration2
-
-;;                                                com.google.re2j/re2j
-;;                                                com.google.code.findbugs/jsr305
-
-;;                                                com.jcraft/jsch
-
-;;                                                log4j/log4j
-;;                                                org.slf4j/slf4j-log4j12]}
-;; org.apache.hadoop/hadoop-mapreduce-client-core {:mvn/version "3.3.0"
-;;                                                 :exclusions  [org.slf4j/slf4j-log4j12
-;;                                                               org.apache.avro/avro
-;;                                                               org.apache.hadoop/hadoop-yarn-client
-;;                                                               org.apache.hadoop/hadoop-yarn-common
-;;                                                               org.apache.hadoop/hadoop-annotations
-;;                                                               org.apache.hadoop/hadoop-hdfs-client
-;;                                                               io.netty/netty
-;;                                                               com.google.inject.extensions/guice-servlet]}
-;; ;; Apple silicon support for snappy
-;; org.xerial.snappy/snappy-java {:mvn/version "1.1.8.4"}
-;; ```
-
-;; Once these dependencies are installed and the relevant namespace is required, tablecloth (thanks to tech.ml.dataset) will handle parquet files like any other file type:
+;; Once this dependency is installed and the relevant namespace is required, tablecloth (thanks to tech.ml.dataset) will handle parquet files like any other file type:
 
 (require '[tech.v3.libs.parquet :as pq])
 
