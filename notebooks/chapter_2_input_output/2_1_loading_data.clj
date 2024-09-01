@@ -209,45 +209,6 @@
 ;;   (map #(zipmap headers %) rows))
 
 ;; ;; ### Reading from a database
-;; ;; #### SQL database
-
-;; ;; (tc/dataset (,,, results from some SQL query))
-
-;; ;; requires `com.github.seancorfield/next.jdbc {:mvn/version "1.3.847"}` in `deps.edn`
-
-;; ;; Note you will also require the relevant driver for the type of db you are trying
-;; ;; to access. These are some available ones:
-
-
-;; (require '[next.jdbc :as jdbc])
-
-;; ;; Connect to the db:
-
-;; (def db {:dbname "data/Chinook_Sqlite.sqlite"
-;;          :dbtype "sqlite"})
-
-;; (def ds (jdbc/get-datasource db))
-
-;; ds
-
-;; ;; Pass the results of a sql query to tablecloth to make a
-
-;; (-> ds
-;;     (jdbc/execute! ["SELECT * FROM artist"])
-;;     (tc/dataset))
-
-;; ;; Passing a parameter to a query
-
-;; (-> ds
-;;     (jdbc/execute! ["SELECT * FROM artist WHERE Name = ?" "Aerosmith"])
-;;     (tc/dataset))
-
-;; ;; note for SQLite specifically the concat operator is `||` not `+`
-
-;; (-> ds
-;;     (jdbc/execute! ["SELECT * FROM artist WHERE Name like '%' || ? || '%'" "man"])
-;;     (tc/dataset))
-
 ;; ;; #### SPARQL database
 
 ;; (require '[grafter-2.rdf4j.repository :as repo])
