@@ -1,42 +1,34 @@
-;; TODO: use this instead of parquet list: https://github.com/techascent/tech.parquet/tree/master
 {:paths ["src" "data"]
  :deps {;; core Clojure for data science
-        org.scicloj/clay {:mvn/version "2-beta15"}
-        org.clojure/clojure {:mvn/version "1.11.3"}
-        org.scicloj/noj {:mvn/version "1-alpha34"}
-        scicloj/tablecloth {:mvn/version "7.029.2"}
-        org.scicloj/tcutils {:mvn/version "0.1.0-alpha2"}
-        org.scicloj/hanamicloth {:mvn/version "1-alpha5-SNAPSHOT"}
+        org.scicloj/noj {:mvn/version "2-alpha12.1"}
+
+        ;; Notebooks
+        org.scicloj/clay {:mvn/version "2-beta23"}
 
         ;; logging
         org.apache.logging.log4j/log4j-core {:mvn/version "2.23.1"}
         org.slf4j/slf4j-simple {:mvn/version "2.0.13"}
 
         ;; Databases
-        ;;;;;;;;;;;;;
-
-        ;; SQL
+        ;;;; SQL
         com.github.seancorfield/next.jdbc {:mvn/version "1.3.939"}
         org.xerial/sqlite-jdbc {:mvn/version "3.46.1.0"}
         com.github.seancorfield/honeysql {:mvn/version "2.6.1147"}
-
-        ;; SPARQL
+        ;;;; SPARQL
+        ont-app/sparql-endpoint {:mvn/version "0.2.1"}
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
-        io.github.swirrl/grafter.repository {:mvn/version "3.0.0"}
 
-        ;; stats
-        ;; generateme/fastmath {:mvn/version "2.4.0"}
+        ;; Web
+        ;;;; APIs
+        clj-http/clj-http {:mvn/version "3.13.0"}
+        com.cnuernber/charred {:mvn/version "1.034"}
+        ;;;; Scraping
 
         ;; Excel
-        ;;;;;;;;;
         org.apache.poi/poi {:mvn/version "5.2.5"}
         org.apache.poi/poi-ooxml {:mvn/version "5.2.5"}
         org.dhatim/fastexcel-reader {:mvn/version "0.16.4"
                                      :exclusions [org.apache.poi/poi-ooxml]}
-
-        ;; Parquet
-        ;;;;;;;;;;
-        com.techascent/tmd-parquet {:mvn/version "1.000-beta-39"}
 
         ;; Arrow
         ;;;;;;;;;
@@ -49,10 +41,7 @@
 
         ;; Required for decompressing lz4 streams with dependent blocks.
         net.java.dev.jna/jna {:mvn/version "5.10.0"}
-        com.github.luben/zstd-jni {:mvn/version "1.5.4-1"}
-
-        ;; SQL Databases
-        }
+        com.github.luben/zstd-jni {:mvn/version "1.5.4-1"}}
 
  :aliases
  {:dev {:extra-paths ["env/dev/src"]

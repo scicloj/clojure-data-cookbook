@@ -1,3 +1,4 @@
+^:kindly/hide-code
 (ns book.part-1-data-import.3-databases
   (:require
    [tablecloth.api :as tc]))
@@ -26,28 +27,28 @@
 
 ;; Then we have to create a "datasource" from the db, against which we can run queries:
 
-(def ds (jdbc/get-datasource db))
+(def data-source (jdbc/get-datasource db))
 
 ;; Now we can run SQL queries against the db:
 
-(-> ds
+(-> data-source
     (jdbc/execute! ["SELECT * FROM artist"]))
 
 ;; Of course now that you have the power of SQL at your fingertips, there may be fewer things you need tablecloth for, but for the scenarios where it is still desirable, we can simply pass the results of any SQL query to tablecloth and it will handle it correctly, creating a dataset:
 
-(-> ds
+(-> data-source
     (jdbc/execute! ["SELECT * FROM artist"])
     (tc/dataset))
 
 ;; If you need to pass a parameter to a query, you can use a positional parameter (`?`)
 
-(-> ds
+(-> data-source
     (jdbc/execute! ["SELECT * FROM artist WHERE Name = ?" "Aerosmith" ])
     (tc/dataset))
 
 ;; You can also pass multiple parameters, they're passed in sequentially:
 
-(-> ds
+(-> data-source
     (jdbc/execute! ["SELECT * FROM Track
 INNER JOIN Album ON Track.AlbumId = Album.AlbumId
 INNER JOIN Artist ON Album.ArtistId = Artist.ArtistId
@@ -78,15 +79,54 @@ ORDER BY Track.Milliseconds DESC"
            [:> :Track.Milliseconds :?duration]]
    :order-by [[:Track.Milliseconds :desc]]})
 
-(-> ds
+(-> data-source
     (jdbc/execute! (sql/format tracks-query
                                {:params {:artist "Queen" :duration 300000}}))
     (tc/dataset))
 
+;; ## SPARQL
 
+;; There are many different ways to connect to a graph database, depending on which one you're using. One easy way to query a graph database that exposes a SPARQL endpoint is to use [sparql-endpoint](https://github.com/ont-app/sparql-endpoint). We'll also use some tools from [grafter](https://github.com/Swirrl/grafter) to help work with the resulting RDF values.
 
-;; ;; note for SQLite specifically the concat operator is `||` not `+`
+;; First, we add the dependency to our `deps.edn` file:
 
-;; (-> ds
-;;     (jdbc/execute! ["SELECT * FROM artist WHERE Name like '%' || ? || '%'" "man"])
-;;     (tc/dataset))
+;; ```clojure
+;; ont-app/sparql-endpoint {:mvn/version "0.2.1"}
+;; io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
+;; ```
+
+;; Then require the necessary libraries:
+
+(require '[ont-app.sparql-endpoint.core :as ep])
+(require '[grafter-2.rdf.protocols :as pr])
+
+;; We can connect directly to a SPARQL endpoint using `sparql-endpoint`. We'll use [DBpedia](https://www.dbpedia.org/about/) as an example, a crowd-sourced community effort to extract structured content from Wikipedia. They expose a SPARQL endpoint that we can directly connect to:
+
+(def endpoint "https://dbpedia.org/sparql")
+
+;; Working with graph databases can be confusing if you don't already know what you're looking for. To get started we can explore, for example, a list of the 100 most common things in this database. Running `SELECT` queries will return tabular results that will be easier for us to work with:
+
+(def top-100
+  (let [query "SELECT DISTINCT ?uri (COUNT(?instance) as ?count)
+WHERE {
+    ?instance a ?uri .
+}
+GROUP BY ?uri
+ORDER BY DESC(?count)
+LIMIT 100"]
+    (ep/sparql-select endpoint query)))
+
+top-100
+
+;; To get these values into a tablecloth dataset, we can just throw it at tabecloth and it will know what to do with this list of maps:
+
+(def ds (tc/dataset top-100))
+
+ds
+
+;; You'll notice that RDF data is very rich. Every value comes with metadata that helps machines understand what to make of it, like its datatype and where to find the datatypes definition. For our purposes we only care about the values, so we can use grafter to extract those from the resulting RDF, updating the column values using tablecloth's `update-column`:
+
+(-> ds
+    (tc/update-columns :all (partial map #(get % "value"))))
+
+;; Any data that comes as a list of maps, including SPARQL results, fits easily into tablecloth.
