@@ -131,7 +131,7 @@
 ;; So we can load the file as a sequence of datasets. The same options are supported for configuring how the data gets loaded [documented here](https://techascent.github.io/tech.ml.dataset/tech.v3.libs.fastexcel.html#var-workbook-.3Edatasets):
 (xlsx/workbook->datasets "data/tabular_data/example_multiple_sheets_XLSX.xlsx")
 
-;; If you don't want to pre-emptively create datasets for all of your sheets (for example if they're very large), you can load them lazily with `xl.input->workbook`:
+;; If you don't want to pre-emptively create datasets for all of your sheets (for example if they're very large), you can load them lazily with `xlsx/input->workbook`:
 (def xlsx-workbook
   (xlsx/input->workbook "data/tabular_data/example_multiple_sheets_XLSX.xlsx"))
 ;;

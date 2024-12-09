@@ -304,6 +304,7 @@
 
 ;; Multiple sale prices and multiple number of parcels
 
+;; TODO: Finish this -- revisit sanity of explaining every possible error in the data. How much cleaning is necessary to do a meaningful analysis?
 ;; TO DROP:
 (let [potentially-duplicate-row-ids (-> potentially-duplicate-row-counts
                                         (tc/join-columns :id

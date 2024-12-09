@@ -15,7 +15,8 @@
         org.xerial/sqlite-jdbc {:mvn/version "3.46.1.0"}
         com.github.seancorfield/honeysql {:mvn/version "2.6.1147"}
         ;;;; SPARQL
-        ont-app/sparql-endpoint {:mvn/version "0.2.1"}
+        ont-app/sparql-endpoint {:mvn/version "0.2.1"
+                                 :exclusions [com.fzakaria/slf4j-timbre]}
         io.github.swirrl/grafter.core {:mvn/version "3.0.0"}
 
         ;; Web

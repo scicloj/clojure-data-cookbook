@@ -1,7 +1,9 @@
 ^:kindly/hide-code
 (ns book.part-1-data-import.4-the-internet
   (:require
-   [tablecloth.api :as tc]))
+   [tablecloth.api :as tc]
+   [charred.api :as ch]
+   [clj-http.client :as http]))
 
 ;; # The Internet
 
@@ -9,39 +11,71 @@
 
 ;; If a dataset is already in a tabular format somewhere on the internet, getting it into tablecloth is trivially easy. You can just pass the URL directly to tablecloth and it will parse the data in to a table automatically.
 
-;; For example the New York Times covid dataset is available as a CSV and Just Works:
+;; For example this dataset of world cities is available as a CSV and Just Works:
 
-(tc/dataset "https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv")
-
-
+(tc/dataset "https://raw.githubusercontent.com/datasets/world-cities/refs/heads/main/data/world-cities.csv")
 
 ;; ## APIs
 
-;; Retrieving data from a URL is trivially easy with tablecloth. You can simply pass the URL to tablecloth directly, and it will parse the results into a table.
+;; JSON data also often comes in a format that tablecloth knows how to handle, but JSON API responses typically have results nested inside some type of data structure and require at least a little bit of parsing to extract the relevant data. How much parsing depends on the structure. Here, we'll explore how to work with a few kinds of differently-shaped data to get it into a tablecloth dataset.
+
+;; Some of this borders on data manipulation, but the idea is that here we'll cover the bare minimum that's necessary to get some common shapes of data into a dataset, and we'll look at data wrangling more in-depth later on.
+
+;; To make the initial request to any API endpoint we need to add the [`clj-http`](https://github.com/dakrone/clj-http) library to our project and require it. We'll also use [charred](https://github.com/cnuernber/charred), the fastest JSON and CSV parsing library for Clojure, to parse the responses:
+
+;; ```
+;; clj-http/clj-http {:mvn/version "3.13.0"}
+;; com.cnuernber/charred {:mvn/version "1.034"}
+;; ```
 
 (require '[clj-http.client :as http])
-
-(http/get "https://pokeapi.co/api/v2/pokemon?limit=100")
-
-;; Simple tabular data - Pokemon API
-;; Returns clean list of pokemon with stats
 (require '[charred.api :as ch])
 
-;; (def pokemon-data
-;;   (-> (http/get "https://pokeapi.co/api/v2/pokemon?limit=100")
-;;       :body
-;;       (json/parse-string true)
-;;       :results))
+;; ### Simple Tabular Data
 
-;; (def pokemon-df
-;;   (tc/dataset pokemon-data))
+;; Some APIs return data in a simple tabular format that just works with tablecloth. The Pokemon API is one such example. Requesting the first 100 Pokemon returns a response with the results nested under a "results" key. First we parse the response body as JSON, and we can see that the results are a list of JSON objects.
 
-;; ;; Wide data - Countries API
-;; ;; Returns extensive country data with many columns
-;; (def countries-data
-;;   (-> (http/get "https://restcountries.com/v3.1/all")
-;;       :body
-;;       (json/parse-string true)))
+(def pokemon-response (http/get "https://pokeapi.co/api/v2/pokemon?limit=100"))
+
+(-> pokemon-response
+    :body
+    ch/read-json)
+
+;; Passing this list of results to tablecloth will give us a nice table by default:
+
+(-> pokemon-response
+    :body
+    ch/read-json
+    (get "results")
+    tc/dataset)
+
+;; While we're here, we can do a little bonus side quest to fill out this dataset and demonstrate how to recursively fetch all Pokemon by automatically following the "next" links that are included in the responses, adding each batch of results to our dataset:
+
+(defn fetch-all-pokemon [url]
+  (loop [current-url url
+         ds (tc/dataset)]
+    (if (nil? current-url)
+      ds
+      (let [{:strs [results next]} (-> current-url http/get :body ch/read-json)]
+        (recur next (tc/concat ds (tc/dataset results)))))))
+
+(fetch-all-pokemon "https://pokeapi.co/api/v2/pokemon?limit=100")
+
+;; TODO: Are any of these worth including?
+;; ### Wide Data
+
+;; Other APIs return very wide data, as in data that is spread out across many columns.
+
+;; Returns extensive country data with many columns
+(def countries-response (http/get "https://restcountries.com/v3.1/all"))
+
+(-> countries-response
+    :body
+    (ch/read-json))
+
+(tc/dataset (-> countries-response
+                :body
+                (ch/read-json)))
 
 ;; (def countries-df
 ;;   (tc/dataset (map #(select-keys % [:name :capital :population :area :region :subregion
@@ -70,18 +104,6 @@
 ;;   (tc/dataset {:title [(:title book-data)]
 ;;                :subjects (get book-data :subjects)
 ;;                :author_count [(count (get-in book-data [:authors]))]}))
-
-;; ;; Nested results - GitHub API
-;; ;; Returns repository data nested in response envelope
-;; (def github-data
-;;   (-> (http/get "https://api.github.com/users/clojure/repos"
-;;                 {:headers {"Accept" "application/vnd.github.v3+json"}})
-;;       :body
-;;       (json/parse-string true)))
-
-;; (def github-df
-;;   (tc/dataset (map #(select-keys % [:name :description :language :stargazers_count])
-;;                    github-data)))
 
 ;; ;; Custom headers - NASA API
 ;; ;; Requires API key in header
