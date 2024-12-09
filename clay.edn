@@ -6,7 +6,17 @@
                                :sPaginationType "full_numbers"
                                :order []}
                   :element/max-height nil}
- :quarto {:format {:html {:css "src/styles.css"}}
+ :quarto {:format {:html {:toc true
+                          :toc-depth 4
+                          :theme {:light "yeti"
+                                  :dark "cyborg"}
+                          :mainfont "-apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif"
+                          :monofont "Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace"
+                          :number-sections false
+                          :grid {:body-width "1000px"}}}
+          :highlight-style "atom-one"
+          :code-block-background true
+          :base-target-path "temp"
           :include-in-header {:text "<link rel = \"icon\" href = \"data:,\" />\n<script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"7612edfb-6430-4b4e-8cec-e648f6cb41cc\"></script>"}}}
 
 

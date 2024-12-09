@@ -28,7 +28,9 @@
                               "book/part_0_end_to_end/2_data_preparation_example.clj"]}
                   {:part "book/part_1_data_import/0_data_import.md"
                    :chapters ["book/part_1_data_import/1_tabular_data.clj"
-                              "book/part_1_data_import/2_columnar_compressed_data.clj"]}]}))
+                              "book/part_1_data_import/2_columnar_compressed_data.clj"
+                              "book/part_1_data_import/3_databases.clj"
+                              "book/part_1_data_import/4_the_internet.clj"]}]}))
 
 (defn build-cli [_]
   (build)

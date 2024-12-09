@@ -4,7 +4,7 @@
 ;; # Welcome {.unnumbered}
 
 ;; ::: {.callout-note}
-;; **Status:** This is a work in progress and still has many missing and moving parts. Updates are published here as they come and this banner will be removed once this book is "stable" (or at least as stable as it will get until more progress is made in the broader Clojure data science ecosystem)
+;; **Status:** This is a work in progress and still has many missing and moving parts. Updates are published here as they come and this banner will be removed once this book is "stable" (or at least as stable as it will get until more progress is made in the broader Clojure data science ecosystem). For now this a "building in public" situation -- the "book" is nowhere near complete and not necessarily correct. Browse at your own risk.
 ;; :::
 ;;
 ;; Welcome to the Clojure Data Cookbook! This book will teach you how to work with data in Clojure. You'll learn how to get your data into Clojure, transform it, and visualize it.
