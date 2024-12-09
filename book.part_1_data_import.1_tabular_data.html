@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Tabular Data – Clojure Data Cookbook</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./book.part_1_data_import.2_columnar_compressed_data.html" rel="next">
+<link href="./src/book/part_1_data_import/0_data_import.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="icon" href="data:,">
+<script defer="" src="https://cloud.umami.is/script.js" data-website-id="7612edfb-6430-4b4e-8cec-e648f6cb41cc"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./src/book/part_1_data_import/0_data_import.html">Data Import</a></li><li class="breadcrumb-item"><a href="./book.part_1_data_import.1_tabular_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tabular Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Clojure Data Cookbook</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./src/book/why-clojure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Why Clojure?</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./src/book/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./src/book/part_0_end_to_end/0_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">End to End</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_0_end_to_end.1_data_import_and_cleanup_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data Import Example</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_0_end_to_end.2_data_preparation_example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Transformation Example</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./src/book/part_1_data_import/0_data_import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Import</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_1_data_import.1_tabular_data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tabular Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_1_data_import.2_columnar_compressed_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Columnar and Compressed Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_1_data_import.3_databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Databases</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book.part_1_data_import.4_the_internet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The Internet</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#delimited-plain-text-file-formats" id="toc-delimited-plain-text-file-formats" class="nav-link" data-scroll-target="#delimited-plain-text-file-formats">Delimited plain-text file formats</a>
+  <ul>
+  <li><a href="#csv-tsv" id="toc-csv-tsv" class="nav-link" data-scroll-target="#csv-tsv">CSV &amp; TSV</a></li>
+  <li><a href="#non-standard-delimeters" id="toc-non-standard-delimeters" class="nav-link" data-scroll-target="#non-standard-delimeters">Non-standard delimeters</a></li>
+  </ul></li>
+  <li><a href="#spreadsheets" id="toc-spreadsheets" class="nav-link" data-scroll-target="#spreadsheets">Spreadsheets</a>
+  <ul>
+  <li><a href="#excel" id="toc-excel" class="nav-link" data-scroll-target="#excel">Excel</a>
+  <ul class="collapse">
+  <li><a href="#xls" id="toc-xls" class="nav-link" data-scroll-target="#xls">.xls</a></li>
+  <li><a href="#xlsx" id="toc-xlsx" class="nav-link" data-scroll-target="#xlsx"><code>.xlsx</code></a></li>
+  </ul></li>
+  <li><a href="#google-sheets" id="toc-google-sheets" class="nav-link" data-scroll-target="#google-sheets">Google Sheets</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./src/book/part_1_data_import/0_data_import.html">Data Import</a></li><li class="breadcrumb-item"><a href="./book.part_1_data_import.1_tabular_data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tabular Data</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Tabular Data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style></style>
+<style>.printedClojure .sourceCode {
+  background-color: transparent;
+  border-style: none;
+}
+</style>
+<style>.clay-limit-image-width .clay-image {max-width: 100%}
+.clay-side-by-side .sourceCode {margin: 0}
+.clay-side-by-side {margin: 1em 0}
+</style>
+<script src="book.part_1_data_import.1_tabular_data_files/md-default0.js" type="text/javascript"></script>
+<script src="book.part_1_data_import.1_tabular_data_files/md-default1.js" type="text/javascript"></script>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an excerpt from the work-in-progress Clojure Data Cookbook. It is under active development and subject to change in the coming months.</p>
+</div>
+</div>
+<p>If the data you’re working with is already in a tabular format, it’s relatively easy to create a tablecloth dataset from it. If you have any control over the data creation and publishing parts of your project, you will have a much better time if you follow the best practices outlined in <a href="https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989">this paper about organizing data in spreadsheets</a>.</p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>TODO</p>
+<p>Further details for how to make each of these commands work are provided below.</p>
+</section>
+<section id="delimited-plain-text-file-formats" class="level2">
+<h2 class="anchored" data-anchor-id="delimited-plain-text-file-formats">Delimited plain-text file formats</h2>
+<p>If your data is saved in a plain-text format, loading it into a tablecloth dataset is supported out of the box.</p>
+<section id="csv-tsv" class="level3">
+<h3 class="anchored" data-anchor-id="csv-tsv">CSV &amp; TSV</h3>
+<p>Standard tabular file formats like <code>.csv</code>and <code>.tsv</code> Just Work:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb1"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/co2_over_time.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>data/tabular_data/co2_over_time.csv [741 3]:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th style="text-align: right;">CO2</th>
+<th style="text-align: right;">adjusted CO2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1958-03-01</td>
+<td style="text-align: right;">315.70</td>
+<td style="text-align: right;">314.44</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td>2020-03-01</td>
+<td style="text-align: right;">414.51</td>
+<td style="text-align: right;">412.94</td>
+</tr>
+<tr class="even">
+<td>2020-04-01</td>
+<td style="text-align: right;">416.18</td>
+<td style="text-align: right;">413.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb2"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/co2_over_time.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>data/tabular_data/co2_over_time.tsv [741 3]:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th style="text-align: right;">CO2</th>
+<th style="text-align: right;">adjusted CO2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1958-03-01</td>
+<td style="text-align: right;">315.70</td>
+<td style="text-align: right;">314.44</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td>2020-03-01</td>
+<td style="text-align: right;">414.51</td>
+<td style="text-align: right;">412.94</td>
+</tr>
+<tr class="even">
+<td>2020-04-01</td>
+<td style="text-align: right;">416.18</td>
+<td style="text-align: right;">413.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="non-standard-delimeters" class="level3">
+<h3 class="anchored" data-anchor-id="non-standard-delimeters">Non-standard delimeters</h3>
+<p>You can also specify the column separator if it is something non-standard, but note that <a href="https://github.com/techascent/tech.ml.dataset/blob/7dbda7ab2923521d298c1be3d257b3563b4f1efc/src/tech/v3/dataset/io/univocity.clj#L45">it must be a single character</a>. The <code>data/tabular_data/co2_over_time.txt</code> file looks like this:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb3"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">slurp</span> <span class="st">"data/tabular_data/co2_over_time.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb4"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">"Date / CO2 / adjusted CO2</span><span class="sc">\n</span><span class="st">1958-03-01 / 315.70 / 314.44</span><span class="sc">\n</span><span class="st">1958-04-01 / 317.46 / 315.16</span><span class="sc">\n</span><span class="st">1958-05-01 / 317.51 / 314.71</span><span class="sc">\n</span><span class="st">1958-07-01 / 315.86 / 315.19</span><span class="sc">\n</span><span class="st">1958-08-01 / 314.93 / 316.19</span><span class="sc">\n</span><span class="st">1958-09-01 / 313.21 / 316.08</span><span class="sc">\n</span><span class="st">1958-11-01 / 313.33 / 315.20</span><span class="sc">\n</span><span class="st">1958-12-01 / 314.67 / 315.43</span><span class="sc">\n</span><span class="st">1959-01-01 / 315.58 / 315.54</span><span class="sc">\n</span><span class="st">1959-02-01 / 316.49 / 315.86</span><span class="sc">\n</span><span class="st">1959-03-01 / 316.65 / 315.38</span><span class="sc">\n</span><span class="st">1959-04-01 / 317.72 / 315.42</span><span class="sc">\n</span><span class="st">1959-05-01 / 318.29 / 315.49</span><span class="sc">\n</span><span class="st">1959-06-01 / 318.15 / 316.03</span><span class="sc">\n</span><span class="st">1959-07-01 / 316.54 / 315.86</span><span class="sc">\n</span><span class="st">1959-08-01 / 314.80 / 316.06</span><span class="sc">\n</span><span class="st">1959-09-01 / 313.84 / 316.73</span><span class="sc">\n</span><span class="st">1959-10-01 / 313.33 / 316.33</span><span class="sc">\n</span><span class="st">1959-11-01 / 314.81 / 316.68</span><span class="sc">\n</span><span class="st">1959-12-01 / 315.58 / 316.35</span><span class="sc">\n</span><span class="st">1960-01-01 / 316.43 / 316.39</span><span class="sc">\n</span><span class="st">1960-02-01 / 316.98 / 316.35</span><span class="sc">\n</span><span class="st">1960-03-01 / 317.58 / 316.28</span><span class="sc">\n</span><span class="st">1960-04-01 / 319.03 / 316.70</span><span class="sc">\n</span><span class="st">1960-05-01 / 320.04 / 317.22</span><span class="sc">\n</span><span class="st">1960-06-01 / 319.58 / 317.48</span><span class="sc">\n</span><span class="st">1960-07-01 / 318.18 / 317.52</span><span class="sc">\n</span><span class="st">1960-08-01 / 315.90 / 317.20</span><span class="sc">\n</span><span class="st">1960-09-01 / 314.17 / 317.08</span><span class="sc">\n</span><span class="st">1960-10-01 / 313.83 / 316.83</span><span class="sc">\n</span><span class="st">1960-11-01 / 315.00 / 316.88</span><span class="sc">\n</span><span class="st">1960-12-01 / 316.19 / 316.96</span><span class="sc">\n</span><span class="st">1961-01-01 / 316.90 / 316.85</span><span class="sc">\n</span><span class="st">1961-02-01 / 317.70 / 317.07</span><span class="sc">\n</span><span class="st">1961-03-01 / 318.54 / 317.26</span><span class="sc">\n</span><span class="st">1961-04-01 / 319.48 / 317.16</span><span class="sc">\n</span><span class="st">1961-05-01 / 320.58 / 317.76</span><span class="sc">\n</span><span class="st">1961-06-01 / 319.77 / 317.63</span><span class="sc">\n</span><span class="st">1961-07-01 / 318.57 / 317.88</span><span class="sc">\n</span><span class="st">1961-08-01 / 316.79 / 318.06</span><span class="sc">\n</span><span class="st">1961-09-01 / 314.99 / 317.90</span><span class="sc">\n</span><span class="st">1961-10-01 / 315.31 / 318.32</span><span class="sc">\n</span><span class="st">1961-11-01 / 316.10 / 317.99</span><span class="sc">\n</span><span class="st">1961-12-01 / 317.01 / 317.78</span><span class="sc">\n</span><span class="st">1962-01-01 / 317.94 / 317.90</span><span class="sc">\n</span><span class="st">1962-02-01 / 318.55 / 317.92</span><span class="sc">\n</span><span class="st">1962-03-01 / 319.68 / 318.40</span><span class="sc">\n</span><span class="st">1962-04-01 / 320.57 / 318.24</span><span class="sc">\n</span><span class="st">1962-05-01 / 321.02 / 318.18</span><span class="sc">\n</span><span class="st">1962-06-01 / 320.62 / 318.47</span><span class="sc">\n</span><span class="st">1962-07-01 / 319.61 / 318.93</span><span class="sc">\n</span><span class="st">1962-08-01 / 317.40 / 318.68</span><span class="sc">\n</span><span class="st">1962-09-01 / 316.25 / 319.17</span><span class="sc">\n</span><span class="st">1962-10-01 / 315.42 / 318.44</span><span class="sc">\n</span><span class="st">1962-11-01 / 316.69 / 318.58</span><span class="sc">\n</span><span class="st">1962-12-01 / 317.70 / 318.47</span><span class="sc">\n</span><span class="st">1963-01-01 / 318.74 / 318.70</span><span class="sc">\n</span><span class="st">1963-02-01 / 319.07 / 318.43</span><span class="sc">\n</span><span class="st">1963-03-01 / 319.86 / 318.57</span><span class="sc">\n</span><span class="st">1963-04-01 / 321.38 / 319.05</span><span class="sc">\n</span><span class="st">1963-05-01 / 322.25 / 319.40</span><span class="sc">\n</span><span class="st">1963-06-01 / 321.48 / 319.33</span><span class="sc">\n</span><span class="st">1963-07-01 / 319.74 / 319.06</span><span class="sc">\n</span><span class="st">1963-08-01 / 317.77 / 319.05</span><span class="sc">\n</span><span class="st">1963-09-01 / 316.21 / 319.14</span><span class="sc">\n</span><span class="st">1963-10-01 / 315.99 / 319.02</span><span class="sc">\n</span><span class="st">1963-11-01 / 317.07 / 318.97</span><span class="sc">\n</span><span class="st">1963-12-01 / 318.35 / 319.13</span><span class="sc">\n</span><span class="st">1964-01-01 / 319.57 / 319.53</span><span class="sc">\n</span><span class="st">1964-05-01 / 322.26 / 319.40</span><span class="sc">\n</span><span class="st">1964-06-01 / 321.89 / 319.75</span><span class="sc">\n</span><span class="st">1964-07-01 / 320.44 / 319.78</span><span class="sc">\n</span><span class="st">1964-08-01 / 318.69 / 320.01</span><span class="sc">\n</span><span class="st">1964-09-01 / 316.70 / 319.66</span><span class="sc">\n</span><span class="st">1964-10-01 / 316.87 / 319.91</span><span class="sc">\n</span><span class="st">1964-11-01 / 317.68 / 319.58</span><span class="sc">\n</span><span class="st">1964-12-01 / 318.71 / 319.49</span><span class="sc">\n</span><span class="st">1965-01-01 / 319.44 / 319.40</span><span class="sc">\n</span><span class="st">1965-02-01 / 320.44 / 319.81</span><span class="sc">\n</span><span class="st">1965-03-01 / 320.89 / 319.59</span><span class="sc">\n</span><span class="st">1965-04-01 / 322.14 / 319.78</span><span class="sc">\n</span><span class="st">1965-05-01 / 322.17 / 319.30</span><span class="sc">\n</span><span class="st">1965-06-01 / 321.87 / 319.70</span><span class="sc">\n</span><span class="st">1965-07-01 / 321.21 / 320.52</span><span class="sc">\n</span><span class="st">1965-08-01 / 318.87 / 320.16</span><span class="sc">\n</span><span class="st">1965-09-01 / 317.81 / 320.77</span><span class="sc">\n</span><span class="st">1965-10-01 / 317.30 / 320.36</span><span class="sc">\n</span><span class="st">1965-11-01 / 318.87 / 320.78</span><span class="sc">\n</span><span class="st">1965-12-01 / 319.42 / 320.20</span><span class="sc">\n</span><span class="st">1966-01-01 / 320.62 / 320.58</span><span class="sc">\n</span><span class="st">1966-02-01 / 321.60 / 320.95</span><span class="sc">\n</span><span class="st">1966-03-01 / 322.39 / 321.08</span><span class="sc">\n</span><span class="st">1966-04-01 / 323.70 / 321.34</span><span class="sc">\n</span><span class="st">1966-05-01 / 324.08 / 321.20</span><span class="sc">\n</span><span class="st">1966-06-01 / 323.75 / 321.57</span><span class="sc">\n</span><span class="st">1966-07-01 / 322.38 / 321.69</span><span class="sc">\n</span><span class="st">1966-08-01 / 320.36 / 321.66</span><span class="sc">\n</span><span class="st">1966-09-01 / 318.64 / 321.60</span><span class="sc">\n</span><span class="st">1966-10-01 / 318.10 / 321.17</span><span class="sc">\n</span><span class="st">1966-11-01 / 319.78 / 321.70</span><span class="sc">\n</span><span class="st">1966-12-01 / 321.03 / 321.81</span><span class="sc">\n</span><span class="st">1967-01-01 / 322.33 / 322.29</span><span class="sc">\n</span><span class="st">1967-02-01 / 322.50 / 321.85</span><span class="sc">\n</span><span class="st">1967-03-01 / 323.04 / 321.73</span><span class="sc">\n</span><span class="st">1967-04-01 / 324.42 / 322.05</span><span class="sc">\n</span><span class="st">1967-05-01 / 325.00 / 322.11</span><span class="sc">\n</span><span class="st">1967-06-01 / 324.09 / 321.91</span><span class="sc">\n</span><span class="st">1967-07-01 / 322.54 / 321.85</span><span class="sc">\n</span><span class="st">1967-08-01 / 320.92 / 322.22</span><span class="sc">\n</span><span class="st">1967-09-01 / 319.25 / 322.23</span><span class="sc">\n</span><span class="st">1967-10-01 / 319.39 / 322.47</span><span class="sc">\n</span><span class="st">1967-11-01 / 320.73 / 322.65</span><span class="sc">\n</span><span class="st">1967-12-01 / 321.96 / 322.74</span><span class="sc">\n</span><span class="st">1968-01-01 / 322.57 / 322.53</span><span class="sc">\n</span><span class="st">1968-02-01 / 323.15 / 322.50</span><span class="sc">\n</span><span class="st">1968-03-01 / 323.89 / 322.55</span><span class="sc">\n</span><span class="st">1968-04-01 / 325.02 / 322.62</span><span class="sc">\n</span><span class="st">1968-05-01 / 325.57 / 322.68</span><span class="sc">\n</span><span class="st">1968-06-01 / 325.36 / 323.19</span><span class="sc">\n</span><span class="st">1968-07-01 / 324.14 / 323.47</span><span class="sc">\n</span><span class="st">1968-08-01 / 322.11 / 323.44</span><span class="sc">\n</span><span class="st">1968-09-01 / 320.33 / 323.32</span><span class="sc">\n</span><span class="st">1968-10-01 / 320.25 / 323.33</span><span class="sc">\n</span><span class="st">1968-11-01 / 321.32 / 323.25</span><span class="sc">\n</span><span class="st">1968-12-01 / 322.89 / 323.68</span><span class="sc">\n</span><span class="st">1969-01-01 / 324.00 / 323.96</span><span class="sc">\n</span><span class="st">1969-02-01 / 324.41 / 323.77</span><span class="sc">\n</span><span class="st">1969-03-01 / 325.63 / 324.32</span><span class="sc">\n</span><span class="st">1969-04-01 / 326.66 / 324.28</span><span class="sc">\n</span><span class="st">1969-05-01 / 327.38 / 324.48</span><span class="sc">\n</span><span class="st">1969-06-01 / 326.71 / 324.51</span><span class="sc">\n</span><span class="st">1969-07-01 / 325.88 / 325.18</span><span class="sc">\n</span><span class="st">1969-08-01 / 323.66 / 324.97</span><span class="sc">\n</span><span class="st">1969-09-01 / 322.38 / 325.37</span><span class="sc">\n</span><span class="st">1969-10-01 / 321.78 / 324.88</span><span class="sc">\n</span><span class="st">1969-11-01 / 322.85 / 324.79</span><span class="sc">\n</span><span class="st">1969-12-01 / 324.12 / 324.91</span><span class="sc">\n</span><span class="st">1970-01-01 / 325.06 / 325.02</span><span class="sc">\n</span><span class="st">1970-02-01 / 325.98 / 325.33</span><span class="sc">\n</span><span class="st">1970-03-01 / 326.93 / 325.61</span><span class="sc">\n</span><span class="st">1970-04-01 / 328.13 / 325.74</span><span class="sc">\n</span><span class="st">1970-05-01 / 328.08 / 325.16</span><span class="sc">\n</span><span class="st">1970-06-01 / 327.67 / 325.46</span><span class="sc">\n</span><span class="st">1970-07-01 / 326.34 / 325.64</span><span class="sc">\n</span><span class="st">1970-08-01 / 324.69 / 326.00</span><span class="sc">\n</span><span class="st">1970-09-01 / 323.10 / 326.10</span><span class="sc">\n</span><span class="st">1970-10-01 / 323.06 / 326.18</span><span class="sc">\n</span><span class="st">1970-11-01 / 324.01 / 325.95</span><span class="sc">\n</span><span class="st">1970-12-01 / 325.13 / 325.93</span><span class="sc">\n</span><span class="st">1971-01-01 / 326.17 / 326.13</span><span class="sc">\n</span><span class="st">1971-02-01 / 326.68 / 326.03</span><span class="sc">\n</span><span class="st">1971-03-01 / 327.17 / 325.85</span><span class="sc">\n</span><span class="st">1971-04-01 / 327.79 / 325.38</span><span class="sc">\n</span><span class="st">1971-05-01 / 328.93 / 326.00</span><span class="sc">\n</span><span class="st">1971-06-01 / 328.57 / 326.36</span><span class="sc">\n</span><span class="st">1971-07-01 / 327.36 / 326.65</span><span class="sc">\n</span><span class="st">1971-08-01 / 325.43 / 326.75</span><span class="sc">\n</span><span class="st">1971-09-01 / 323.36 / 326.37</span><span class="sc">\n</span><span class="st">1971-10-01 / 323.56 / 326.68</span><span class="sc">\n</span><span class="st">1971-11-01 / 324.80 / 326.75</span><span class="sc">\n</span><span class="st">1971-12-01 / 326.01 / 326.81</span><span class="sc">\n</span><span class="st">1972-01-01 / 326.77 / 326.73</span><span class="sc">\n</span><span class="st">1972-02-01 / 327.63 / 326.98</span><span class="sc">\n</span><span class="st">1972-03-01 / 327.75 / 326.40</span><span class="sc">\n</span><span class="st">1972-04-01 / 329.72 / 327.29</span><span class="sc">\n</span><span class="st">1972-05-01 / 330.07 / 327.13</span><span class="sc">\n</span><span class="st">1972-06-01 / 329.09 / 326.89</span><span class="sc">\n</span><span class="st">1972-07-01 / 328.04 / 327.36</span><span class="sc">\n</span><span class="st">1972-08-01 / 326.32 / 327.67</span><span class="sc">\n</span><span class="st">1972-09-01 / 324.84 / 327.87</span><span class="sc">\n</span><span class="st">1972-10-01 / 325.20 / 328.33</span><span class="sc">\n</span><span class="st">1972-11-01 / 326.50 / 328.45</span><span class="sc">\n</span><span class="st">1972-12-01 / 327.55 / 328.35</span><span class="sc">\n</span><span class="st">1973-01-01 / 328.55 / 328.50</span><span class="sc">\n</span><span class="st">1973-02-01 / 329.56 / 328.90</span><span class="sc">\n</span><span class="st">1973-03-01 / 330.30 / 328.97</span><span class="sc">\n</span><span class="st">1973-04-01 / 331.50 / 329.08</span><span class="sc">\n</span><span class="st">1973-05-01 / 332.48 / 329.53</span><span class="sc">\n</span><span class="st">1973-06-01 / 332.07 / 329.84</span><span class="sc">\n</span><span class="st">1973-07-01 / 330.87 / 330.16</span><span class="sc">\n</span><span class="st">1973-08-01 / 329.31 / 330.64</span><span class="sc">\n</span><span class="st">1973-09-01 / 327.51 / 330.55</span><span class="sc">\n</span><span class="st">1973-10-01 / 327.18 / 330.32</span><span class="sc">\n</span><span class="st">1973-11-01 / 328.16 / 330.13</span><span class="sc">\n</span><span class="st">1973-12-01 / 328.64 / 329.44</span><span class="sc">\n</span><span class="st">1974-01-01 / 329.35 / 329.31</span><span class="sc">\n</span><span class="st">1974-02-01 / 330.71 / 330.05</span><span class="sc">\n</span><span class="st">1974-03-01 / 331.48 / 330.14</span><span class="sc">\n</span><span class="st">1974-04-01 / 332.65 / 330.22</span><span class="sc">\n</span><span class="st">1974-05-01 / 333.09 / 330.13</span><span class="sc">\n</span><span class="st">1974-06-01 / 332.25 / 330.01</span><span class="sc">\n</span><span class="st">1974-07-01 / 331.18 / 330.46</span><span class="sc">\n</span><span class="st">1974-08-01 / 329.39 / 330.73</span><span class="sc">\n</span><span class="st">1974-09-01 / 327.43 / 330.48</span><span class="sc">\n</span><span class="st">1974-10-01 / 327.37 / 330.52</span><span class="sc">\n</span><span class="st">1974-11-01 / 328.46 / 330.43</span><span class="sc">\n</span><span class="st">1974-12-01 / 329.57 / 330.38</span><span class="sc">\n</span><span class="st">1975-01-01 / 330.40 / 330.36</span><span class="sc">\n</span><span class="st">1975-02-01 / 331.40 / 330.74</span><span class="sc">\n</span><span class="st">1975-03-01 / 332.04 / 330.69</span><span class="sc">\n</span><span class="st">1975-04-01 / 333.31 / 330.87</span><span class="sc">\n</span><span class="st">1975-05-01 / 333.97 / 331.00</span><span class="sc">\n</span><span class="st">1975-06-01 / 333.60 / 331.36</span><span class="sc">\n</span><span class="st">1975-07-01 / 331.90 / 331.19</span><span class="sc">\n</span><span class="st">1975-08-01 / 330.06 / 331.39</span><span class="sc">\n</span><span class="st">1975-09-01 / 328.56 / 331.61</span><span class="sc">\n</span><span class="st">1975-10-01 / 328.34 / 331.50</span><span class="sc">\n</span><span class="st">1975-11-01 / 329.49 / 331.47</span><span class="sc">\n</span><span class="st">1975-12-01 / 330.76 / 331.57</span><span class="sc">\n</span><span class="st">1976-01-01 / 331.75 / 331.70</span><span class="sc">\n</span><span class="st">1976-02-01 / 332.57 / 331.90</span><span class="sc">\n</span><span class="st">1976-03-01 / 333.50 / 332.12</span><span class="sc">\n</span><span class="st">1976-04-01 / 334.58 / 332.12</span><span class="sc">\n</span><span class="st">1976-05-01 / 334.88 / 331.90</span><span class="sc">\n</span><span class="st">1976-06-01 / 334.33 / 332.10</span><span class="sc">\n</span><span class="st">1976-07-01 / 333.05 / 332.36</span><span class="sc">\n</span><span class="st">1976-08-01 / 330.94 / 332.31</span><span class="sc">\n</span><span class="st">1976-09-01 / 329.30 / 332.38</span><span class="sc">\n</span><span class="st">1976-10-01 / 328.94 / 332.11</span><span class="sc">\n</span><span class="st">1976-11-01 / 330.31 / 332.29</span><span class="sc">\n</span><span class="st">1976-12-01 / 331.68 / 332.49</span><span class="sc">\n</span><span class="st">1977-01-01 / 332.93 / 332.88</span><span class="sc">\n</span><span class="st">1977-02-01 / 333.42 / 332.75</span><span class="sc">\n</span><span class="st">1977-03-01 / 334.70 / 333.35</span><span class="sc">\n</span><span class="st">1977-04-01 / 336.07 / 333.62</span><span class="sc">\n</span><span class="st">1977-05-01 / 336.75 / 333.76</span><span class="sc">\n</span><span class="st">1977-06-01 / 336.27 / 334.01</span><span class="sc">\n</span><span class="st">1977-07-01 / 334.92 / 334.20</span><span class="sc">\n</span><span class="st">1977-08-01 / 332.75 / 334.10</span><span class="sc">\n</span><span class="st">1977-09-01 / 331.59 / 334.67</span><span class="sc">\n</span><span class="st">1977-10-01 / 331.16 / 334.35</span><span class="sc">\n</span><span class="st">1977-11-01 / 332.40 / 334.40</span><span class="sc">\n</span><span class="st">1977-12-01 / 333.85 / 334.66</span><span class="sc">\n</span><span class="st">1978-01-01 / 334.97 / 334.93</span><span class="sc">\n</span><span class="st">1978-02-01 / 335.39 / 334.72</span><span class="sc">\n</span><span class="st">1978-03-01 / 336.64 / 335.28</span><span class="sc">\n</span><span class="st">1978-04-01 / 337.76 / 335.30</span><span class="sc">\n</span><span class="st">1978-05-01 / 338.01 / 335.02</span><span class="sc">\n</span><span class="st">1978-06-01 / 337.90 / 335.63</span><span class="sc">\n</span><span class="st">1978-07-01 / 336.54 / 335.82</span><span class="sc">\n</span><span class="st">1978-08-01 / 334.68 / 336.03</span><span class="sc">\n</span><span class="st">1978-09-01 / 332.76 / 335.85</span><span class="sc">\n</span><span class="st">1978-10-01 / 332.55 / 335.74</span><span class="sc">\n</span><span class="st">1978-11-01 / 333.92 / 335.92</span><span class="sc">\n</span><span class="st">1978-12-01 / 334.95 / 335.77</span><span class="sc">\n</span><span class="st">1979-01-01 / 336.23 / 336.18</span><span class="sc">\n</span><span class="st">1979-02-01 / 336.76 / 336.09</span><span class="sc">\n</span><span class="st">1979-03-01 / 337.96 / 336.60</span><span class="sc">\n</span><span class="st">1979-04-01 / 338.88 / 336.41</span><span class="sc">\n</span><span class="st">1979-05-01 / 339.47 / 336.47</span><span class="sc">\n</span><span class="st">1979-06-01 / 339.29 / 337.01</span><span class="sc">\n</span><span class="st">1979-07-01 / 337.73 / 337.01</span><span class="sc">\n</span><span class="st">1979-08-01 / 336.09 / 337.44</span><span class="sc">\n</span><span class="st">1979-09-01 / 333.92 / 337.01</span><span class="sc">\n</span><span class="st">1979-10-01 / 333.86 / 337.07</span><span class="sc">\n</span><span class="st">1979-11-01 / 335.29 / 337.30</span><span class="sc">\n</span><span class="st">1979-12-01 / 336.73 / 337.55</span><span class="sc">\n</span><span class="st">1980-01-01 / 338.01 / 337.97</span><span class="sc">\n</span><span class="st">1980-02-01 / 338.36 / 337.69</span><span class="sc">\n</span><span class="st">1980-03-01 / 340.07 / 338.68</span><span class="sc">\n</span><span class="st">1980-04-01 / 340.76 / 338.26</span><span class="sc">\n</span><span class="st">1980-05-01 / 341.47 / 338.45</span><span class="sc">\n</span><span class="st">1980-06-01 / 341.17 / 338.91</span><span class="sc">\n</span><span class="st">1980-07-01 / 339.56 / 338.86</span><span class="sc">\n</span><span class="st">1980-08-01 / 337.60 / 338.99</span><span class="sc">\n</span><span class="st">1980-09-01 / 335.88 / 339.00</span><span class="sc">\n</span><span class="st">1980-10-01 / 336.02 / 339.23</span><span class="sc">\n</span><span class="st">1980-11-01 / 337.10 / 339.11</span><span class="sc">\n</span><span class="st">1980-12-01 / 338.21 / 339.03</span><span class="sc">\n</span><span class="st">1981-01-01 / 339.24 / 339.19</span><span class="sc">\n</span><span class="st">1981-02-01 / 340.48 / 339.80</span><span class="sc">\n</span><span class="st">1981-03-01 / 341.38 / 340.01</span><span class="sc">\n</span><span class="st">1981-04-01 / 342.50 / 340.02</span><span class="sc">\n</span><span class="st">1981-05-01 / 342.91 / 339.89</span><span class="sc">\n</span><span class="st">1981-06-01 / 342.25 / 339.96</span><span class="sc">\n</span><span class="st">1981-07-01 / 340.49 / 339.76</span><span class="sc">\n</span><span class="st">1981-08-01 / 338.43 / 339.80</span><span class="sc">\n</span><span class="st">1981-09-01 / 336.69 / 339.81</span><span class="sc">\n</span><span class="st">1981-10-01 / 336.86 / 340.08</span><span class="sc">\n</span><span class="st">1981-11-01 / 338.36 / 340.38</span><span class="sc">\n</span><span class="st">1981-12-01 / 339.61 / 340.44</span><span class="sc">\n</span><span class="st">1982-01-01 / 340.75 / 340.71</span><span class="sc">\n</span><span class="st">1982-02-01 / 341.61 / 340.94</span><span class="sc">\n</span><span class="st">1982-03-01 / 342.70 / 341.32</span><span class="sc">\n</span><span class="st">1982-04-01 / 343.57 / 341.08</span><span class="sc">\n</span><span class="st">1982-05-01 / 344.14 / 341.10</span><span class="sc">\n</span><span class="st">1982-06-01 / 343.35 / 341.05</span><span class="sc">\n</span><span class="st">1982-07-01 / 342.06 / 341.32</span><span class="sc">\n</span><span class="st">1982-08-01 / 339.81 / 341.18</span><span class="sc">\n</span><span class="st">1982-09-01 / 337.98 / 341.10</span><span class="sc">\n</span><span class="st">1982-10-01 / 337.86 / 341.10</span><span class="sc">\n</span><span class="st">1982-11-01 / 339.26 / 341.29</span><span class="sc">\n</span><span class="st">1982-12-01 / 340.49 / 341.32</span><span class="sc">\n</span><span class="st">1983-01-01 / 341.38 / 341.33</span><span class="sc">\n</span><span class="st">1983-02-01 / 342.52 / 341.84</span><span class="sc">\n</span><span class="st">1983-03-01 / 343.10 / 341.72</span><span class="sc">\n</span><span class="st">1983-04-01 / 344.94 / 342.44</span><span class="sc">\n</span><span class="st">1983-05-01 / 345.76 / 342.71</span><span class="sc">\n</span><span class="st">1983-06-01 / 345.32 / 343.01</span><span class="sc">\n</span><span class="st">1983-07-01 / 343.98 / 343.25</span><span class="sc">\n</span><span class="st">1983-08-01 / 342.38 / 343.75</span><span class="sc">\n</span><span class="st">1983-09-01 / 339.87 / 343.00</span><span class="sc">\n</span><span class="st">1983-10-01 / 339.99 / 343.24</span><span class="sc">\n</span><span class="st">1983-11-01 / 341.15 / 343.19</span><span class="sc">\n</span><span class="st">1983-12-01 / 342.99 / 343.82</span><span class="sc">\n</span><span class="st">1984-01-01 / 343.70 / 343.65</span><span class="sc">\n</span><span class="st">1984-02-01 / 344.50 / 343.83</span><span class="sc">\n</span><span class="st">1984-03-01 / 345.28 / 343.87</span><span class="sc">\n</span><span class="st">1984-04-01 / 347.05 / 344.52</span><span class="sc">\n</span><span class="st">1984-05-01 / 347.43 / 344.38</span><span class="sc">\n</span><span class="st">1984-06-01 / 346.80 / 344.51</span><span class="sc">\n</span><span class="st">1984-07-01 / 345.39 / 344.69</span><span class="sc">\n</span><span class="st">1984-08-01 / 343.28 / 344.68</span><span class="sc">\n</span><span class="st">1984-09-01 / 341.07 / 344.23</span><span class="sc">\n</span><span class="st">1984-10-01 / 341.35 / 344.60</span><span class="sc">\n</span><span class="st">1984-11-01 / 342.98 / 345.01</span><span class="sc">\n</span><span class="st">1984-12-01 / 344.22 / 345.05</span><span class="sc">\n</span><span class="st">1985-01-01 / 344.97 / 344.92</span><span class="sc">\n</span><span class="st">1985-02-01 / 345.99 / 345.31</span><span class="sc">\n</span><span class="st">1985-03-01 / 347.42 / 346.04</span><span class="sc">\n</span><span class="st">1985-04-01 / 348.35 / 345.83</span><span class="sc">\n</span><span class="st">1985-05-01 / 348.93 / 345.86</span><span class="sc">\n</span><span class="st">1985-06-01 / 348.25 / 345.93</span><span class="sc">\n</span><span class="st">1985-07-01 / 346.56 / 345.82</span><span class="sc">\n</span><span class="st">1985-08-01 / 344.67 / 346.06</span><span class="sc">\n</span><span class="st">1985-09-01 / 343.09 / 346.24</span><span class="sc">\n</span><span class="st">1985-10-01 / 342.80 / 346.07</span><span class="sc">\n</span><span class="st">1985-11-01 / 344.24 / 346.29</span><span class="sc">\n</span><span class="st">1985-12-01 / 345.56 / 346.39</span><span class="sc">\n</span><span class="st">1986-01-01 / 346.30 / 346.25</span><span class="sc">\n</span><span class="st">1986-02-01 / 346.95 / 346.27</span><span class="sc">\n</span><span class="st">1986-03-01 / 347.85 / 346.46</span><span class="sc">\n</span><span class="st">1986-04-01 / 349.55 / 347.03</span><span class="sc">\n</span><span class="st">1986-05-01 / 350.22 / 347.14</span><span class="sc">\n</span><span class="st">1986-06-01 / 349.55 / 347.23</span><span class="sc">\n</span><span class="st">1986-07-01 / 347.94 / 347.20</span><span class="sc">\n</span><span class="st">1986-08-01 / 345.90 / 347.29</span><span class="sc">\n</span><span class="st">1986-09-01 / 344.85 / 348.02</span><span class="sc">\n</span><span class="st">1986-10-01 / 344.17 / 347.45</span><span class="sc">\n</span><span class="st">1986-11-01 / 345.66 / 347.71</span><span class="sc">\n</span><span class="st">1986-12-01 / 346.90 / 347.74</span><span class="sc">\n</span><span class="st">1987-01-01 / 348.02 / 347.98</span><span class="sc">\n</span><span class="st">1987-02-01 / 348.48 / 347.79</span><span class="sc">\n</span><span class="st">1987-03-01 / 349.42 / 348.02</span><span class="sc">\n</span><span class="st">1987-04-01 / 350.98 / 348.45</span><span class="sc">\n</span><span class="st">1987-05-01 / 351.85 / 348.76</span><span class="sc">\n</span><span class="st">1987-06-01 / 351.26 / 348.92</span><span class="sc">\n</span><span class="st">1987-07-01 / 349.51 / 348.77</span><span class="sc">\n</span><span class="st">1987-08-01 / 348.10 / 349.49</span><span class="sc">\n</span><span class="st">1987-09-01 / 346.45 / 349.62</span><span class="sc">\n</span><span class="st">1987-10-01 / 346.36 / 349.65</span><span class="sc">\n</span><span class="st">1987-11-01 / 347.81 / 349.87</span><span class="sc">\n</span><span class="st">1987-12-01 / 348.96 / 349.81</span><span class="sc">\n</span><span class="st">1988-01-01 / 350.43 / 350.39</span><span class="sc">\n</span><span class="st">1988-02-01 / 351.73 / 351.04</span><span class="sc">\n</span><span class="st">1988-03-01 / 352.22 / 350.79</span><span class="sc">\n</span><span class="st">1988-04-01 / 353.59 / 351.02</span><span class="sc">\n</span><span class="st">1988-05-01 / 354.22 / 351.12</span><span class="sc">\n</span><span class="st">1988-06-01 / 353.80 / 351.48</span><span class="sc">\n</span><span class="st">1988-07-01 / 352.38 / 351.66</span><span class="sc">\n</span><span class="st">1988-08-01 / 350.43 / 351.85</span><span class="sc">\n</span><span class="st">1988-09-01 / 348.73 / 351.92</span><span class="sc">\n</span><span class="st">1988-10-01 / 348.88 / 352.18</span><span class="sc">\n</span><span class="st">1988-11-01 / 350.07 / 352.13</span><span class="sc">\n</span><span class="st">1988-12-01 / 351.34 / 352.18</span><span class="sc">\n</span><span class="st">1989-01-01 / 352.76 / 352.71</span><span class="sc">\n</span><span class="st">1989-02-01 / 353.07 / 352.38</span><span class="sc">\n</span><span class="st">1989-03-01 / 353.68 / 352.27</span><span class="sc">\n</span><span class="st">1989-04-01 / 355.42 / 352.87</span><span class="sc">\n</span><span class="st">1989-05-01 / 355.67 / 352.56</span><span class="sc">\n</span><span class="st">1989-06-01 / 355.12 / 352.77</span><span class="sc">\n</span><span class="st">1989-07-01 / 353.90 / 353.15</span><span class="sc">\n</span><span class="st">1989-08-01 / 351.67 / 353.07</span><span class="sc">\n</span><span class="st">1989-09-01 / 349.81 / 353.00</span><span class="sc">\n</span><span class="st">1989-10-01 / 349.99 / 353.30</span><span class="sc">\n</span><span class="st">1989-11-01 / 351.30 / 353.37</span><span class="sc">\n</span><span class="st">1989-12-01 / 352.52 / 353.37</span><span class="sc">\n</span><span class="st">1990-01-01 / 353.66 / 353.62</span><span class="sc">\n</span><span class="st">1990-02-01 / 354.70 / 354.00</span><span class="sc">\n</span><span class="st">1990-03-01 / 355.38 / 353.97</span><span class="sc">\n</span><span class="st">1990-04-01 / 356.20 / 353.64</span><span class="sc">\n</span><span class="st">1990-05-01 / 357.16 / 354.04</span><span class="sc">\n</span><span class="st">1990-06-01 / 356.23 / 353.87</span><span class="sc">\n</span><span class="st">1990-07-01 / 354.81 / 354.06</span><span class="sc">\n</span><span class="st">1990-08-01 / 352.91 / 354.31</span><span class="sc">\n</span><span class="st">1990-09-01 / 350.96 / 354.17</span><span class="sc">\n</span><span class="st">1990-10-01 / 351.18 / 354.50</span><span class="sc">\n</span><span class="st">1990-11-01 / 352.83 / 354.91</span><span class="sc">\n</span><span class="st">1990-12-01 / 354.21 / 355.06</span><span class="sc">\n</span><span class="st">1991-01-01 / 354.72 / 354.68</span><span class="sc">\n</span><span class="st">1991-02-01 / 355.75 / 355.05</span><span class="sc">\n</span><span class="st">1991-03-01 / 357.16 / 355.74</span><span class="sc">\n</span><span class="st">1991-04-01 / 358.60 / 356.03</span><span class="sc">\n</span><span class="st">1991-05-01 / 359.34 / 356.21</span><span class="sc">\n</span><span class="st">1991-06-01 / 358.24 / 355.88</span><span class="sc">\n</span><span class="st">1991-07-01 / 356.17 / 355.42</span><span class="sc">\n</span><span class="st">1991-08-01 / 354.01 / 355.42</span><span class="sc">\n</span><span class="st">1991-09-01 / 352.15 / 355.37</span><span class="sc">\n</span><span class="st">1991-10-01 / 352.21 / 355.55</span><span class="sc">\n</span><span class="st">1991-11-01 / 353.75 / 355.83</span><span class="sc">\n</span><span class="st">1991-12-01 / 354.99 / 355.84</span><span class="sc">\n</span><span class="st">1992-01-01 / 355.99 / 355.94</span><span class="sc">\n</span><span class="st">1992-02-01 / 356.72 / 356.02</span><span class="sc">\n</span><span class="st">1992-03-01 / 357.81 / 356.36</span><span class="sc">\n</span><span class="st">1992-04-01 / 359.15 / 356.55</span><span class="sc">\n</span><span class="st">1992-05-01 / 359.66 / 356.53</span><span class="sc">\n</span><span class="st">1992-06-01 / 359.25 / 356.90</span><span class="sc">\n</span><span class="st">1992-07-01 / 357.02 / 356.30</span><span class="sc">\n</span><span class="st">1992-08-01 / 355.00 / 356.44</span><span class="sc">\n</span><span class="st">1992-09-01 / 353.01 / 356.25</span><span class="sc">\n</span><span class="st">1992-10-01 / 353.31 / 356.64</span><span class="sc">\n</span><span class="st">1992-11-01 / 354.16 / 356.25</span><span class="sc">\n</span><span class="st">1992-12-01 / 355.40 / 356.25</span><span class="sc">\n</span><span class="st">1993-01-01 / 356.70 / 356.66</span><span class="sc">\n</span><span class="st">1993-02-01 / 357.17 / 356.46</span><span class="sc">\n</span><span class="st">1993-03-01 / 358.38 / 356.95</span><span class="sc">\n</span><span class="st">1993-04-01 / 359.46 / 356.88</span><span class="sc">\n</span><span class="st">1993-05-01 / 360.28 / 357.13</span><span class="sc">\n</span><span class="st">1993-06-01 / 359.60 / 357.22</span><span class="sc">\n</span><span class="st">1993-07-01 / 357.57 / 356.81</span><span class="sc">\n</span><span class="st">1993-08-01 / 355.52 / 356.94</span><span class="sc">\n</span><span class="st">1993-09-01 / 353.69 / 356.93</span><span class="sc">\n</span><span class="st">1993-10-01 / 353.99 / 357.34</span><span class="sc">\n</span><span class="st">1993-11-01 / 355.34 / 357.44</span><span class="sc">\n</span><span class="st">1993-12-01 / 356.80 / 357.66</span><span class="sc">\n</span><span class="st">1994-01-01 / 358.37 / 358.32</span><span class="sc">\n</span><span class="st">1994-02-01 / 358.91 / 358.21</span><span class="sc">\n</span><span class="st">1994-03-01 / 359.97 / 358.54</span><span class="sc">\n</span><span class="st">1994-04-01 / 361.26 / 358.67</span><span class="sc">\n</span><span class="st">1994-05-01 / 361.69 / 358.53</span><span class="sc">\n</span><span class="st">1994-06-01 / 360.94 / 358.56</span><span class="sc">\n</span><span class="st">1994-07-01 / 359.55 / 358.79</span><span class="sc">\n</span><span class="st">1994-08-01 / 357.48 / 358.90</span><span class="sc">\n</span><span class="st">1994-09-01 / 355.84 / 359.09</span><span class="sc">\n</span><span class="st">1994-10-01 / 356.00 / 359.36</span><span class="sc">\n</span><span class="st">1994-11-01 / 357.58 / 359.69</span><span class="sc">\n</span><span class="st">1994-12-01 / 359.04 / 359.90</span><span class="sc">\n</span><span class="st">1995-01-01 / 359.97 / 359.92</span><span class="sc">\n</span><span class="st">1995-02-01 / 361.00 / 360.30</span><span class="sc">\n</span><span class="st">1995-03-01 / 361.63 / 360.20</span><span class="sc">\n</span><span class="st">1995-04-01 / 363.45 / 360.85</span><span class="sc">\n</span><span class="st">1995-05-01 / 363.80 / 360.63</span><span class="sc">\n</span><span class="st">1995-06-01 / 363.26 / 360.87</span><span class="sc">\n</span><span class="st">1995-07-01 / 361.89 / 361.13</span><span class="sc">\n</span><span class="st">1995-08-01 / 359.45 / 360.88</span><span class="sc">\n</span><span class="st">1995-09-01 / 358.05 / 361.31</span><span class="sc">\n</span><span class="st">1995-10-01 / 357.75 / 361.13</span><span class="sc">\n</span><span class="st">1995-11-01 / 359.56 / 361.68</span><span class="sc">\n</span><span class="st">1995-12-01 / 360.70 / 361.56</span><span class="sc">\n</span><span class="st">1996-01-01 / 362.05 / 362.00</span><span class="sc">\n</span><span class="st">1996-02-01 / 363.24 / 362.54</span><span class="sc">\n</span><span class="st">1996-03-01 / 364.02 / 362.56</span><span class="sc">\n</span><span class="st">1996-04-01 / 364.71 / 362.08</span><span class="sc">\n</span><span class="st">1996-05-01 / 365.42 / 362.24</span><span class="sc">\n</span><span class="st">1996-06-01 / 364.97 / 362.59</span><span class="sc">\n</span><span class="st">1996-07-01 / 363.65 / 362.92</span><span class="sc">\n</span><span class="st">1996-08-01 / 361.48 / 362.94</span><span class="sc">\n</span><span class="st">1996-09-01 / 359.45 / 362.73</span><span class="sc">\n</span><span class="st">1996-10-01 / 359.61 / 362.99</span><span class="sc">\n</span><span class="st">1996-11-01 / 360.76 / 362.87</span><span class="sc">\n</span><span class="st">1996-12-01 / 362.33 / 363.19</span><span class="sc">\n</span><span class="st">1997-01-01 / 363.19 / 363.14</span><span class="sc">\n</span><span class="st">1997-02-01 / 363.99 / 363.28</span><span class="sc">\n</span><span class="st">1997-03-01 / 364.56 / 363.12</span><span class="sc">\n</span><span class="st">1997-04-01 / 366.36 / 363.74</span><span class="sc">\n</span><span class="st">1997-05-01 / 366.80 / 363.61</span><span class="sc">\n</span><span class="st">1997-06-01 / 365.63 / 363.22</span><span class="sc">\n</span><span class="st">1997-07-01 / 364.47 / 363.70</span><span class="sc">\n</span><span class="st">1997-08-01 / 362.50 / 363.94</span><span class="sc">\n</span><span class="st">1997-09-01 / 360.19 / 363.47</span><span class="sc">\n</span><span class="st">1997-10-01 / 360.78 / 364.17</span><span class="sc">\n</span><span class="st">1997-11-01 / 362.43 / 364.56</span><span class="sc">\n</span><span class="st">1997-12-01 / 364.28 / 365.14</span><span class="sc">\n</span><span class="st">1998-01-01 / 365.33 / 365.28</span><span class="sc">\n</span><span class="st">1998-02-01 / 366.15 / 365.44</span><span class="sc">\n</span><span class="st">1998-03-01 / 367.31 / 365.87</span><span class="sc">\n</span><span class="st">1998-04-01 / 368.61 / 365.99</span><span class="sc">\n</span><span class="st">1998-05-01 / 369.30 / 366.11</span><span class="sc">\n</span><span class="st">1998-06-01 / 368.88 / 366.46</span><span class="sc">\n</span><span class="st">1998-07-01 / 367.64 / 366.87</span><span class="sc">\n</span><span class="st">1998-08-01 / 365.78 / 367.22</span><span class="sc">\n</span><span class="st">1998-09-01 / 363.90 / 367.19</span><span class="sc">\n</span><span class="st">1998-10-01 / 364.23 / 367.64</span><span class="sc">\n</span><span class="st">1998-11-01 / 365.46 / 367.59</span><span class="sc">\n</span><span class="st">1998-12-01 / 366.97 / 367.84</span><span class="sc">\n</span><span class="st">1999-01-01 / 368.15 / 368.10</span><span class="sc">\n</span><span class="st">1999-02-01 / 368.87 / 368.16</span><span class="sc">\n</span><span class="st">1999-03-01 / 369.59 / 368.14</span><span class="sc">\n</span><span class="st">1999-04-01 / 371.14 / 368.51</span><span class="sc">\n</span><span class="st">1999-05-01 / 371.00 / 367.80</span><span class="sc">\n</span><span class="st">1999-06-01 / 370.35 / 367.93</span><span class="sc">\n</span><span class="st">1999-07-01 / 369.27 / 368.49</span><span class="sc">\n</span><span class="st">1999-08-01 / 366.93 / 368.37</span><span class="sc">\n</span><span class="st">1999-09-01 / 364.64 / 367.94</span><span class="sc">\n</span><span class="st">1999-10-01 / 365.13 / 368.55</span><span class="sc">\n</span><span class="st">1999-11-01 / 366.68 / 368.81</span><span class="sc">\n</span><span class="st">1999-12-01 / 368.00 / 368.88</span><span class="sc">\n</span><span class="st">2000-01-01 / 369.14 / 369.09</span><span class="sc">\n</span><span class="st">2000-02-01 / 369.46 / 368.75</span><span class="sc">\n</span><span class="st">2000-03-01 / 370.51 / 369.03</span><span class="sc">\n</span><span class="st">2000-04-01 / 371.66 / 369.00</span><span class="sc">\n</span><span class="st">2000-05-01 / 371.83 / 368.61</span><span class="sc">\n</span><span class="st">2000-06-01 / 371.69 / 369.28</span><span class="sc">\n</span><span class="st">2000-07-01 / 370.12 / 369.37</span><span class="sc">\n</span><span class="st">2000-08-01 / 368.12 / 369.60</span><span class="sc">\n</span><span class="st">2000-09-01 / 366.62 / 369.94</span><span class="sc">\n</span><span class="st">2000-10-01 / 366.73 / 370.15</span><span class="sc">\n</span><span class="st">2000-11-01 / 368.29 / 370.43</span><span class="sc">\n</span><span class="st">2000-12-01 / 369.52 / 370.40</span><span class="sc">\n</span><span class="st">2001-01-01 / 370.28 / 370.23</span><span class="sc">\n</span><span class="st">2001-02-01 / 371.50 / 370.78</span><span class="sc">\n</span><span class="st">2001-03-01 / 372.12 / 370.66</span><span class="sc">\n</span><span class="st">2001-04-01 / 372.86 / 370.21</span><span class="sc">\n</span><span class="st">2001-05-01 / 374.02 / 370.79</span><span class="sc">\n</span><span class="st">2001-06-01 / 373.31 / 370.87</span><span class="sc">\n</span><span class="st">2001-07-01 / 371.62 / 370.84</span><span class="sc">\n</span><span class="st">2001-08-01 / 369.55 / 371.00</span><span class="sc">\n</span><span class="st">2001-09-01 / 367.96 / 371.28</span><span class="sc">\n</span><span class="st">2001-10-01 / 368.09 / 371.53</span><span class="sc">\n</span><span class="st">2001-11-01 / 369.68 / 371.83</span><span class="sc">\n</span><span class="st">2001-12-01 / 371.24 / 372.12</span><span class="sc">\n</span><span class="st">2002-01-01 / 372.44 / 372.39</span><span class="sc">\n</span><span class="st">2002-02-01 / 373.08 / 372.36</span><span class="sc">\n</span><span class="st">2002-03-01 / 373.52 / 372.05</span><span class="sc">\n</span><span class="st">2002-04-01 / 374.85 / 372.20</span><span class="sc">\n</span><span class="st">2002-05-01 / 375.55 / 372.31</span><span class="sc">\n</span><span class="st">2002-06-01 / 375.40 / 372.95</span><span class="sc">\n</span><span class="st">2002-07-01 / 374.02 / 373.24</span><span class="sc">\n</span><span class="st">2002-08-01 / 371.48 / 372.94</span><span class="sc">\n</span><span class="st">2002-09-01 / 370.70 / 374.03</span><span class="sc">\n</span><span class="st">2002-10-01 / 370.25 / 373.70</span><span class="sc">\n</span><span class="st">2002-11-01 / 372.08 / 374.24</span><span class="sc">\n</span><span class="st">2002-12-01 / 373.78 / 374.66</span><span class="sc">\n</span><span class="st">2003-01-01 / 374.68 / 374.63</span><span class="sc">\n</span><span class="st">2003-02-01 / 375.62 / 374.90</span><span class="sc">\n</span><span class="st">2003-03-01 / 376.11 / 374.64</span><span class="sc">\n</span><span class="st">2003-04-01 / 377.65 / 374.99</span><span class="sc">\n</span><span class="st">2003-05-01 / 378.35 / 375.11</span><span class="sc">\n</span><span class="st">2003-06-01 / 378.13 / 375.67</span><span class="sc">\n</span><span class="st">2003-07-01 / 376.60 / 375.82</span><span class="sc">\n</span><span class="st">2003-08-01 / 374.48 / 375.95</span><span class="sc">\n</span><span class="st">2003-09-01 / 372.98 / 376.32</span><span class="sc">\n</span><span class="st">2003-10-01 / 373.00 / 376.46</span><span class="sc">\n</span><span class="st">2003-11-01 / 374.35 / 376.51</span><span class="sc">\n</span><span class="st">2003-12-01 / 375.69 / 376.57</span><span class="sc">\n</span><span class="st">2004-01-01 / 376.79 / 376.74</span><span class="sc">\n</span><span class="st">2004-02-01 / 377.37 / 376.64</span><span class="sc">\n</span><span class="st">2004-03-01 / 378.39 / 376.89</span><span class="sc">\n</span><span class="st">2004-04-01 / 380.50 / 377.80</span><span class="sc">\n</span><span class="st">2004-05-01 / 380.62 / 377.36</span><span class="sc">\n</span><span class="st">2004-06-01 / 379.55 / 377.11</span><span class="sc">\n</span><span class="st">2004-07-01 / 377.76 / 377.01</span><span class="sc">\n</span><span class="st">2004-08-01 / 375.83 / 377.33</span><span class="sc">\n</span><span class="st">2004-09-01 / 374.05 / 377.41</span><span class="sc">\n</span><span class="st">2004-10-01 / 374.22 / 377.69</span><span class="sc">\n</span><span class="st">2004-11-01 / 375.84 / 378.01</span><span class="sc">\n</span><span class="st">2004-12-01 / 377.44 / 378.33</span><span class="sc">\n</span><span class="st">2005-01-01 / 378.34 / 378.29</span><span class="sc">\n</span><span class="st">2005-02-01 / 379.61 / 378.88</span><span class="sc">\n</span><span class="st">2005-03-01 / 380.08 / 378.61</span><span class="sc">\n</span><span class="st">2005-04-01 / 382.05 / 379.37</span><span class="sc">\n</span><span class="st">2005-05-01 / 382.24 / 378.97</span><span class="sc">\n</span><span class="st">2005-06-01 / 382.08 / 379.61</span><span class="sc">\n</span><span class="st">2005-07-01 / 380.66 / 379.88</span><span class="sc">\n</span><span class="st">2005-08-01 / 378.67 / 380.14</span><span class="sc">\n</span><span class="st">2005-09-01 / 376.42 / 379.78</span><span class="sc">\n</span><span class="st">2005-10-01 / 376.80 / 380.28</span><span class="sc">\n</span><span class="st">2005-11-01 / 378.31 / 380.49</span><span class="sc">\n</span><span class="st">2005-12-01 / 379.96 / 380.85</span><span class="sc">\n</span><span class="st">2006-01-01 / 381.37 / 381.32</span><span class="sc">\n</span><span class="st">2006-02-01 / 382.02 / 381.29</span><span class="sc">\n</span><span class="st">2006-03-01 / 382.56 / 381.08</span><span class="sc">\n</span><span class="st">2006-04-01 / 384.36 / 381.68</span><span class="sc">\n</span><span class="st">2006-05-01 / 384.92 / 381.65</span><span class="sc">\n</span><span class="st">2006-06-01 / 384.03 / 381.55</span><span class="sc">\n</span><span class="st">2006-07-01 / 382.28 / 381.49</span><span class="sc">\n</span><span class="st">2006-08-01 / 380.48 / 381.95</span><span class="sc">\n</span><span class="st">2006-09-01 / 378.81 / 382.18</span><span class="sc">\n</span><span class="st">2006-10-01 / 379.06 / 382.55</span><span class="sc">\n</span><span class="st">2006-11-01 / 380.14 / 382.33</span><span class="sc">\n</span><span class="st">2006-12-01 / 381.66 / 382.55</span><span class="sc">\n</span><span class="st">2007-01-01 / 382.58 / 382.53</span><span class="sc">\n</span><span class="st">2007-02-01 / 383.71 / 382.98</span><span class="sc">\n</span><span class="st">2007-03-01 / 384.34 / 382.85</span><span class="sc">\n</span><span class="st">2007-04-01 / 386.23 / 383.53</span><span class="sc">\n</span><span class="st">2007-05-01 / 386.41 / 383.13</span><span class="sc">\n</span><span class="st">2007-06-01 / 385.87 / 383.39</span><span class="sc">\n</span><span class="st">2007-07-01 / 384.44 / 383.65</span><span class="sc">\n</span><span class="st">2007-08-01 / 381.84 / 383.32</span><span class="sc">\n</span><span class="st">2007-09-01 / 380.86 / 384.25</span><span class="sc">\n</span><span class="st">2007-10-01 / 380.86 / 384.36</span><span class="sc">\n</span><span class="st">2007-11-01 / 382.36 / 384.55</span><span class="sc">\n</span><span class="st">2007-12-01 / 383.61 / 384.51</span><span class="sc">\n</span><span class="st">2008-01-01 / 385.07 / 385.02</span><span class="sc">\n</span><span class="st">2008-02-01 / 385.84 / 385.11</span><span class="sc">\n</span><span class="st">2008-03-01 / 385.83 / 384.31</span><span class="sc">\n</span><span class="st">2008-04-01 / 386.77 / 384.04</span><span class="sc">\n</span><span class="st">2008-05-01 / 388.51 / 385.22</span><span class="sc">\n</span><span class="st">2008-06-01 / 388.05 / 385.58</span><span class="sc">\n</span><span class="st">2008-07-01 / 386.25 / 385.49</span><span class="sc">\n</span><span class="st">2008-08-01 / 384.08 / 385.60</span><span class="sc">\n</span><span class="st">2008-09-01 / 383.09 / 386.49</span><span class="sc">\n</span><span class="st">2008-10-01 / 382.78 / 386.28</span><span class="sc">\n</span><span class="st">2008-11-01 / 384.01 / 386.20</span><span class="sc">\n</span><span class="st">2008-12-01 / 385.11 / 386.01</span><span class="sc">\n</span><span class="st">2009-01-01 / 386.65 / 386.61</span><span class="sc">\n</span><span class="st">2009-02-01 / 387.12 / 386.39</span><span class="sc">\n</span><span class="st">2009-03-01 / 388.52 / 387.02</span><span class="sc">\n</span><span class="st">2009-04-01 / 389.57 / 386.86</span><span class="sc">\n</span><span class="st">2009-05-01 / 390.17 / 386.86</span><span class="sc">\n</span><span class="st">2009-06-01 / 389.62 / 387.12</span><span class="sc">\n</span><span class="st">2009-07-01 / 388.07 / 387.27</span><span class="sc">\n</span><span class="st">2009-08-01 / 386.08 / 387.57</span><span class="sc">\n</span><span class="st">2009-09-01 / 384.65 / 388.06</span><span class="sc">\n</span><span class="st">2009-10-01 / 384.33 / 387.85</span><span class="sc">\n</span><span class="st">2009-11-01 / 386.05 / 388.25</span><span class="sc">\n</span><span class="st">2009-12-01 / 387.49 / 388.39</span><span class="sc">\n</span><span class="st">2010-01-01 / 388.55 / 388.50</span><span class="sc">\n</span><span class="st">2010-02-01 / 390.08 / 389.34</span><span class="sc">\n</span><span class="st">2010-03-01 / 391.01 / 389.51</span><span class="sc">\n</span><span class="st">2010-04-01 / 392.38 / 389.66</span><span class="sc">\n</span><span class="st">2010-05-01 / 393.22 / 389.90</span><span class="sc">\n</span><span class="st">2010-06-01 / 392.24 / 389.73</span><span class="sc">\n</span><span class="st">2010-07-01 / 390.33 / 389.53</span><span class="sc">\n</span><span class="st">2010-08-01 / 388.52 / 390.01</span><span class="sc">\n</span><span class="st">2010-09-01 / 386.84 / 390.25</span><span class="sc">\n</span><span class="st">2010-10-01 / 387.16 / 390.70</span><span class="sc">\n</span><span class="st">2010-11-01 / 388.67 / 390.88</span><span class="sc">\n</span><span class="st">2010-12-01 / 389.81 / 390.71</span><span class="sc">\n</span><span class="st">2011-01-01 / 391.30 / 391.25</span><span class="sc">\n</span><span class="st">2011-02-01 / 391.92 / 391.18</span><span class="sc">\n</span><span class="st">2011-03-01 / 392.45 / 390.95</span><span class="sc">\n</span><span class="st">2011-04-01 / 393.37 / 390.64</span><span class="sc">\n</span><span class="st">2011-05-01 / 394.28 / 390.96</span><span class="sc">\n</span><span class="st">2011-06-01 / 393.69 / 391.18</span><span class="sc">\n</span><span class="st">2011-07-01 / 392.59 / 391.79</span><span class="sc">\n</span><span class="st">2011-08-01 / 390.21 / 391.71</span><span class="sc">\n</span><span class="st">2011-09-01 / 389.00 / 392.43</span><span class="sc">\n</span><span class="st">2011-10-01 / 388.93 / 392.48</span><span class="sc">\n</span><span class="st">2011-11-01 / 390.24 / 392.46</span><span class="sc">\n</span><span class="st">2011-12-01 / 391.80 / 392.71</span><span class="sc">\n</span><span class="st">2012-01-01 / 393.07 / 393.02</span><span class="sc">\n</span><span class="st">2012-02-01 / 393.35 / 392.61</span><span class="sc">\n</span><span class="st">2012-03-01 / 394.36 / 392.82</span><span class="sc">\n</span><span class="st">2012-04-01 / 396.43 / 393.66</span><span class="sc">\n</span><span class="st">2012-05-01 / 396.87 / 393.53</span><span class="sc">\n</span><span class="st">2012-06-01 / 395.88 / 393.38</span><span class="sc">\n</span><span class="st">2012-07-01 / 394.52 / 393.75</span><span class="sc">\n</span><span class="st">2012-08-01 / 392.54 / 394.07</span><span class="sc">\n</span><span class="st">2012-09-01 / 391.13 / 394.57</span><span class="sc">\n</span><span class="st">2012-10-01 / 391.01 / 394.56</span><span class="sc">\n</span><span class="st">2012-11-01 / 392.95 / 395.17</span><span class="sc">\n</span><span class="st">2012-12-01 / 394.33 / 395.24</span><span class="sc">\n</span><span class="st">2013-01-01 / 395.61 / 395.55</span><span class="sc">\n</span><span class="st">2013-02-01 / 396.85 / 396.10</span><span class="sc">\n</span><span class="st">2013-03-01 / 397.26 / 395.74</span><span class="sc">\n</span><span class="st">2013-04-01 / 398.35 / 395.60</span><span class="sc">\n</span><span class="st">2013-05-01 / 399.98 / 396.63</span><span class="sc">\n</span><span class="st">2013-06-01 / 398.87 / 396.34</span><span class="sc">\n</span><span class="st">2013-07-01 / 397.37 / 396.56</span><span class="sc">\n</span><span class="st">2013-08-01 / 395.41 / 396.92</span><span class="sc">\n</span><span class="st">2013-09-01 / 393.39 / 396.84</span><span class="sc">\n</span><span class="st">2013-10-01 / 393.70 / 397.26</span><span class="sc">\n</span><span class="st">2013-11-01 / 395.19 / 397.43</span><span class="sc">\n</span><span class="st">2013-12-01 / 396.82 / 397.73</span><span class="sc">\n</span><span class="st">2014-01-01 / 397.93 / 397.87</span><span class="sc">\n</span><span class="st">2014-02-01 / 398.10 / 397.35</span><span class="sc">\n</span><span class="st">2014-03-01 / 399.47 / 397.95</span><span class="sc">\n</span><span class="st">2014-04-01 / 401.33 / 398.57</span><span class="sc">\n</span><span class="st">2014-05-01 / 401.88 / 398.52</span><span class="sc">\n</span><span class="st">2014-06-01 / 401.31 / 398.77</span><span class="sc">\n</span><span class="st">2014-07-01 / 399.07 / 398.26</span><span class="sc">\n</span><span class="st">2014-08-01 / 397.21 / 398.72</span><span class="sc">\n</span><span class="st">2014-09-01 / 395.40 / 398.86</span><span class="sc">\n</span><span class="st">2014-10-01 / 395.65 / 399.23</span><span class="sc">\n</span><span class="st">2014-11-01 / 397.23 / 399.46</span><span class="sc">\n</span><span class="st">2014-12-01 / 398.79 / 399.70</span><span class="sc">\n</span><span class="st">2015-01-01 / 399.85 / 399.80</span><span class="sc">\n</span><span class="st">2015-02-01 / 400.31 / 399.56</span><span class="sc">\n</span><span class="st">2015-03-01 / 401.51 / 399.99</span><span class="sc">\n</span><span class="st">2015-04-01 / 403.45 / 400.69</span><span class="sc">\n</span><span class="st">2015-05-01 / 404.10 / 400.74</span><span class="sc">\n</span><span class="st">2015-06-01 / 402.88 / 400.33</span><span class="sc">\n</span><span class="st">2015-07-01 / 401.61 / 400.80</span><span class="sc">\n</span><span class="st">2015-08-01 / 399.00 / 400.51</span><span class="sc">\n</span><span class="st">2015-09-01 / 397.50 / 400.96</span><span class="sc">\n</span><span class="st">2015-10-01 / 398.28 / 401.87</span><span class="sc">\n</span><span class="st">2015-11-01 / 400.24 / 402.48</span><span class="sc">\n</span><span class="st">2015-12-01 / 401.89 / 402.81</span><span class="sc">\n</span><span class="st">2016-01-01 / 402.65 / 402.60</span><span class="sc">\n</span><span class="st">2016-02-01 / 404.16 / 403.41</span><span class="sc">\n</span><span class="st">2016-03-01 / 404.85 / 403.30</span><span class="sc">\n</span><span class="st">2016-04-01 / 407.57 / 404.77</span><span class="sc">\n</span><span class="st">2016-05-01 / 407.66 / 404.28</span><span class="sc">\n</span><span class="st">2016-06-01 / 407.00 / 404.48</span><span class="sc">\n</span><span class="st">2016-07-01 / 404.50 / 403.72</span><span class="sc">\n</span><span class="st">2016-08-01 / 402.24 / 403.79</span><span class="sc">\n</span><span class="st">2016-09-01 / 401.01 / 404.50</span><span class="sc">\n</span><span class="st">2016-10-01 / 401.50 / 405.09</span><span class="sc">\n</span><span class="st">2016-11-01 / 403.64 / 405.88</span><span class="sc">\n</span><span class="st">2016-12-01 / 404.55 / 405.47</span><span class="sc">\n</span><span class="st">2017-01-01 / 406.07 / 406.02</span><span class="sc">\n</span><span class="st">2017-02-01 / 406.64 / 405.89</span><span class="sc">\n</span><span class="st">2017-03-01 / 407.05 / 405.52</span><span class="sc">\n</span><span class="st">2017-04-01 / 408.95 / 406.17</span><span class="sc">\n</span><span class="st">2017-05-01 / 409.91 / 406.52</span><span class="sc">\n</span><span class="st">2017-06-01 / 409.12 / 406.56</span><span class="sc">\n</span><span class="st">2017-07-01 / 407.20 / 406.38</span><span class="sc">\n</span><span class="st">2017-08-01 / 405.24 / 406.76</span><span class="sc">\n</span><span class="st">2017-09-01 / 403.27 / 406.75</span><span class="sc">\n</span><span class="st">2017-10-01 / 403.64 / 407.25</span><span class="sc">\n</span><span class="st">2017-11-01 / 405.17 / 407.43</span><span class="sc">\n</span><span class="st">2017-12-01 / 406.75 / 407.68</span><span class="sc">\n</span><span class="st">2018-01-01 / 408.05 / 408.00</span><span class="sc">\n</span><span class="st">2018-02-01 / 408.34 / 407.59</span><span class="sc">\n</span><span class="st">2018-03-01 / 409.25 / 407.72</span><span class="sc">\n</span><span class="st">2018-04-01 / 410.30 / 407.52</span><span class="sc">\n</span><span class="st">2018-05-01 / 411.30 / 407.91</span><span class="sc">\n</span><span class="st">2018-06-01 / 410.88 / 408.31</span><span class="sc">\n</span><span class="st">2018-07-01 / 408.90 / 408.08</span><span class="sc">\n</span><span class="st">2018-08-01 / 407.10 / 408.63</span><span class="sc">\n</span><span class="st">2018-09-01 / 405.59 / 409.08</span><span class="sc">\n</span><span class="st">2018-10-01 / 405.99 / 409.61</span><span class="sc">\n</span><span class="st">2018-11-01 / 408.12 / 410.38</span><span class="sc">\n</span><span class="st">2018-12-01 / 409.23 / 410.15</span><span class="sc">\n</span><span class="st">2019-01-01 / 410.92 / 410.87</span><span class="sc">\n</span><span class="st">2019-02-01 / 411.66 / 410.90</span><span class="sc">\n</span><span class="st">2019-03-01 / 412.00 / 410.46</span><span class="sc">\n</span><span class="st">2019-04-01 / 413.52 / 410.72</span><span class="sc">\n</span><span class="st">2019-05-01 / 414.83 / 411.42</span><span class="sc">\n</span><span class="st">2019-06-01 / 413.96 / 411.38</span><span class="sc">\n</span><span class="st">2019-07-01 / 411.85 / 411.03</span><span class="sc">\n</span><span class="st">2019-08-01 / 410.08 / 411.62</span><span class="sc">\n</span><span class="st">2019-09-01 / 408.55 / 412.06</span><span class="sc">\n</span><span class="st">2019-10-01 / 408.43 / 412.06</span><span class="sc">\n</span><span class="st">2019-11-01 / 410.29 / 412.56</span><span class="sc">\n</span><span class="st">2019-12-01 / 411.85 / 412.78</span><span class="sc">\n</span><span class="st">2020-01-01 / 413.37 / 413.32</span><span class="sc">\n</span><span class="st">2020-02-01 / 414.09 / 413.33</span><span class="sc">\n</span><span class="st">2020-03-01 / 414.51 / 412.94</span><span class="sc">\n</span><span class="st">2020-04-01 / 416.18 / 413.35</span><span class="sc">\n</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So we can specify the <code>separator</code> option when loading the data to create our properly-formed dataset:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb5"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/co2_over_time.txt"</span> {<span class="at">:separator</span> <span class="st">"/"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>data/tabular_data/co2_over_time.txt [741 3]:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th style="text-align: right;">CO2</th>
+<th style="text-align: right;">adjusted CO2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1958-03-01</td>
+<td style="text-align: right;">315.70</td>
+<td style="text-align: right;">314.44</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td>2020-03-01</td>
+<td style="text-align: right;">414.51</td>
+<td style="text-align: right;">412.94</td>
+</tr>
+<tr class="even">
+<td>2020-04-01</td>
+<td style="text-align: right;">416.18</td>
+<td style="text-align: right;">413.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="spreadsheets" class="level2">
+<h2 class="anchored" data-anchor-id="spreadsheets">Spreadsheets</h2>
+<section id="excel" class="level3">
+<h3 class="anchored" data-anchor-id="excel">Excel</h3>
+<section id="xls" class="level4">
+<h4 class="anchored" data-anchor-id="xls">.xls</h4>
+<p>Loading .xls files requires the <code>tech.v3.libs.poi</code> namespace to be loaded. It is not included by default by <code>tech.ml.dataset</code> because <code>poi</code> has a hard dependency on log4j2 which the core team at <code>tech.ml.dataset</code> (upon which tablecloth is built) <a href="https://clojurians.zulipchat.com/#narrow/stream/236259-tech.2Eml.2Edataset.2Edev/topic/working.20with.20excel.20files/near/314711378">did not want to impose on all users by default</a>.</p>
+<p>Depending on your project’s dependencies, you may get an error the first time you try to load the <code>tech.v3.libs.poi</code> namespace saying something like “Execution error (ClassNotFoundException) org.apache.poi.ss.usermodel.Workbook”. We need to explicitly require the dependencies for working with .xls files, adding them to our <code>deps.edn</code> file:</p>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode clojure code-annotation-code code-with-copy code-annotated"><code class="sourceCode clojure"><a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a> org.apache.poi/poi {<span class="at">:mvn/version</span> <span class="st">"5.2.5"</span>}</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a> org.apache.poi/poi-ooxml {<span class="at">:mvn/version</span> <span class="st">"5.2.5"</span>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1"><a href="http://a-link.comhttps://search.maven.org/artifact/org.apache.poi/poi">search for the latest <code>org.apache.poi/poi</code> version here</a></span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="2"><a href="http://a-link.comhttps://search.maven.org/artifact/org.apache.poi/poi-ooxml">search for the latest <code>org.apache.poi/poi-ooxml</code> version here</a></span>
+</dd>
+</dl>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important that the <code>poi</code> and <code>poi-ooxml</code> dependencies both have the same version. <a href="https://poi.apache.org/help/faq.html#faq-N10204">Mixing versions is not supported</a> and will fail in unpredictable ways.</p>
+</div>
+</div>
+<p>You may also start seeing messages in your REPL along the lines of “SLF4J: Defaulting to no-operation (NOP) logger implementation” and/or “ERROR StatusLogger Log4j2 could not find a logging implementation” now, too, unless you already have log4j configured. Due to the dependency mentioned above, you need to make sure your project explicitly specifies a logger dependency. These messages are harmless, but if you want to get rid of them you can add the two missing logging libraries to your <code>deps.edn</code> file:</p>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode clojure code-annotation-code code-with-copy code-annotated"><code class="sourceCode clojure"><a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>org.apache.logging.log4j/log4j-core {<span class="at">:mvn/version</span> <span class="st">"2.23.1"</span>}</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>org.slf4j/slf4j-simple {<span class="at">:mvn/version</span> <span class="st">"2.0.13"</span>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="1"><a href="http://a-link.comhttps://search.maven.org/artifact/org.apache.logging.log4j/log4j-core">search for the latest <code>org.apache.logging.log4j/log4j-core</code> version here</a></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="2"><a href="http://a-link.comhttps://search.maven.org/artifact/org.slf4j/slf4j-simple">search for the latest <code>org.slf4j/slf4j-simple</code> version here</a></span>
+</dd>
+</dl>
+<p>Now we should finally be able to load the <code>tech.v3.libs.poi</code> namespace without any issues:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb6"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">require</span> '[tech.v3.libs.poi <span class="at">:as</span> xls])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now our excel spreadsheet should load. If there’s a single sheet in the workbook, tablecloth will just work.</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb7"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/example_XLS.xls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>data/tabular_data/example_XLS.xls [50 8]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Gender</th>
+<th>Country</th>
+<th style="text-align: right;">Age</th>
+<th>Date</th>
+<th style="text-align: right;">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>With multiple sheets we get an error:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb8"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/example_multiple_sheets_XLS.xls"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>_unnamed [1 2]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 57%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>:<span class="math inline">\(value |                             :\)</span>error</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>data/tabular_data/example_multiple_sheets_XLS.xls</td>
+<td>Multiple (3) datasets found in file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So we can load the file as a sequence of datasets and work with them from there. We can load them all using <code>xl/workbook-&gt;datasets</code>.</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb9"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> xls-sheets</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  (xls/workbook-&gt;datasets <span class="st">"data/tabular_data/example_multiple_sheets_XLS.xls"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are also options for configuring how column names are rendered and how values are parsed. They are a subset of the arguments for creating a new dataset, <a href="https://techascent.github.io/tech.ml.dataset/tech.v3.libs.poi.html#var-workbook-.3Edatasets">documented here</a>.</p>
+<p>Now we can work with the sequence of datasets like any other Clojure seq:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb10"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">map</span> tc/dataset-name xls-sheets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb11"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="st">"Sheet1"</span> <span class="st">"Sheet2"</span> <span class="st">"Sheet3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or get a single one to work on:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb12"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">first</span> xls-sheets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>Sheet1 [50 8]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Gender</th>
+<th>Country</th>
+<th style="text-align: right;">Age</th>
+<th>Date</th>
+<th style="text-align: right;">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If, for some reason, you know you don’t want to load all the sheets as datasets pre-emptively, for example if they’re very large and you only want to work with one of them, you can load the workbook itself, which allows you to iterate through the sheets without parsing them. <code>input-&gt;workbook</code> returns an implementation of <code>tech.v3.dataset/Spreadsheet$Workbook</code>:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb13"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> xls-workbook</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  (xls/input-&gt;workbook <span class="st">"data/tabular_data/example_multiple_sheets_XLS.xls"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The easiest way to work with this sequence of workbooks is to convert it to a Clojure seq:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb14"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">nth</span> (<span class="kw">iterator-seq</span> (.iterator xls-workbook)) <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="printedClojure">
+<div class="sourceCode" id="cb15"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>#object[tech.v3.libs.poi$wrap_sheet$reify__33261 <span class="bn">0x5aa6bb7c</span> <span class="st">"tech.v3.libs.poi$wrap_sheet$reify__33261@5aa6bb7c"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From here, we can reify a given sheet by calling <code>tech.v3.dataset.io.spreadsheet/sheet-&gt;dataset</code>:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb16"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">require</span> '[tech.v3.dataset.io.spreadsheet <span class="at">:as</span> ssheet])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb17"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> xls-workbook</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    .iterator</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">iterator-seq</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">nth</span> <span class="dv">2</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    (ssheet/sheet-&gt;dataset {}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>Sheet3 [34 8]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Gender</th>
+<th>Country</th>
+<th style="text-align: right;">Age</th>
+<th>Date</th>
+<th style="text-align: right;">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">17.0</td>
+<td>Shavon</td>
+<td>Benito</td>
+<td>Female</td>
+<td>France</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3579.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="xlsx" class="level4">
+<h4 class="anchored" data-anchor-id="xlsx"><code>.xlsx</code></h4>
+<p>Tablecloth supports .xlsx files only if the underlying Java library for working with this file format is added as a dependency and required. It’s not required by default because the core team at <code>tech.ml.dataset</code>(upon which tablecloth is built) did not want to impose it and all of its dependencies on all users by default. If you want to work with excel files, you can add the dependency to your <code>deps.edn</code> file:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode clj code-with-copy"><code class="sourceCode clojure"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>org.dhatim/fastexcel-reader {<span class="at">:mvn/version</span> <span class="st">"0.16.4"</span> <span class="at">:exclusions</span> [org.apache.poi/poi-ooxml]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and then we can require the library:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb19"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">require</span> '[tech.v3.libs.fastexcel <span class="at">:as</span> xlsx])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now our excel spreadsheet should load. These behave the same way as <code>.xls</code> files. For completeness, specific examples are given below.</p>
+<p>If there’s a single sheet, tablecloth will just work:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb20"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/example_XLSX.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>data/tabular_data/example_XLSX.xlsx [50 8]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Gender</th>
+<th>Country</th>
+<th style="text-align: right;">Age</th>
+<th>Date</th>
+<th style="text-align: right;">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>With multiple sheets it throws an error:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb21"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(tc/dataset <span class="st">"data/tabular_data/example_multiple_sheets_XLSX.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>_unnamed [1 2]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 58%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>:<span class="math inline">\(value |                             :\)</span>error</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>data/tabular_data/example_multiple_sheets_XLSX.xlsx</td>
+<td>Multiple (3) datasets found in file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So we can load the file as a sequence of datasets. The same options are supported for configuring how the data gets loaded <a href="https://techascent.github.io/tech.ml.dataset/tech.v3.libs.fastexcel.html#var-workbook-.3Edatasets">documented here</a>:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb22"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(xlsx/workbook-&gt;datasets <span class="st">"data/tabular_data/example_multiple_sheets_XLSX.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div><p>[</p><div class="clay-sequential" style="margin-left:10%;width:110%;"><div class="clay-dataset"><p>Sheet1 [50 8]:</p>
+<table class="table caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Index</th>
+<th data-quarto-table-cell-role="th">First Name</th>
+<th data-quarto-table-cell-role="th">Last Name</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">Country</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div><div class="clay-dataset"><p>Sheet2 [31 8]:</p>
+<table class="table caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Index</th>
+<th data-quarto-table-cell-role="th">First Name</th>
+<th data-quarto-table-cell-role="th">Last Name</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">Country</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">20.0</td>
+<td>Teresa</td>
+<td>Strawn</td>
+<td>Female</td>
+<td>France</td>
+<td style="text-align: right;">46.0</td>
+<td>21/05/2015</td>
+<td style="text-align: right;">3569.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">49.0</td>
+<td>Jeromy</td>
+<td>Danz</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">39.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">3265.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50.0</td>
+<td>Rasheeda</td>
+<td>Alkire</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">29.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">6125.0</td>
+</tr>
+</tbody>
+</table>
+</div><div class="clay-dataset"><p>Sheet3 [30 8]:</p>
+<table class="table caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Index</th>
+<th data-quarto-table-cell-role="th">First Name</th>
+<th data-quarto-table-cell-role="th">Last Name</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">Country</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+<td>...</td>
+<td style="text-align: right;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">29.0</td>
+<td>Garth</td>
+<td>Gangi</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">41.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">3256.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30.0</td>
+<td>Carla</td>
+<td>Trumbull</td>
+<td>Female</td>
+<td>Great Britain</td>
+<td style="text-align: right;">28.0</td>
+<td>21/05/2015</td>
+<td style="text-align: right;">3264.0</td>
+</tr>
+</tbody>
+</table>
+</div></div><p>]</p></div>
+<p>If you don’t want to pre-emptively create datasets for all of your sheets (for example if they’re very large), you can load them lazily with <code>xlsx/input-&gt;workbook</code>:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb23"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(<span class="bu">def</span><span class="fu"> xlsx-workbook</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  (xlsx/input-&gt;workbook <span class="st">"data/tabular_data/example_multiple_sheets_XLSX.xlsx"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And now work with this workbook as a lazy sequence of un-reified sheets:</p>
+<div class="sourceClojure">
+<div class="sourceCode" id="cb24"><pre class="sourceCode clojure code-with-copy"><code class="sourceCode clojure"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(<span class="kw">-&gt;</span> xlsx-workbook</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    .iterator</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">iterator-seq</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">nth</span> <span class="dv">2</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    (ssheet/sheet-&gt;dataset {}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="clay-dataset">
+<p>Sheet3 [30 8]:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Index</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Gender</th>
+<th>Country</th>
+<th style="text-align: right;">Age</th>
+<th>Date</th>
+<th style="text-align: right;">Id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.0</td>
+<td>Dulce</td>
+<td>Abril</td>
+<td>Female</td>
+<td>United States</td>
+<td style="text-align: right;">32.0</td>
+<td>15/10/2017</td>
+<td style="text-align: right;">1562.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+<td>…</td>
+<td style="text-align: right;">…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">29.0</td>
+<td>Garth</td>
+<td>Gangi</td>
+<td>Male</td>
+<td>United States</td>
+<td style="text-align: right;">41.0</td>
+<td>16/08/2016</td>
+<td style="text-align: right;">3256.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">30.0</td>
+<td>Carla</td>
+<td>Trumbull</td>
+<td>Female</td>
+<td>Great Britain</td>
+<td style="text-align: right;">28.0</td>
+<td>21/05/2015</td>
+<td style="text-align: right;">3264.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="google-sheets" class="level3">
+<h3 class="anchored" data-anchor-id="google-sheets">Google Sheets</h3>
+<p>TODO</p>
+<div style="background-color:grey;height:2px;width:100%;"></div>
+<div><pre><small><small>source: <a href="https://github.com/scicloj/clojure-data-cookbook/blob/main/src/book/part_1_data_import/1_tabular_data.clj">src/book/part_1_data_import/1_tabular_data.clj</a></small></small></pre></div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./src/book/part_1_data_import/0_data_import.html" class="pagination-link" aria-label="Data Import">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Import</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./book.part_1_data_import.2_columnar_compressed_data.html" class="pagination-link" aria-label="Columnar and Compressed Data">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Columnar and Compressed Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
